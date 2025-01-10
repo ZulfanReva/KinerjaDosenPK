@@ -43,27 +43,11 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('admin.datapengawas*') ? 'active' : '' }}" href="{{ route('admin.datapengawas.index') }}">
-                    <div class="bg-gradient-info icon-shape shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <img src="{{ asset('assets/foto/profilpengawas.png') }}" alt="Data Pengawas" width="50" height="50">
-                    </div>
-                    <span class="nav-link-text ms-1">Data Pengawas</span>
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('admin.datajabatan*') ? 'active' : '' }}" href="{{ route('admin.datajabatan.index') }}">
                     <div class="bg-gradient-info icon-shape shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <img src="{{ asset('assets/foto/jabatan.png') }}" alt="Data Jabatan" width="50" height="50">
                     </div>
                     <span class="nav-link-text ms-1">Data Jabatan</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('admin.dataperiode*') ? 'active' : '' }}" href="{{ route('admin.dataperiode.index') }}">
-                    <div class="bg-gradient-info icon-shape shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <img src="{{ asset('assets/foto/periode.png') }}" alt="Data Jabatan" width="50" height="50">
-                    </div>
-                    <span class="nav-link-text ms-1">Data Periode</span>
                 </a>
             </li>
             <li class="nav-item">

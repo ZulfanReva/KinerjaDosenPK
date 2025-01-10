@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('penilaian_pk', function (Blueprint $table) {
+        Schema::create('penilaian_perilakukerja', function (Blueprint $table) {
             $table->id();
             $table->foreignId('dosen_id')->constrained('dosen')->cascadeOnDelete();
-            $table->foreignId('pengawas_id')->constrained('pengawas')->cascadeOnDelete();
-            $table->foreignId('periode_id')->constrained('periode')->onDelete('cascade');
-            $table->tinyInteger('orientasi_pelayanan');
+            $table->string('periode');
             $table->tinyInteger('integritas');
             $table->tinyInteger('komitmen');
-            $table->tinyInteger('disiplin');
             $table->tinyInteger('kerjasama');
+            $table->tinyInteger('orientasi_pelayanan');
+            $table->tinyInteger('disiplin');
             $table->tinyInteger('kepemimpinan');
+            $table->decimal('nilai_ncf');
             $table->decimal('nilai_nsf');
             $table->timestamps();
         });

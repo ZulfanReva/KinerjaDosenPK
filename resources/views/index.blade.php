@@ -249,7 +249,7 @@
           </div>
           <h3><a class="stretched-link">Latar Belakang</a></h3>
           <p style="text-align: justify;">
-            Sistem ini dikembangkan untuk meningkatkan efisiensi dan transparansi dalam evaluasi kinerja dosen di Universitas Muhammadiyah Banjarmasin. Saat ini, penilaian kinerja hanya berfokus pada BKD (Beban Kerja Dosen). Dengan sistem ini, penilaian akan mencakup aspek perilaku kerja, menciptakan evaluasi yang lebih menyeluruh dan adil.
+            Sistem ini dikembangkan untuk meningkatkan efisiensi dan transparansi dalam evaluasi kinerja dosen di Universitas Muhammadiyah Banjarmasin. Sistem ini, penilaian kinerja dosen hanya berfokus pada aspek Perilaku Kerja (PK) seperti yang tercantum pada pedoman penilaian kinerja dosen di UMBJM. 
           </p>
         </div>
       </div><!-- End Card Item -->
@@ -306,15 +306,6 @@
 
     <div class="row gy-4 justify-content-center">
 
-      <!-- Beban Kerja Dosen -->
-      <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
-        <div class="service-item position-relative">
-          <img src="assets/foto/bkd.png" alt="Beban Kerja Dosen">
-          <h4><a class="stretched-link">Beban Kerja Dosen (BKD)</a></h4>
-          <p>Penilaian berdasarkan Beban Kerja Dosen yang sudah didtetapkan oleh Kemendikbud dalam Sistem Informasi Sumberdaya Terintegrasi (SISTER).</p>
-        </div>
-      </div><!-- End Service Item -->
-
       <!-- Perilaku Kerja -->
       <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
         <div class="service-item position-relative">
@@ -323,7 +314,7 @@
           <p>Evaluasi terhadap sikap dan etika kerja, termasuk kolaborasi, tanggung jawab, dan kepimpinan yang sudah ditetapkan oleh bagian Sumber Daya Insani (SDI).</p>
         </div>
       </div><!-- End Service Item -->
-
+    
     </div>
 
   </div> 
@@ -455,7 +446,7 @@
             <div class="row">
               <div class="col-lg-8 details order-2 order-lg-1">
                 <h3>Sumber Daya Insani (SDI)</h3>
-                <p class="fst-italic">Supian</p>
+                <p class="fst-italic">Wahyu</p>
                 <p>Bagian SDI bertanggung jawab langsung dalam pengelolaan dan pelaksanaan Sistem Penilaian Kinerja Dosen, memastikan proses penilaian berjalan transparan dan berbasis data yang valid.</p>
               </div>
               <div class="col-lg-4 text-center order-1 order-lg-2" data-aos="fade-up" data-aos-delay="400">
@@ -471,7 +462,7 @@
                     </div>
                   </div>
                   <div class="member-info">
-                    <h4>Supian</h4>
+                    <h4>Wahyu</h4>
                     <span>Kepala SDI</span>
                   </div>
                 </div>
@@ -508,289 +499,101 @@
 
     </section>
 
-    <!-- Berita Section -->
-    <section id="berita">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <span>Berita Sistem Penilaian Kinerja Dosen</span>
-        <h2>Berita Sistem Penilaian Kinerja Dosen</h2>
-        <p>Berikut <strong>berita terbaru</strong> mengenai kinerja dosen dan kampus</p>
-      </div><!-- End Section Title -->
-        
-      <!-- Berita Item 1 -->
-      <div class="news-container news-item">
-        <div class="news-image">
-          <img src="assets/foto/cover4.png" alt="Penilaian Kinerja Semester Genap 2024">
-        </div>
-        <div class="news-content">
-          <h2>Penilaian Kinerja Semester Genap 2024</h2>
-          <p>Universitas Muhammadiyah Banjarmasin telah menerapkan sistem penilaian kinerja terbaru untuk semester genap 2024, mencakup evaluasi Beban Kerja Dosen (BKD) dan Perilaku Kerja sebagai langkah peningkatan kualitas pendidikan.</p>
-          <div class="news-footer">
-            <div class="news-source">
-              <img src="assets/foto/umbjm.png" alt="Universitas Muhammadiyah Banjarmasin">
-              <span>Universitas Muhammadiyah Banjarmasin</span>
-              <span>Senin, 1 Agustus 2024</span>
-            </div>
-            <div class="news-views">
-              <i class="bi bi-eye"></i>
-              <span>45</span>
-            </div>
-          </div>
-        </div>
-      </div> <!-- End Berita Item -->
-
-      <!-- Berita Item 2 -->
-      <div class="news-container news-item">
-        <div class="news-image">
-          <img src="assets/foto/cover5.png" alt="Peningkatan Kinerja SDI">
-        </div>
-        <div class="news-content">
-          <h2>Peningkatan Kinerja Sumber Daya Insani (SDI)</h2>
-          <p>Melalui program pelatihan baru, bagian SDI di kampus telah berhasil meningkatkan kemampuan dosen dalam kepemimpinan, kolaborasi, dan tanggung jawab sesuai standar kerja nasional.</p>
-          <div class="news-footer">
-            <div class="news-source">
-              <img src="assets/foto/umbjm.png" alt="Universitas Muhammadiyah Banjarmasin">
-              <span>Universitas Muhammadiyah Banjarmasin</span>
-              <span>Sabtu, 29 Juli 2024</span>
-            </div>
-            <div class="news-views">
-              <i class="bi bi-eye"></i>
-              <span>60</span>
-            </div>
-          </div>
-        </div>
-      </div> <!-- End Berita Item -->
-
-      <!-- Berita Item 3 -->
-      <div class="news-container news-item">
-        <div class="news-image">
-          <img src="assets/foto/cover3.png" alt="Workshop Peningkatan Perilaku Kerja">
-        </div>
-        <div class="news-content">
-          <h2>Workshop Peningkatan Perilaku Kerja Dosen</h2>
-          <p>Workshop ini dihadiri lebih dari 50 dosen untuk meningkatkan kesadaran etika kerja, kolaborasi, dan tanggung jawab dalam mendukung keberhasilan mahasiswa dan pengembangan kampus.</p>
-          <div class="news-footer">
-            <div class="news-source">
-              <img src="assets/foto/umbjm.png" alt="Universitas Muhammadiyah Banjarmasin">
-              <span>Universitas Muhammadiyah Banjarmasin</span>
-              <span>Kamis, 27 Juli 2024</span>
-            </div>
-            <div class="news-views">
-              <i class="bi bi-eye"></i>
-              <span>75</span>
-            </div>
-          </div>
-        </div>
-      </div> <!-- End Berita Item -->
-
-    </section> <!-- End Berita Section -->
-
-
-    <!-- Testimonial Section -->
-    <section id="testimonial" class="testimonials call-to-action section dark-background">
-      <div class="background-image">
-        <img src="assets/foto/testimonial.png" alt="">
-      </div>
-
-      <div class="container">
-        <div class="row justify-content-center" data-aos="zoom-in" data-aos-delay="100">
-          <div class="col-xl-10">
-            <div class="container" data-aos="fade-up" data-aos-delay="100">
-              <div class="swiper init-swiper">
-                <script type="application/json" class="swiper-config">
-                  {
-                    "loop": true,
-                    "speed": 600,
-                    "autoplay": {
-                      "delay": 5000
-                    },
-                    "slidesPerView": "auto",
-                    "pagination": {
-                      "el": ".swiper-pagination",
-                      "type": "bullets",
-                      "clickable": true
-                    }
-                  }
-                </script>
-                <div class="swiper-wrapper">
-                  <!-- Testimonial 1 -->
-                  <div class="swiper-slide">
-                    <div class="testimonial-item">
-                      <div class="testimonial-img-container">
-                        <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt=""></div>
-                      <h3>Dr. Ahmad Yani</h3>
-                      <h4>Dosen Senior</h4>
-                      <p>
-                        <i class="bi bi-quote quote-icon-left"></i>
-                        <span>Sistem penilaian kinerja dosen yang baru sangat membantu kami untuk meningkatkan kualitas pengajaran dan akuntabilitas kinerja secara transparan.</span>
-                        <i class="bi bi-quote quote-icon-right"></i>
-                      </p>
-                    </div>
-                  </div>
-
-                  <!-- Testimonial 2 -->
-                  <div class="swiper-slide">
-                    <div class="testimonial-item">
-                      <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
-                      <h3>Siti Rahmah, M.Pd</h3>
-                      <h4>Dosen Ekonomi</h4>
-                      <p>
-                        <i class="bi bi-quote quote-icon-left"></i>
-                        <span>Penilaian berbasis perilaku kerja memberikan kami umpan balik yang konstruktif untuk mengembangkan etos kerja dan keahlian mengajar.</span>
-                        <i class="bi bi-quote quote-icon-right"></i>
-                      </p>
-                    </div>
-                  </div><!-- End testimonial item -->
-
-                  <!-- Testimonial 3 -->
-                  <div class="swiper-slide">
-                    <div class="testimonial-item">
-                      <img src="assets/img/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
-                      <h3>Rusdiansyah, M.T</h3> 
-                      <h4>Dosen Teknik</h4>
-                      <p>
-                        <i class="bi bi-quote quote-icon-left"></i>
-                        <span>Platform evaluasi kinerja ini memudahkan kami dalam mendokumentasikan aktivitas akademik dan memenuhi target BKD setiap semester.</span>
-                        <i class="bi bi-quote quote-icon-right"></i>
-                      </p>
-                    </div>
-                  </div><!-- End testimonial item -->
-
-                  <!-- Testimonial 4 -->
-                  <div class="swiper-slide">
-                    <div class="testimonial-item">
-                      <img src="assets/img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
-                      <h3>Mira Syafitri</h3>
-                      <h4>Mahasiswa</h4>
-                      <p>
-                        <i class="bi bi-quote quote-icon-left"></i>
-                        <span>Sistem baru membantu mahasiswa mendapatkan dosen berkualitas karena penilaian yang transparan dan berbasis perilaku kerja.</span>
-                        <i class="bi bi-quote quote-icon-right"></i>
-                      </p>
-                    </div>
-                  </div><!-- End testimonial item -->
-
-                  <!-- Testimonial 5 -->
-                  <div class="swiper-slide">
-                    <div class="testimonial-item">
-                      <img src="assets/img/testimonials/testimonials-5.jpg" class="testimonial-img" alt="">
-                      <h3>Hadi Santoso</h3>
-                      <h4>Staff IT</h4>
-                      <p>
-                        <i class="bi bi-quote quote-icon-left"></i>
-                        <span>Implementasi sistem penilaian berbasis teknologi membuat proses lebih cepat dan akurat, mendukung kebutuhan administratif kampus.</span>
-                        <i class="bi bi-quote quote-icon-right"></i>
-                      </p>
-                    </div>
-                  </div><!-- End testimonial item -->
-
-                </div>
-                <div class="swiper-pagination"></div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </section><!-- /Testimonial Section -->
-
 
     <!-- Sponsorship Section -->
-<section id="sponsorship" class="sponsorship section">
+    <section id="sponsorship" class="sponsorship section">
 
-  <div class="section-title" data-aos="fade-up">
-    <span>Didukung Oleh</span>
-    <h2>Didukung Oleh</h2>
-    <p>Kami berterima kasih kepada semua pihak yang telah mendukung pengembangan Sistem Penilaian Kinerja Dosen</p>
-  </div><!-- End Section Title -->
+      <div class="section-title" data-aos="fade-up">
+        <span>Didukung Oleh</span>
+        <h2>Didukung Oleh</h2>
+        <p>Kami berterima kasih kepada semua pihak yang telah mendukung pengembangan Sistem Penilaian Kinerja Dosen</p>
+      </div><!-- End Section Title -->
 
-  <div class="logos">
-    <div class="logos-slide">
-      <img src="assets/foto/umbjm.png" alt="Sponsor 1" />
-      <img src="assets/foto/ftumbjm.png" alt="Sponsor 2" />
-      <img src="assets/foto/pemkalteng.png" alt="Sponsor 3" />
-      <img src="assets/foto/pemprov.png" alt="Sponsor 4" />
-      <img src="assets/foto/pemkot.png" alt="Sponsor 5" />
-      <img src="assets/foto/kemenkeu.png" alt="Sponsor 6" />
-      <img src="assets/foto/kominfo.png" alt="Sponsor 7" />
-      <img src="assets/foto/kemenparekraf.png" alt="Sponsor 8" />
-      <img src="assets/foto/wonderful.png" alt="Sponsor 9" />
-      <img src="assets/foto/telkom.png" alt="Sponsor 10" />
-    </div>
-    
-    <script>
-      var copy = document.querySelector(".logos-slide").cloneNode(true);
-      document.querySelector(".logos").appendChild(copy);
-    </script>
+      <div class="logos">
+        <div class="logos-slide">
+          <img src="assets/foto/umbjm.png" alt="Sponsor 1" />
+          <img src="assets/foto/ftumbjm.png" alt="Sponsor 2" />
+          <img src="assets/foto/pemkalteng.png" alt="Sponsor 3" />
+          <img src="assets/foto/pemprov.png" alt="Sponsor 4" />
+          <img src="assets/foto/pemkot.png" alt="Sponsor 5" />
+          <img src="assets/foto/kemenkeu.png" alt="Sponsor 6" />
+          <img src="assets/foto/kominfo.png" alt="Sponsor 7" />
+          <img src="assets/foto/kemenparekraf.png" alt="Sponsor 8" />
+          <img src="assets/foto/wonderful.png" alt="Sponsor 9" />
+          <img src="assets/foto/telkom.png" alt="Sponsor 10" />
+        </div>
+        
+        <script>
+          var copy = document.querySelector(".logos-slide").cloneNode(true);
+          document.querySelector(".logos").appendChild(copy);
+        </script>
 
-  </div>
+      </div>
 
-  <style>
-  * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+      <style>
+      * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-body {
-  background: #f2f2f2;
-}
+    body {
+      background: #f2f2f2;
+    }
 
-@keyframes slide {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-100%);
-  }
-}
+    @keyframes slide {
+      from {
+        transform: translateX(0);
+      }
+      to {
+        transform: translateX(-100%);
+      }
+    }
 
-.logos {
-  overflow: hidden;
-  padding: 60px 0;
-  background: white;
-  white-space: nowrap;
-  position: relative;
-}
+    .logos {
+      overflow: hidden;
+      padding: 60px 0;
+      background: white;
+      white-space: nowrap;
+      position: relative;
+    }
 
-.logos:before,
-.logos:after {
-  position: absolute;
-  top: 0;
-  width: 250px;
-  height: 100%;
-  content: "";
-  z-index: 2;
-}
+    .logos:before,
+    .logos:after {
+      position: absolute;
+      top: 0;
+      width: 250px;
+      height: 100%;
+      content: "";
+      z-index: 2;
+    }
 
-.logos:before {
-  left: 0;
-  background: linear-gradient(to left, rgba(255, 255, 255, 0), white);
-}
+    .logos:before {
+      left: 0;
+      background: linear-gradient(to left, rgba(255, 255, 255, 0), white);
+    }
 
-.logos:after {
-  right: 0;
-  background: linear-gradient(to right, rgba(255, 255, 255, 0), white);
-}
+    .logos:after {
+      right: 0;
+      background: linear-gradient(to right, rgba(255, 255, 255, 0), white);
+    }
 
-.logos:hover .logos-slide {
-  animation-play-state: paused;
-}
+    .logos:hover .logos-slide {
+      animation-play-state: paused;
+    }
 
-.logos-slide {
-  display: inline-block;
-  animation: 35s slide infinite linear;
-}
+    .logos-slide {
+      display: inline-block;
+      animation: 35s slide infinite linear;
+    }
 
-.logos-slide img {
-  height: 100px;
-  margin: 0 40px;
-}
-  </style>
+    .logos-slide img {
+      height: 100px;
+      margin: 0 40px;
+    }
+      </style>
 
-</section><!-- /Sponsorship Section -->
+    </section><!-- /Sponsorship Section -->
 
     <!-- Faq Section -->
     <section id="faq" class="faq section">

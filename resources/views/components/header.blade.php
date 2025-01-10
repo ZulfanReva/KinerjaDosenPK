@@ -26,9 +26,6 @@
                     </ul>
                 </li>
 
-                <!-- Link ke berita -->
-                <li><a href="{{ route('index') }}#berita" class="{{ Request::is('*#berita') ? 'active' : '' }}">BERITA</a></li>
-
                 <!-- Link ke kontak -->
                 <li><a href="{{ route('kontak') }}" class="{{ Request::routeIs('kontak') ? 'active' : '' }}">KONTAK</a></li>
             </ul>

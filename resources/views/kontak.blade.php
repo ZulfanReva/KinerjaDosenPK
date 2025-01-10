@@ -96,7 +96,7 @@
                 <div class="col-md-6">
                   <div class="position-relative">
                     <select id="category" class="form-control" required style="border-radius: 4px; padding-right: 2.5rem;">
-                      <option value="" disabled selected>Dari Siapa?</option>
+                      <option value="" disabled selected style="color: grey;">Dari Siapa?</option>
                       <option value="Smart Government">Dosen</option>
                       <option value="Smart Government">Tenaga Pendidik</option>
                       <option value="Smart Society">Mahasiswa</option>
