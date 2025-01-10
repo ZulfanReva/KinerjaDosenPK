@@ -46,7 +46,7 @@
                   {{ $user->username }} <!-- Menampilkan username -->
                 </h5>
                 <p class="mb-0 font-weight-bold text-sm">
-                  Admin
+                  Admin Sumber Daya Insani
                   {{-- {{ $user->role }} <!-- Menampilkan role --> --}}
                 </p>
               </div>
@@ -110,7 +110,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <button type="submit" class="btn btn-primary">Simpan</button>
+                <button type="submit" class="btn bg-gradient-info">Simpan</button>
             </div>
         </form>
 

@@ -30,29 +30,28 @@
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
                             <div class="p-4">
-                                <form id="formContainer" method="POST" action="{{ route('admin.datadosen.update', $dosen->id) }}">
+                                <form method="POST" action="{{ route('admin.datadosen.update', $dosen->id) }}">
                                     @csrf
                                     @method('PUT')
-
-                                    <div class="form-group mb-4">
-                                        <div class="row">
-                                            <!-- Input Nama -->
-                                            <div class="col-md-3 mb-3">
-                                                <label for="nama_dosen" class="form-label">Nama</label>
-                                                <input type="text" id="nama_dosen" name="nama_dosen" class="form-control" placeholder="Masukkan Nama" value="{{ old('nama_dosen', $dosen->nama_dosen) }}">
+                                    <div id="formGroup">
+                                        <div class="form-group row mb-3">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="nama_dosen" class="form-label">Nama Dosen</label>
+                                                <input type="text" name="nama_dosen" class="form-control"
+                                                    placeholder="Masukkan Nama Dosen" value="{{ old('nama_dosen', $dosen->nama_dosen) }}" required>
                                             </div>
-
-                                            <!-- Input NIDN -->
-                                            <div class="col-md-3 mb-3">
+                                            <div class="col-md-6 mb-3">
                                                 <label for="nidn" class="form-label">NIDN</label>
-                                                <input type="text" id="nidn" name="nidn" class="form-control" placeholder="Masukkan NIDN" value="{{ old('nidn', $dosen->nidn) }}">
+                                                <input type="text" name="nidn" class="form-control"
+                                                    placeholder="Masukkan NIDN" value="{{ old('nidn', $dosen->nidn) }}" required>
                                             </div>
-
-                                            <!-- Dropdown Prodi -->
-                                            <div class="col-md-3 mb-3">
+                                        </div>
+                                
+                                        <div class="form-group row mb-3">
+                                            <div class="col-md-6 mb-3">
                                                 <label for="prodi" class="form-label">Prodi</label>
-                                                <select id="prodi" name="prodi_id" class="form-select">
-                                                    <option value="">Pilih Prodi</option>
+                                                <select name="prodi_id" class="form-select" required>
+                                                    <option value="" selected disabled>Pilih Prodi</option>
                                                     @foreach ($prodis as $prodi)
                                                         <option value="{{ $prodi->id }}" {{ $prodi->id == old('prodi_id', $dosen->prodi_id) ? 'selected' : '' }}>
                                                             {{ $prodi->nama_prodi }}
@@ -60,27 +59,79 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-
-                                            <!-- Dropdown Status -->
-                                            <div class="col-md-3 mb-3">
+                                            <div class="col-md-6 mb-3">
                                                 <label for="status" class="form-label">Status</label>
-                                                <select id="status" name="status" class="form-select">
-                                                    <option value="Aktif" {{ $dosen->status == 'Aktif' ? 'selected' : '' }}>Aktif</option>
-                                                    <option value="Nonaktif" {{ $dosen->status == 'Nonaktif' ? 'selected' : '' }}>Nonaktif</option>
+                                                <select name="status" class="form-select" required>
+                                                    <option value="Aktif" {{ old('status', $dosen->status) == 'Aktif' ? 'selected' : '' }}>Aktif</option>
+                                                    <option value="Nonaktif" {{ old('status', $dosen->status) == 'Nonaktif' ? 'selected' : '' }}>Nonaktif</option>
                                                 </select>
                                             </div>
                                         </div>
+                                
+                                        <div class="form-group row mb-3">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="jabatan" class="form-label">Jabatan</label>
+                                                <select name="jabatan_id" class="form-select" id="jabatanSelect" required>
+                                                    <option value="" selected disabled>Pilih Jabatan</option>
+                                                    @foreach ($jabatans as $jabatan)
+                                                        <option value="{{ $jabatan->id }}" {{ $jabatan->id == old('jabatan_id', $dosen->jabatan_id) ? 'selected' : '' }}>
+                                                            {{ $jabatan->nama_jabatan }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                
+                                        <!-- Kolom Nama Pengguna dan Kata Sandi -->
+                                        <div id="additionalFields" style="display: none;">
+                                            <div class="form-group row mb-3">
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="username" class="form-label">Nama Pengguna</label>
+                                                    <input type="text" name="username" class="form-control" placeholder="Masukkan Nama Pengguna"
+                                                        value="{{ old('username', $dosen->username) }}">
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="password" class="form-label">Kata Sandi</label>
+                                                    <input type="password" name="password" class="form-control" placeholder="Masukkan Kata Sandi">
+                                                </div>
+                                            </div>
+                                        </div>
+                                
+                                        <!-- Catatan jika jabatan bukan Dosen Pengajar -->
+                                        <div id="jabatanNote" style="display: none; font-size: 0.9rem; color: gray;">
+                                            *Nama Pengguna dan Kata Sandi tidak bisa diedit oleh admin
+                                        </div>
+                                
+                                        <div class="d-flex justify-content-between mt-4">
+                                            <!-- Tombol Simpan dan Kembali -->
+                                            <div class="d-flex" style="gap: 10px;">
+                                                <button type="submit" class="btn bg-gradient-info">Simpan</button>
+                                                <button type="button" class="btn btn-outline-secondary"
+                                                    onclick="window.location.href='{{ route('admin.datadosen.index') }}'">Kembali</button>
+                                            </div>
+                                        </div>
                                     </div>
-
-                                    <div class="d-flex justify-content-between mt-4">
-                                        <!-- Tombol Simpan -->
-                                        <button type="submit" class="btn bg-gradient-info" id="saveButton">Simpan</button>
-
-                                        <!-- Tombol Kembali -->
-                                        <button type="button" class="btn btn-outline-secondary" onclick="window.location.href='{{ route('admin.datadosen.index') }}'">
-                                            Kembali
-                                        </button>
-                                    </div>
+                                
+                                    <script>
+                                        // Elemen yang diperlukan
+                                        const jabatanSelect = document.getElementById('jabatanSelect');
+                                        const additionalFields = document.getElementById('additionalFields');
+                                        const jabatanNote = document.getElementById('jabatanNote');
+                                
+                                        // Event Listener untuk perubahan pada dropdown Jabatan
+                                        jabatanSelect.addEventListener('change', function () {
+                                            const selectedOption = jabatanSelect.options[jabatanSelect.selectedIndex].text;
+                                
+                                            // Tampilkan atau sembunyikan kolom tambahan berdasarkan pilihan
+                                            if (selectedOption !== 'Dosen Pengajar') {
+                                                additionalFields.style.display = 'none'; // Sembunyikan kolom
+                                                jabatanNote.style.display = 'block'; // Tampilkan catatan
+                                            } else {
+                                                additionalFields.style.display = 'block'; // Tampilkan kolom
+                                                jabatanNote.style.display = 'none'; // Sembunyikan catatan
+                                            }
+                                        });
+                                    </script>
                                 </form>
 
                                 @if(session('success'))
@@ -108,40 +159,40 @@
         <script>
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
   
-              document.getElementById('formContainer').addEventListener('submit', function (event) {
-                  event.preventDefault(); // Mencegah form disubmit secara default
+            document.getElementById('formContainer').addEventListener('submit', function (event) {
+                event.preventDefault(); // Mencegah form disubmit secara default
   
-                  const formData = new FormData(this); // Mengambil data form
-                  const data = {};  // Data untuk dikirim ke server
+                const formData = new FormData(this); // Mengambil data form
+                const data = {};  // Data untuk dikirim ke server
   
-                  formData.forEach((value, key) => {
-                      data[key] = value;
-                  });
+                formData.forEach((value, key) => {
+                    data[key] = value;
+                });
   
-                  // Mengirim data ke server menggunakan fetch
-                  fetch("{{ route('admin.datadosen.update', $dosen->id) }}", {
-                      method: "PUT",
-                      headers: {
-                          'Content-Type': 'application/json',
-                          'X-CSRF-TOKEN': csrfToken
-                      },
-                      body: JSON.stringify(data)
-                  })
-                  .then(response => response.json())  // Mengambil response dalam format JSON
-                  .then(data => {
-                      if (data.success) {
-                          alert("Data dosen berhasil diperbarui!");
-                          window.location.href = "{{ route('admin.datadosen.index') }}";  // Redirect ke halaman index
-                      } else {
-                          alert(`Gagal mengupdate data: ${data.message}`);
-                      }
-                  })
-                  .catch(error => {
-                      console.error("Error:", error);
-                      alert(`Terjadi kesalahan: ${error.message}`);
-                  });
-              });
-          </script>
+                // Mengirim data ke server menggunakan fetch
+                fetch("{{ route('admin.datadosen.update', $dosen->id) }}", {
+                    method: "PUT",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())  // Mengambil response dalam format JSON
+                .then(data => {
+                    if (data.success) {
+                        alert("Data dosen berhasil diperbarui!");
+                        window.location.href = "{{ route('admin.datadosen.index') }}";  // Redirect ke halaman index
+                    } else {
+                        alert(`Gagal mengupdate data: ${data.message}`);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert(`Terjadi kesalahan: ${error.message}`);
+                });
+            });
+        </script>
 
     </main>
 </body>
