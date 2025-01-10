@@ -8,24 +8,43 @@ namespace App\Models;
     class Dosen extends Model
 {
     protected $table = 'dosen'; // Nama tabel di database
-    protected $fillable = ['nama_dosen', 'nidn', 'prodi_id', 'status'];
+    use HasFactory;
+
+    protected $fillable = [
+        'nama_dosen',
+        'nidn',
+        'prodi_id',
+        'status',
+        'jabatan_id',
+        'users_id', // Menyimpan ID user jika perlu
+    ];
+
+    protected $hidden = [
+        'password',
+    ];
 
     // Relasi dengan tabel prodi
     public function prodi()
     {
         return $this->belongsTo(Prodi::class);
     }
-
-    // Relasi dengan PenilaianPK
-    public function penilaianPK()
+    
+    // Relasi dengan tabel jabatan
+    public function jabatan()
     {
-        return $this->hasOne(PenilaianPK::class, 'dosen_id');
+        return $this->belongsTo(Jabatan::class);
     }
 
-    // Relasi dengan PenilaianBKD
-    public function penilaianBKD()
+    // Relasi dengan model User
+    public function user()
     {
-        return $this->hasOne(PenilaianBKD::class);
+        return $this->belongsTo(User::class, 'users_id'); // Sesuaikan dengan nama kolom
+    }
+
+    // Relasi dengan PenilaianPK
+    public function penilaianperilakukerja()
+    {
+        return $this->hasOne(PenilaianPK::class, 'dosen_id');
     }
 
 }
