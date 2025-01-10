@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use App\Models\User;
 use App\Models\Dosen;
 use App\Models\Prodi;
@@ -10,16 +9,14 @@ use App\Models\Jabatan;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class DataDosenController extends Controller
 {
-    // Menampilkan daftar data dosen
     public function index()
     {
-        // Mengambil dosen dengan relasi Prodi dan Jabatan
-        $dosens = Dosen::with('prodi', 'jabatan')->get();
+        $dosens = Dosen::with('prodi', 'jabatan', 'user')->get();
 
-        // Pisahkan dosen berdasarkan jabatan
         $dosenPengajar = $dosens->filter(function ($dosen) {
             return $dosen->jabatan->nama_jabatan == 'Dosen Pengajar';
         });
@@ -28,23 +25,16 @@ class DataDosenController extends Controller
             return $dosen->jabatan->nama_jabatan != 'Dosen Pengajar';
         });
 
-        // Mengirimkan data ke view
         return view('pageadmin.datadosen.index', compact('dosenPengajar', 'dosenBerjabatan'));
     }
 
-
-    // Menampilkan form tambah data dosen
     public function create()
     {
-        // Mengambil semua data prodi
         $prodis = Prodi::all();
         $jabatans = Jabatan::all();
-
-        // Mengirim data ke view
         return view('pageadmin.datadosen.create', compact('prodis', 'jabatans'));
     }
 
-    // Menyimpan data dosen baru
     public function store(Request $request)
     {
         // Validasi input dosen
@@ -54,117 +44,150 @@ class DataDosenController extends Controller
             'prodi_id.*' => 'required|integer|exists:prodi,id',
             'status.*' => 'required|in:Aktif,Nonaktif',
             'jabatan_id.*' => 'required|integer|exists:jabatan,id',
-            'username.*' => 'nullable|max:50|unique:users,username', // Username hanya diperlukan untuk dosen non-pengajar
-            'password.*' => 'nullable|string|min:8', // Password hanya diperlukan untuk dosen non-pengajar
+            'username.*' => 'nullable|max:50|unique:users,username',
+            'password.*' => 'nullable|string|min:8',
         ]);
 
         foreach ($request->nama_dosen as $key => $namaDosen) {
-            $nidn = $request->nidn[$key];
-            $prodiId = $request->prodi_id[$key];
-            $status = $request->status[$key];
-            $jabatanId = $request->jabatan_id[$key];
-            $username = $request->username[$key] ?? null; // Ambil username jika ada
-            $password = $request->password[$key] ?? null; // Ambil password jika ada
+            $jabatan = Jabatan::find($request->jabatan_id[$key]);
 
-            // Cek apakah jabatan bukan "Dosen Pengajar"
-            $jabatan = Jabatan::find($jabatanId);
-            $usersId = null;
-
-            if ($jabatan && $jabatan->nama_jabatan !== 'Dosen Pengajar') {
-                // Pastikan username dan password tersedia
-                if (!empty($username) && !empty($password)) {
-                    // Buat user untuk dosen non-pengajar
-                    $user = User::create([
-                        'username' => $username,
-                        'password' => bcrypt($password), // Hash password dengan bcrypt
-                        'role' => 'dosenjabatan', // Role khusus untuk dosen non-pengajar
-                    ]);
-                    $usersId = $user->id;
-                } else {
-                    // Kembali dengan error jika username atau password kosong
+            if ($jabatan->nama_jabatan !== 'Dosen Pengajar') {
+                // Validasi untuk non-Dosen Pengajar
+                if (empty($request->username[$key]) || empty($request->password[$key])) {
                     return back()->withErrors(['error' => "Username dan Password wajib diisi untuk dosen dengan jabatan selain 'Dosen Pengajar'."]);
                 }
-            }
 
-            // Simpan data ke tabel dosen
-            Dosen::create([
-                'nama_dosen' => $namaDosen,
-                'nidn' => $nidn,
-                'prodi_id' => $prodiId,
-                'status' => $status,
-                'jabatan_id' => $jabatanId,
-                'users_id' => $usersId, // Bisa null jika Dosen Pengajar
-            ]);
+                // Buat user baru
+                $user = User::create([
+                    'username' => $request->username[$key],
+                    'password' => bcrypt($request->password[$key]),
+                    'role' => 'dosenberjabatan',
+                ]);
+
+                // Buat dosen dengan users_id
+                Dosen::create([
+                    'nama_dosen' => $namaDosen,
+                    'nidn' => $request->nidn[$key],
+                    'prodi_id' => $request->prodi_id[$key],
+                    'status' => $request->status[$key],
+                    'jabatan_id' => $request->jabatan_id[$key],
+                    'users_id' => $user->id,
+                ]);
+            } else {
+                // Buat dosen tanpa users_id untuk Dosen Pengajar
+                Dosen::create([
+                    'nama_dosen' => $namaDosen,
+                    'nidn' => $request->nidn[$key],
+                    'prodi_id' => $request->prodi_id[$key],
+                    'status' => $request->status[$key],
+                    'jabatan_id' => $request->jabatan_id[$key],
+                    'users_id' => null, // Set NULL untuk Dosen Pengajar
+                ]);
+            }
         }
 
         return redirect()->route('admin.datadosen.index')->with('success', 'Data dosen berhasil ditambahkan.');
     }
 
-
-    // Menampilkan detail data dosen
     public function show($id)
     {
-        $dosen = Dosen::findOrFail($id);
+        $dosen = Dosen::with('prodi', 'jabatan', 'user')->findOrFail($id);
         return view('pageadmin.datadosen.show', compact('dosen'));
     }
 
-    // Menampilkan form edit data dosen
     public function edit($id)
     {
-        $dosen = Dosen::findOrFail($id);
-        $prodis = Prodi::all(); // Mengambil semua data prodi
-        return view('pageadmin.datadosen.edit', compact('dosen', 'prodis'));
+        $dosen = Dosen::with('user')->findOrFail($id);
+        $prodis = Prodi::all();
+        $jabatans = Jabatan::all();
+        return view('pageadmin.datadosen.edit', compact('dosen', 'prodis', 'jabatans'));
     }
 
-    // Memperbarui data dosen
     public function update(Request $request, $id)
     {
-        // Validasi data
-        $validatedData = $request->validate([
-            'nama_dosen' => 'required|string|max:255',
-            'nidn' => 'required|string|max:20',
-            'prodi_id' => 'required|exists:prodi,id',
-            'status' => 'required|in:Aktif,Nonaktif',
-        ]);
-
         try {
-            // Cari dosen berdasarkan ID
-            $dosen = Dosen::findOrFail($id);
+            DB::beginTransaction();
 
-            // Update data dosen
+            $validatedData = $request->validate([
+                'nama_dosen' => 'required|string|max:255',
+                'nidn' => 'required|string|max:20|unique:dosen,nidn,' . $id,
+                'prodi_id' => 'required|exists:prodi,id',
+                'status' => 'required|in:Aktif,Nonaktif',
+                'jabatan_id' => 'required|exists:jabatan,id',
+                'username' => 'nullable|max:50|unique:users,username,' . optional(Dosen::find($id)->user)->id,
+                'password' => 'nullable|string|min:8',
+            ]);
+
+            $dosen = Dosen::findOrFail($id);
+            $jabatan = Jabatan::find($request->jabatan_id);
+
+            // Handle user account based on jabatan
+            if ($jabatan->nama_jabatan === 'Dosen Pengajar') {
+                // If changing to Dosen Pengajar, remove user account
+                if ($dosen->user) {
+                    $dosen->user->delete();
+                }
+                $dosen->users_id = null;
+            } else {
+                // For non-Dosen Pengajar
+                if ($dosen->user) {
+                    // Update existing user
+                    if ($request->filled('username')) {
+                        $dosen->user->username = $request->username;
+                    }
+                    if ($request->filled('password')) {
+                        $dosen->user->password = Hash::make($request->password);
+                    }
+                    $dosen->user->save();
+                } else {
+                    // Create new user account
+                    if (!$request->filled('username') || !$request->filled('password')) {
+                        throw new \Exception("Username dan Password wajib diisi untuk dosen dengan jabatan selain 'Dosen Pengajar'.");
+                    }
+                    $user = User::create([
+                        'username' => $request->username,
+                        'password' => Hash::make($request->password),
+                        'role' => 'dosenjabatan',
+                    ]);
+                    $dosen->users_id = $user->id;
+                }
+            }
+
             $dosen->update([
                 'nama_dosen' => $validatedData['nama_dosen'],
                 'nidn' => $validatedData['nidn'],
                 'prodi_id' => $validatedData['prodi_id'],
                 'status' => $validatedData['status'],
+                'jabatan_id' => $validatedData['jabatan_id'],
             ]);
 
-            // Mengembalikan respons sukses
+            DB::commit();
             return response()->json(['success' => true]);
         } catch (\Exception $e) {
-            // Menangani kesalahan dan mengembalikan error
-            return response()->json(['success' => false, 'message' => 'Gagal mengupdate data: ' . $e->getMessage()]);
+            DB::rollBack();
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
     }
-    // Menghapus data dosen
+
     public function destroy($id)
     {
-        // Mencari data berdasarkan ID
-        $dosen = Dosen::findOrFail($id);
+        try {
+            DB::beginTransaction();
 
-        // Cek apakah data ditemukan
-        if (!$dosen) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Data Dosen tidak ditemukan.'
-            ], 404);  // Mengembalikan error 404 jika data tidak ditemukan
+            $dosen = Dosen::findOrFail($id);
+
+            // Delete associated user if exists
+            if ($dosen->user) {
+                $dosen->user->delete();
+            }
+
+            $dosen->delete();
+
+            DB::commit();
+            return redirect()->route('admin.datadosen.index')->with('success', 'Data Dosen berhasil dihapus!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Gagal menghapus data: ' . $e->getMessage());
         }
-
-        // Menghapus data
-        // Menghapus data
-        $dosen->delete();
-
-        // Redirect setelah menghapus data
-        return redirect()->route('admin.datadosen.index')->with('success', 'Data Dosen berhasil dihapus!');
     }
 }

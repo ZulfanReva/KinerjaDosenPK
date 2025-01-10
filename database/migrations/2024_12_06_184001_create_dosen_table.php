@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('prodi_id')->constrained('prodi')->onDelete('cascade');
             $table->enum('status', ['Aktif', 'Nonaktif']);
             $table->foreignId('jabatan_id')->constrained('jabatan')->onDelete('cascade');
-            $table->foreignId('users_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('users_id')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
         });
     }

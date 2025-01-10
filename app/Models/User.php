@@ -52,7 +52,7 @@ class User extends Authenticatable
      * @param string $role
      * @return static
      */
-    public static function createWithRole(string $username, string $password, string $role = 'pengawas')
+    public static function createWithRole(string $username, string $password, string $role = 'dosenberjabatan')
     {
         return self::create([
             'username' => $username,
@@ -61,8 +61,8 @@ class User extends Authenticatable
         ]);
     }
 
-    public function pengawas()
+    public function dosen()
     {
-        return $this->hasMany(Pengawas::class, 'user_id', 'id');
+        return $this->hasMany(Dosen::class, 'user_id', 'id');
     }
 }
