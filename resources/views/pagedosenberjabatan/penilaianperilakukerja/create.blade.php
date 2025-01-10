@@ -4,7 +4,7 @@
 <x-headeradmin :title="'Form Penilaian PK | E-Kinerja UMBJM'" />
 
 <body class="g-sidenav-show  bg-gray-100">
-  <x-navigasipengawas></x-navigasipengawas>
+  <x-navigasidosenberjabatan></x-navigasidosenberjabatan>
 
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
 
@@ -13,7 +13,7 @@
         <div class="container-fluid py-1 px-3">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-              <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="{{ route('pengawas.penilaianpk.index') }}">Penilaian PK</a></li>
+              <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="{{ route('dosenberjabatan.penilaianpk.index') }}">Penilaian PK</a></li>
               <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Form Penilaian</li>
             </ol>
             <h6 class="font-weight-bolder mb-0">Selamat Datang di Halamanan Form Penilaian PK</h6>
@@ -29,12 +29,12 @@
         </div>
         
         <div class="card card-body blur shadow-blur mx-4 mt-4 overflow-hidden">
-            <form id="penilaian-pk-form" method="POST" action="{{ route('pengawas.penilaianpk.store') }}">
+            <form id="penilaian-pk-form" method="POST" action="{{ route('dosenberjabatan.penilaianpk.store') }}">
                 @csrf
                 <h6 class="text-center text-info mb-4 font-weight-bold">FORM PENILAIAN PERILAKU KERJA</h6>
                 
                 <div class="row">
-                    <!-- Profil Dosen dan Pengawas -->
+                    <!-- Profil Dosen dan dosenberjabatan -->
                     <div class="col-md-6">
                         <h6 class="font-weight-bold text-info">Profil Dosen</h6>
                         <div class="form-group">
@@ -57,15 +57,15 @@
                     </div>
 
                     <div class="col-md-6">
-                        <h6 class="font-weight-bold text-info">Profil Pengawas</h6>
+                        <h6 class="font-weight-bold text-info">Profil dosenberjabatan</h6>
                         <div class="form-group">
-                            <label for="nama-pengawas">Nama</label>
-                            <input type="text" class="form-control" id="nama-pengawas" value="{{ $pengawas->nama_pengawas }}" readonly>
-                            <input type="hidden" name="pengawas_id" value="{{ $pengawas->id }}">
+                            <label for="nama-dosenberjabatan">Nama</label>
+                            <input type="text" class="form-control" id="nama-dosenberjabatan" value="{{ $dosenberjabatan->nama_dosenberjabatan }}" readonly>
+                            <input type="hidden" name="dosenberjabatan_id" value="{{ $dosenberjabatan->id }}">
                         </div>
                         <div class="form-group">
                             <label for="jabatan">Jabatan</label>
-                            <input type="text" class="form-control" id="jabatan" value="{{ $pengawas->jabatan->nama_jabatan }}" readonly>
+                            <input type="text" class="form-control" id="jabatan" value="{{ $dosenberjabatan->jabatan->nama_jabatan }}" readonly>
                         </div>
 
                         <h6 class="font-weight-bold text-info">Waktu Penilaian</h6>
@@ -170,7 +170,7 @@
                 </div>
                 <div class="row mt-4">
                 <div class="col-12 text-end"> <!-- Menggunakan text-end untuk memposisikan di kanan -->
-                    <button type="button" class="btn btn-outline-secondary" onclick="window.location.href='{{ route('pengawas.penilaianpk.index') }}'">Kembali</button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="window.location.href='{{ route('dosenberjabatan.penilaianpk.index') }}'">Kembali</button>
                     <button type="submit" class="btn bg-gradient-info me-2">Simpan</button>
                 </div>
                 </div>
@@ -324,7 +324,7 @@ document.addEventListener('DOMContentLoaded', function() {
             formData.append('nilai_nsf', nsfValue);
 
             // Kirim data ke server
-            fetch("{{ route('pengawas.penilaianpk.store') }}", {
+            fetch("{{ route('dosenberjabatan.penilaianpk.store') }}", {
                 method: "POST",
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
@@ -340,7 +340,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(data => {
                 alert("Penilaian Perilaku Kerja berhasil disimpan!");
-                window.location.href = "{{ route('pengawas.penilaianpk.index') }}";
+                window.location.href = "{{ route('dosenberjabatan.penilaianpk.index') }}";
             })
             .catch(error => {
                 console.error("Error:", error);

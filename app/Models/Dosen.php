@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-    use Illuminate\Database\Eloquent\Factories\HasFactory;
-    use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-    class Dosen extends Model
+class Dosen extends Model
 {
     protected $table = 'dosen'; // Nama tabel di database
     use HasFactory;
@@ -26,9 +26,10 @@ namespace App\Models;
     // Relasi dengan tabel prodi
     public function prodi()
     {
-        return $this->belongsTo(Prodi::class);
+        return $this->belongsTo(Prodi::class, 'prodi_id', 'id');
     }
-    
+
+
     // Relasi dengan tabel jabatan
     public function jabatan()
     {
@@ -44,7 +45,6 @@ namespace App\Models;
     // Relasi dengan PenilaianPK
     public function penilaianperilakukerja()
     {
-        return $this->hasOne(PenilaianPK::class, 'dosen_id');
+        return $this->hasOne(PenilaianPerilakuKerja::class, 'dosen_id');
     }
-
 }

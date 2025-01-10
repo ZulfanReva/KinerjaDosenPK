@@ -63,6 +63,11 @@ class User extends Authenticatable
 
     public function dosen()
     {
-        return $this->hasMany(Dosen::class, 'user_id', 'id');
+        return $this->hasOne(Dosen::class, 'users_id', 'id');
+    }
+
+    public function prodi()
+    {
+        return $this->belongsTo(Prodi::class);  // Pastikan relasi ini benar
     }
 }

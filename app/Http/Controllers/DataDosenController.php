@@ -147,7 +147,7 @@ class DataDosenController extends Controller
                     $user = User::create([
                         'username' => $request->username,
                         'password' => Hash::make($request->password),
-                        'role' => 'dosenjabatan',
+                        'role' => 'dosenberjabatan',
                     ]);
                     $dosen->users_id = $user->id;
                 }

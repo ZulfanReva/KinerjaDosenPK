@@ -10,11 +10,11 @@ class Prodi extends Model
 {
     use HasFactory;
 
-    protected $table = 'prodi'; 
+    protected $table = 'prodi';
     protected $fillable = ['nama_prodi'];
 
     public function dosen()
-{
-    return $this->hasMany(Dosen::class, 'prodi_id');
-}
+    {
+        return $this->hasMany(Dosen::class, 'prodi_id');
+    }
 }

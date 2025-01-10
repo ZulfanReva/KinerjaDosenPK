@@ -27,7 +27,7 @@
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Halaman</h6>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('dosenberjabatan.penilaianpk*') ? 'active' : '' }}" href="{{ route('dosenberjabatan.penilaianpk.index') }}">
+                <a class="nav-link {{ request()->routeIs('dosenberjabatan.penilaianperilakukerja*') ? 'active' : '' }}" href="{{ route('dosenberjabatan.penilaianperilakukerja.index') }}">
                     <div class="bg-gradient-info icon-shape shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <img src="{{ asset('assets/foto/pk.png') }}" alt="Penilaian PK" width="50" height="50">
                     </div>

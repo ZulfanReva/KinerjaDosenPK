@@ -8,11 +8,10 @@ use App\Http\Controllers\KontakController;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\DataDosenController;
 use App\Http\Controllers\DataJabatanController;
-use App\Http\Controllers\PenilaianPKController;
 use App\Http\Controllers\PenilaianPMController;
 use App\Http\Controllers\ProfilAdminController;
-use App\Http\Controllers\PenilaianBKDController;
 use App\Http\Controllers\ProfilDosenBerjabatanController;
+use App\Http\Controllers\PenilaianPerilakuKerjaController;
 
 // Route untuk halaman beranda
 Route::get('/', [BerandaController::class, 'index'])->name('index');
@@ -95,14 +94,14 @@ Route::put('/profiladmin/update-password', [ProfilAdminController::class, 'updat
 
 Route::middleware(['auth'])->prefix('dosenberjabatan')->name('dosenberjabatan.')->group(function () {
     // Halaman beranda dosen berjabatan
-    Route::view('/beranda', 'pagedosenberjabatan.berandadosenberjabatan')->name('beranda');
+    Route::view('/beranda', 'dosenberjabatan.berandadosenberjabatan')->name('beranda');
+
+     // Menggunakan resource untuk sisa route
+     Route::resource('penilaianperilakukerja', PenilaianPerilakuKerjaController::class)->except(['create']);
 
     // Route untuk halaman create penilaian pk dengan parameter dosen_id
-    Route::get('penilaianpk/create/{dosen_id}', [PenilaianPKController::class, 'create'])
-        ->name('penilaianpk.create');
-
-    // Menggunakan resource untuk sisa route
-    Route::resource('penilaianpk', PenilaianPKController::class)->except(['create']);
+    Route::get('penilaianperilakukerja/create/{dosen_id}', [PenilaianPerilakuKerjaController::class, 'create'])
+        ->name('penilaianperilakukerja.create');
 
     // Profil dosen berjabatan
     Route::get('/profildosenberjabatan', [ProfilDosenBerjabatanController::class, 'index'])->name('profildosenberjabatan');
