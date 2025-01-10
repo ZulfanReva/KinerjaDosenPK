@@ -32,152 +32,127 @@
                 <a href="{{ route('admin.datadosen.create') }}" class="btn btn-sm bg-gradient-info">Tambah Data</a>
             </div>
 
-
             <!-- Tabel Data Dosen Pengajar -->
-            <div class="row">
-                <div class="col-12">
-                    <div class="card mb-4">
-                        <div class="card-header pb-2" style="margin-bottom: 10px;">
-                            <h6 class="mb-0" style="font-size: 1.2rem; font-weight: bold; text-align: justify;">Data
-                                Dosen Pengajar</h6>
-                        </div>
-                        <div class="card-body px-3 pt-2 pb-3">
-                            <div class="table-responsive">
-                                <table class="table align-items-center mb-0" style="font-size: 0.9rem;">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify"
-                                                style="padding: 10px;">Nama</th>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify"
-                                                style="padding: 10px;">NIDN</th>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify"
-                                                style="padding: 10px;">Prodi</th>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify"
-                                                style="padding: 10px;">Status</th>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify"
-                                                style="padding: 10px;">Jabatan</th>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify"
-                                                style="padding: 10px;">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse($dosenPengajar as $dosen)
-                                            <tr>
-                                                <td style="text-align: left; padding: 10px;">{{ $dosen->nama_dosen }}
-                                                </td>
-                                                <td style="text-align: left; padding: 10px;">{{ $dosen->nidn }}</td>
-                                                <td style="text-align: left; padding: 10px;">
-                                                    {{ $dosen->prodi->nama_prodi }}</td>
-                                                <td style="text-align: left; padding: 10px;">
-                                                    <span
-                                                        class="badge bg-gradient-{{ $dosen->status === 'Aktif' ? 'success' : 'danger' }}">
-                                                        {{ ucfirst($dosen->status) }}
-                                                    </span>
-                                                </td>
-                                                <td style="text-align: left; padding: 10px;">
-                                                    {{ $dosen->jabatan->nama_jabatan }}</td>
-                                                <td style="text-align: left; padding: 10px;">
-                                                    <button class="btn btn-sm bg-gradient-danger"
-                                                        onclick="hapusData({{ $dosen->id }})" data-bs-toggle="modal"
-                                                        data-bs-target="#confirmDeleteModal">
-                                                        <i class="fa fa-trash"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="6" class="text-center text-secondary py-4"
-                                                    style="font-size: 1rem; padding: 15px;">
-                                                    <h6 class="mb-0">Belum Ada Data Dosen Pengajar</h6>
-                                                </td>
-                                            </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+<div class="row">
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header pb-2" style="margin-bottom: 10px;">
+                <h6 class="mb-0" style="font-size: 1.2rem; font-weight: bold; text-align: justify;">Data Dosen Pengajar</h6>
+            </div>
+            <div class="card-body px-3 pt-2 pb-3">
+                <div class="table-responsive">
+                    <table class="table align-items-center mb-0" style="font-size: 0.9rem;">
+                        <thead>
+                            <tr>
+                                <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify" style="padding: 10px;">Nama</th>
+                                <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify" style="padding: 10px;">NIDN</th>
+                                <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify" style="padding: 10px;">Prodi</th>
+                                <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify" style="padding: 10px;">Status</th>
+                                <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify" style="padding: 10px;">Jabatan</th>
+                                <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify" style="padding: 10px;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($dosenPengajar as $dosen)
+                                <tr>
+                                    <td class="text-start" style="padding: 10px;">{{ $dosen->nama_dosen }}</td>
+                                    <td class="text-start" style="padding: 10px;">{{ $dosen->nidn }}</td>
+                                    <td class="text-start" style="padding: 10px;">{{ $dosen->prodi->nama_prodi }}</td>
+                                    <td class="text-start" style="padding: 10px;">
+                                        <span class="badge bg-gradient-{{ $dosen->status === 'Aktif' ? 'success' : 'danger' }}">
+                                            {{ ucfirst($dosen->status) }}
+                                        </span>
+                                    </td>
+                                    <td class="text-start" style="padding: 10px;">{{ $dosen->jabatan->nama_jabatan }}</td>
+                                    <td class="text-start" style="padding: 10px;">
+                                        <!-- Tombol Edit -->
+                                        <a href="{{ route('admin.datadosen.edit', $dosen->id) }}" class="btn btn-sm bg-gradient-info me-2">
+                                            <i class="fa fa-edit fa-xs"></i>
+                                        </a>
+                                        <!-- Tombol Hapus -->
+                                        <button class="btn btn-sm bg-gradient-danger" onclick="hapusData({{ $dosen->id }})" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="text-center text-secondary py-4" style="font-size: 1rem; padding: 15px;">
+                                        <h6 class="mb-0">Belum Ada Data Dosen Pengajar</h6>
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
 
-            <!-- Tabel Data Dosen Berjabatan -->
-            <div class="row mt-4">
-                <div class="col-12">
-                    <div class="card mb-4">
-                        <div class="card-header pb-2" style="margin-bottom: 10px;">
-                            <h6 class="mb-0" style="font-size: 1.2rem; font-weight: bold; text-align: justify;">Data
-                                Dosen Berjabatan</h6>
-                        </div>
-                        <div class="card-body px-3 pt-2 pb-3">
-                            <div class="table-responsive">
-                                <table class="table align-items-center mb-0" style="font-size: 0.9rem;">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify"
-                                                style="padding: 10px;">Nama</th>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify"
-                                                style="padding: 10px;">NIDN</th>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify"
-                                                style="padding: 10px;">Prodi</th>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify"
-                                                style="padding: 10px;">Status</th>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify"
-                                                style="padding: 10px;">Jabatan</th>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify"
-                                                style="padding: 10px;">Nama Pengguna</th>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify"
-                                                style="padding: 10px;">Kata Sandi</th>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify"
-                                                style="padding: 10px;">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse($dosenBerjabatan as $dosen)
-                                            <tr>
-                                                <td style="text-align: left; padding: 10px;">{{ $dosen->nama_dosen }}
-                                                </td>
-                                                <td style="text-align: left; padding: 10px;">{{ $dosen->nidn }}</td>
-                                                <td style="text-align: left; padding: 10px;">
-                                                    {{ $dosen->prodi->nama_prodi }}</td>
-                                                <td style="text-align: left; padding: 10px;">
-                                                    <span
-                                                        class="badge bg-gradient-{{ $dosen->status === 'Aktif' ? 'success' : 'danger' }}">
-                                                        {{ ucfirst($dosen->status) }}
-                                                    </span>
-                                                </td>
-                                                <td style="text-align: left; padding: 10px;">
-                                                    {{ $dosen->jabatan->nama_jabatan }}</td>
-                                                <td style="text-align: left; padding: 10px;">
-                                                    {{ $dosen->user->username ?? '-' }}</td>
-                                                <td style="text-align: left; padding: 10px;">*****</td>
-                                                <td style="text-align: left; padding: 10px;">
-                                                    <button class="btn btn-sm bg-gradient-danger"
-                                                        onclick="hapusData({{ $dosen->id }})" data-bs-toggle="modal"
-                                                        data-bs-target="#confirmDeleteModal">
-                                                        <i class="fa fa-trash"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="8" class="text-center text-secondary py-4"
-                                                    style="font-size: 1rem; padding: 15px;">
-                                                    <h6 class="mb-0">Belum Ada Data Dosen Berjabatan</h6>
-                                                </td>
-                                            </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+<!-- Tabel Data Dosen Berjabatan -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header pb-2" style="margin-bottom: 10px;">
+                <h6 class="mb-0" style="font-size: 1.2rem; font-weight: bold; text-align: justify;">Data Dosen Berjabatan</h6>
+            </div>
+            <div class="card-body px-3 pt-2 pb-3">
+                <div class="table-responsive">
+                    <table class="table align-items-center mb-0" style="font-size: 0.9rem;">
+                        <thead>
+                            <tr>
+                                <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify" style="padding: 10px;">Nama</th>
+                                <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify" style="padding: 10px;">NIDN</th>
+                                <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify" style="padding: 10px;">Prodi</th>
+                                <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify" style="padding: 10px;">Status</th>
+                                <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify" style="padding: 10px;">Jabatan</th>
+                                <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify" style="padding: 10px;">Nama Pengguna</th>
+                                <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify" style="padding: 10px;">Kata Sandi</th>
+                                <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify" style="padding: 10px;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($dosenBerjabatan as $dosen)
+                                <tr>
+                                    <td class="text-start" style="padding: 10px;">{{ $dosen->nama_dosen }}</td>
+                                    <td class="text-start" style="padding: 10px;">{{ $dosen->nidn }}</td>
+                                    <td class="text-start" style="padding: 10px;">{{ $dosen->prodi->nama_prodi }}</td>
+                                    <td class="text-start" style="padding: 10px;">
+                                        <span class="badge bg-gradient-{{ $dosen->status === 'Aktif' ? 'success' : 'danger' }}">
+                                            {{ ucfirst($dosen->status) }}
+                                        </span>
+                                    </td>
+                                    <td class="text-start" style="padding: 10px;">{{ $dosen->jabatan->nama_jabatan }}</td>
+                                    <td class="text-start" style="padding: 10px;">
+                                        {{ $dosen->user->username ?? '-' }}
+                                    </td>
+                                    <td class="text-start" style="padding: 10px;">*****</td>
+                                    <td class="text-start" style="padding: 10px;">
+                                        <!-- Tombol Edit -->
+                                        <a href="{{ route('admin.datadosen.edit', $dosen->id) }}" class="btn btn-sm bg-gradient-info me-2">
+                                            <i class="fa fa-edit fa-xs"></i>
+                                        </a>
+                                        <!-- Tombol Hapus -->
+                                        <button class="btn btn-sm bg-gradient-danger" onclick="hapusData({{ $dosen->id }})" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="8" class="text-center text-secondary py-4" style="font-size: 1rem; padding: 15px;">
+                                        <h6 class="mb-0">Belum Ada Data Dosen Berjabatan</h6>
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
             </div>
-
-
-
-
-
+        </div>
+    </div>
+</div>
 
             <!-- Footer -->
             <x-footeradminpengawas></x-footeradminpengawas>

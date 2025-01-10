@@ -21,9 +21,9 @@ class UserSeeder extends Seeder
             'role' => 'admin',
         ]);
         User::create([
-            'username' => 'dosenjabatan',
-            'password' => bcrypt('dosenjabatan'),
-            'role' => 'dosenjabatan',
+            'username' => 'dosenberjabatan',
+            'password' => bcrypt('dosenberjabatan'),
+            'role' => 'dosenberjabatan',
         ]);
     }
 }

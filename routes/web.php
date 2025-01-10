@@ -6,18 +6,13 @@ use App\Http\Controllers\MasukController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\KontakController;
 use App\Http\Controllers\BerandaController;
-use App\Http\Controllers\PeriodeController;
 use App\Http\Controllers\DataDosenController;
 use App\Http\Controllers\DataJabatanController;
-use App\Http\Controllers\DataJatabanController;
-use App\Http\Controllers\DataPeriodeController;
-use App\Http\Controllers\PenilaianCFController;
 use App\Http\Controllers\PenilaianPKController;
 use App\Http\Controllers\PenilaianPMController;
 use App\Http\Controllers\ProfilAdminController;
-use App\Http\Controllers\DataPengawasController;
 use App\Http\Controllers\PenilaianBKDController;
-use App\Http\Controllers\ProfilPengawasController;
+use App\Http\Controllers\ProfilDosenBerjabatanController;
 
 // Route untuk halaman beranda
 Route::get('/', [BerandaController::class, 'index'])->name('index');
@@ -31,8 +26,8 @@ Route::get('/masuk', function () {
         // Cek peran pengguna
         if (Auth::user()->role === 'admin') {
             return redirect()->route('admin.beranda'); // Redirect ke beranda admin
-        } elseif (Auth::user()->role === 'pengawas') {
-            return redirect()->route('pengawas.beranda'); // Redirect ke beranda pengawas
+        } elseif (Auth::user()->role === 'dosenberjabatan') {
+            return redirect()->route('dosenberjabatan.beranda'); // Redirect ke beranda dosenberjabatan
         }
     }
     return view('masuk'); // Ganti dengan 'masuk' sesuai nama file tampilan Anda
@@ -48,16 +43,16 @@ Route::post('/logout', [MasukController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     // Halaman beranda admin
     Route::view('/beranda', 'pageadmin.berandaadmin')->name('beranda');
-    
+
     // Data Dosen menggunakan resource route
     Route::resource('datadosen', DataDosenController::class)->names([
-    'index' => 'datadosen.index',
-    'create' => 'datadosen.create',
-    'store' => 'datadosen.store',
-    'show' => 'datadosen.show',
-    'edit' => 'datadosen.edit',
-    'update' => 'datadosen.update',
-    'destroy' => 'datadosen.destroy',
+        'index' => 'datadosen.index',
+        'create' => 'datadosen.create',
+        'store' => 'datadosen.store',
+        'show' => 'datadosen.show',
+        'edit' => 'datadosen.edit',
+        'update' => 'datadosen.update',
+        'destroy' => 'datadosen.destroy',
     ]);
 
     // Data Prodi menggunakan resource route
@@ -69,17 +64,6 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         'edit' => 'dataprodi.edit',
         'update' => 'dataprodi.update',
         'destroy' => 'dataprodi.destroy',
-    ]);
-    
-    // Data Pengawas menggunakan resource route
-    Route::resource('datapengawas', DataPengawasController::class)->names([
-    'index' => 'datapengawas.index',
-    'create' => 'datapengawas.create',
-    'store' => 'datapengawas.store',
-    'show' => 'datapengawas.show',
-    'edit' => 'datapengawas.edit',
-    'update' => 'datapengawas.update',
-    'destroy' => 'datapengawas.destroy',
     ]);
 
     // Data Jabatan menggunakan resource route
@@ -104,44 +88,23 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         'destroy' => 'penilaianpm.destroy',
     ]);
 
-    // Penilaian PM menggunakan resource route
-    Route::resource('penilaianbkd', PenilaianBKDController::class)->names([
-        'index' => 'penilaianbkd.index',
-        'create' => 'penilaianbkd.create',
-        'store' => 'penilaianbkd.store',
-        'show' => 'penilaianbkd.show',
-        'edit' => 'penilaianbkd.edit',
-        'update' => 'penilaianbkd.update',
-        'destroy' => 'penilaianbkd.destroy',
-    ]);
-
-    // Data Periode menggunakan resource route
-    Route::resource('dataperiode', PeriodeController::class)->names([
-        'index' => 'dataperiode.index',
-        'create' => 'dataperiode.create',
-        'store' => 'dataperiode.store',
-        'show' => 'dataperiode.show',
-        'edit' => 'dataperiode.edit',
-        'update' => 'dataperiode.update',
-        'destroy' => 'dataperiode.destroy',
-    ]);
-
     // Profil Admin
-    Route::get('/profiladmin', [ProfilAdminController::class, 'index'])->name('profiladmin');});
-    Route::put('/profiladmin/update-password', [ProfilAdminController::class, 'updatePassword'])->name('admin.update.password');
+    Route::get('/profiladmin', [ProfilAdminController::class, 'index'])->name('profiladmin');
+});
+Route::put('/profiladmin/update-password', [ProfilAdminController::class, 'updatePassword'])->name('admin.update.password');
 
-Route::middleware(['auth'])->prefix('pengawas')->name('pengawas.')->group(function () {
-    // Halaman beranda pengawas
-    Route::view('/beranda', 'pagepengawas.berandapengawas')->name('beranda');
-    
-    // Route untuk halaman create penilaian pk dengan parameter dosen_id dan pengawas_id
-    Route::get('penilaianpk/create/{dosen_id}/{pengawas_id}', [PenilaianPKController::class, 'create'])
+Route::middleware(['auth'])->prefix('dosenberjabatan')->name('dosenberjabatan.')->group(function () {
+    // Halaman beranda dosen berjabatan
+    Route::view('/beranda', 'pagedosenberjabatan.berandadosenberjabatan')->name('beranda');
+
+    // Route untuk halaman create penilaian pk dengan parameter dosen_id
+    Route::get('penilaianpk/create/{dosen_id}', [PenilaianPKController::class, 'create'])
         ->name('penilaianpk.create');
-    
+
     // Menggunakan resource untuk sisa route
     Route::resource('penilaianpk', PenilaianPKController::class)->except(['create']);
 
-    // Profil Pengawas
-    Route::get('/profilpengawas', [ProfilPengawasController::class, 'index'])->name('profilpengawas');
-    Route::put('/profilpengawas/update-password', [ProfilPengawasController::class, 'updatePassword'])->name('pengawas.update.password');
+    // Profil dosen berjabatan
+    Route::get('/profildosenberjabatan', [ProfilDosenBerjabatanController::class, 'index'])->name('profildosenberjabatan');
+    Route::put('/profildosenberjabatan/update-password', [ProfilDosenBerjabatanController::class, 'updatePassword'])->name('dosenberjabatan.update.password');
 });

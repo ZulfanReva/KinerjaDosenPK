@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Pengawas;
+use App\Models\Dosen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class ProfilPengawasController extends Controller
+class ProfilDosenBerjabatanController extends Controller
 {
     public function index()
     {
         $user = Auth::user(); // Mengambil data pengguna yang sedang login
-        $pengawas = Pengawas::with('jabatan')->where('user_id', $user->id)->get();
-        return view('pagepengawas.profilpengawas', compact('user', 'pengawas')); // Mengirim data ke view
+        $dosen = dosen::with('jabatan')->where('user_id', $user->id)->get();
+        return view('pagedosenberjabatan.profildosenberjabatan', compact('user', 'dosenberjabatan')); // Mengirim data ke view
     }
 
     public function updatePassword(Request $request)

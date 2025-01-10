@@ -19,8 +19,8 @@ class MasukController extends Controller
             $user = Auth::user();
             if ($user->role == 'admin') {
                 return redirect()->route('pageadmin.berandaadmin');
-            } elseif ($user->role == 'pengawas') {
-                return redirect()->route('pagepengawas.berandapengawas');
+            } elseif ($user->role == 'dosenberjabatan') {
+                return redirect()->route('pagedosenberjabatan.berandadosenberjabatan');
             }
         }
 
@@ -46,8 +46,8 @@ class MasukController extends Controller
             // Redirect berdasarkan peran
             if (Auth::user()->role === 'admin') {
                 return redirect()->route('admin.beranda');
-            } elseif (Auth::user()->role === 'pengawas') {
-                return redirect()->route('pengawas.beranda');
+            } elseif (Auth::user()->role === 'dosenberjabatan') {
+                return redirect()->route('dosenberjabatan.beranda');
             }
         }
 

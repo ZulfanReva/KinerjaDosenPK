@@ -4,7 +4,7 @@
 <x-headeradmin :title="'Beranda | E-Kinerja UMBJM'" />
 
 <body class="g-sidenav-show  bg-gray-100">
-  <x-navigasipengawas></x-navigasipengawas>
+  <x-navigasidosenberjabatan></x-navigasidosenberjabatan>
 
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <!-- Navbar -->
