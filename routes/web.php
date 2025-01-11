@@ -87,23 +87,27 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         'destroy' => 'penilaianpm.destroy',
     ]);
 
-    // Profil Admin
-    Route::get('/profiladmin', [ProfilAdminController::class, 'index'])->name('profiladmin');
+    Route::prefix('profil')->name('profil.')->group(function () {
+        Route::get('/', [ProfilAdminController::class, 'index'])->name('index');
+        Route::put('/update-password', [ProfilAdminController::class, 'updatePassword'])->name('update.password');
+    });
 });
-Route::put('/profiladmin/update-password', [ProfilAdminController::class, 'updatePassword'])->name('admin.update.password');
+
 
 Route::middleware(['auth'])->prefix('dosenberjabatan')->name('dosenberjabatan.')->group(function () {
     // Halaman beranda dosen berjabatan
-    Route::view('/beranda', 'dosenberjabatan.berandadosenberjabatan')->name('beranda');
+    Route::view('/beranda', 'pagedosenberjabatan.berandadosenberjabatan')->name('beranda');
 
-     // Menggunakan resource untuk sisa route
-     Route::resource('penilaianperilakukerja', PenilaianPerilakuKerjaController::class)->except(['create']);
+    // Menggunakan resource untuk sisa route
+    Route::resource('penilaianperilakukerja', PenilaianPerilakuKerjaController::class)->except(['create']);
 
     // Route untuk halaman create penilaian pk dengan parameter dosen_id
     Route::get('penilaianperilakukerja/create/{dosen_id}', [PenilaianPerilakuKerjaController::class, 'create'])
         ->name('penilaianperilakukerja.create');
 
     // Profil dosen berjabatan
-    Route::get('/profildosenberjabatan', [ProfilDosenBerjabatanController::class, 'index'])->name('profildosenberjabatan');
-    Route::put('/profildosenberjabatan/update-password', [ProfilDosenBerjabatanController::class, 'updatePassword'])->name('dosenberjabatan.update.password');
+    Route::prefix('profil')->name('profil.')->group(function () {
+        Route::get('/', [ProfilDosenBerjabatanController::class, 'index'])->name('index');
+        Route::put('/update-password', [ProfilDosenBerjabatanController::class, 'updatePassword'])->name('update.password');
+    });
 });

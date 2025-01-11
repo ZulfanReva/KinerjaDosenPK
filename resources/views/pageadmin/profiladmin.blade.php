@@ -90,7 +90,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           
-          <form method="POST" action="{{ route('admin.update.password') }}">
+          <form method="POST" action="{{ route('admin.profil.update.password') }}">
             @csrf
             @method('PUT')
             <!-- Isi Modal -->

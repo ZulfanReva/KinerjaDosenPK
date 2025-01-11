@@ -40,7 +40,7 @@
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Akun</h6>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('dosenberjabatan.profildosenberjabatan') ? 'active' : '' }}" href="{{ route('dosenberjabatan.profildosenberjabatan') }}">
+                <a class="nav-link {{ request()->routeIs('dosenberjabatan.profil.index') ? 'active' : '' }}" href="{{ route('dosenberjabatan.profil.index') }}">
                     <div class="bg-gradient-info icon-shape shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <img src="{{ asset('assets/foto/profil.png') }}" alt="Profil dosenberjabatan" width="50" height="50">
                     </div>

@@ -33,7 +33,7 @@ class Dosen extends Model
     // Relasi dengan tabel jabatan
     public function jabatan()
     {
-        return $this->belongsTo(Jabatan::class);
+        return $this->belongsTo(Jabatan::class, 'jabatan_id'); // Sesuaikan 'jabatan_id'
     }
 
     // Relasi dengan model User
