@@ -50,15 +50,24 @@ class PenilaianPerilakuKerjaController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create($dosen_id)
+    public function create(Request $request)
     {
-        // Mengambil data dosen berdasarkan id
-        $dosen = Dosen::with('prodi')->findOrFail($dosen_id);
+        // Ambil user yang sedang login
+        $user = Auth::user();
 
-        // Ambil semua data periode
-        $periodeList = Periode::all();
+        // Ambil data dosen berdasarkan dosen_id yang dikirimkan
+        $dosen = Dosen::findOrFail($request->dosen_id);
 
-        return view('pagedosenberjabatan.penilaianperilakukerja.create', compact('dosen', 'periodeList'));
+        // Ambil data dosen berdasarkan user yang login (profil dosen berjabatan)
+        $dosenBerjabatan = Dosen::with('jabatan')->where('users_id', $user->id)->firstOrFail();
+
+        // Pilihan periode statis
+        $periodeList = [
+            '2022/2023 Ganjil',
+            '2022/2023 Genap',
+        ];
+
+        return view('pagedosenberjabatan.penilaianperilakukerja.create', compact('dosen', 'dosenBerjabatan', 'periodeList'));
     }
 
     /**
@@ -66,30 +75,32 @@ class PenilaianPerilakuKerjaController extends Controller
      */
     public function store(Request $request)
     {
-        // Validasi data yang diterima
+        // Validasi input
         $request->validate([
             'dosen_id' => 'required|exists:dosen,id',
-            'pengawas_id' => 'required|exists:pengawas,id',
-            'periode_id' => 'required|exists:periode,id',
-            'orientasi_pelayanan' => 'required|numeric|min:0|max:5',
-            'integritas' => 'required|numeric|min:0|max:5',
-            'komitmen' => 'required|numeric|min:0|max:5',
-            'disiplin' => 'required|numeric|min:0|max:5',
-            'kerjasama' => 'required|numeric|min:0|max:5',
-            'kepemimpinan' => 'required|numeric|min:0|max:5',
-            'nilai_nsf' => 'required|numeric|between:0,5.00',
+            'user_id' => 'nullable|exists:users,id',
+            'periode' => 'required|string',
+            'integritas' => 'required|integer|min:1|max:5',
+            'komitmen' => 'required|integer|min:1|max:5',
+            'kerjasama' => 'required|integer|min:1|max:5',
+            'orientasi_pelayanan' => 'required|integer|min:1|max:5',
+            'disiplin' => 'required|integer|min:1|max:5',
+            'kepemimpinan' => 'nullable|integer|min:1|max:5',
+            'nilai_corefactor' => 'required|numeric',
+            'nilai_secondaryfactor' => 'required|numeric',
         ]);
 
-        // Format nilai_nsf sebelum menyimpan
+        // Format core factor dan secondary factor sebelum menyimpan
         $request->merge([
-            'nilai_nsf' => number_format((float) $request->nilai_nsf, 2, '.', '')
+            'nilai_corefactor' => number_format((float) $request->nilai_corefactor, 2, '.', ''),
+            'nilai_secondaryfactor' => number_format((float) $request->nilai_secondaryfactor, 2, '.', '')
         ]);
 
-        // Menyimpan data penilaian PK baru
+        // Menyimpan data menggunakan mass assignment
         PenilaianPerilakuKerja::create($request->all());
 
-        // Redirect ke index dengan pesan sukses
-        return redirect()->route('pagedosenberjabatan.penilaianperilakukerja.index')->with('success', 'Penilaian PK berhasil disimpan.');
+        // Redirect kembali ke index dengan pesan sukses
+        return redirect()->route('dosenberjabatan.penilaianperilakukerja.index')->with('success', 'Penilaian Perilaku Kerja berhasil disimpan.');
     }
 
     /**
@@ -97,9 +108,10 @@ class PenilaianPerilakuKerjaController extends Controller
      */
     public function show(string $id)
     {
+
         // Menampilkan detail penilaian PK berdasarkan ID
         $penilaianPK = PenilaianPerilakuKerja::findOrFail($id);
-        return view('pagedosenberjabatan.penilaianperilakukerja.show', compact('penilaianPK'));
+        return view('dosenberjabatan.penilaianperilakukerja.show', compact('penilaianPK'));
     }
 
     /**
@@ -109,7 +121,7 @@ class PenilaianPerilakuKerjaController extends Controller
     {
         // Menampilkan form untuk mengedit penilaian PK
         $penilaianPK = PenilaianPerilakuKerja::findOrFail($id);
-        return view('pagedosenberjabatan.penilaianperilakukerja.edit', compact('penilaianPK'));
+        return view('dosenberjabatan.penilaianperilakukerja.edit', compact('penilaianPK'));
     }
 
     /**
@@ -140,7 +152,7 @@ class PenilaianPerilakuKerjaController extends Controller
         $penilaianPK->update($request->all());
 
         // Redirect ke index dengan pesan sukses
-        return redirect()->route('pagedosenberjabatan.penilaianperilakukerja.index')->with('success', 'Penilaian Perilaku Kerja berhasil diperbarui.');
+        return redirect()->route('dosenberjabatan.penilaianperilakukerja.index')->with('success', 'Penilaian Perilaku Kerja berhasil diperbarui.');
     }
 
     /**

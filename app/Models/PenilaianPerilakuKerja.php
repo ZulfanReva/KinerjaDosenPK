@@ -22,13 +22,18 @@ class PenilaianPerilakuKerja extends Model
         'orientasi_pelayanan',
         'disiplin',
         'kepemimpinan',
-        'nilai_ncf',
-        'nilai_nsf',
+        'nilai_corefactor',
+        'nilai_secondaryfactor',
     ];
     
     // Relasi ke tabel periode
     public function periode()
     {
         return $this->belongsTo(Periode::class, 'periode_id'); // pastikan kolom foreign key benar
+    }
+
+    public function dosen()
+    {
+        return $this->belongsTo(Dosen::class, 'dosen_id'); // pastikan kolom foreign key benar
     }
 }

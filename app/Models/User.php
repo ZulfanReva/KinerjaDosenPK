@@ -70,4 +70,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Prodi::class);  // Pastikan relasi ini benar
     }
+
+    public function jabatan()
+    {
+        return $this->belongsTo(Jabatan::class, 'jabatan_id');
+    }
 }

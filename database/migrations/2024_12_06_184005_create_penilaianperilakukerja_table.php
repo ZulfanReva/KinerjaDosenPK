@@ -21,8 +21,8 @@ return new class extends Migration
             $table->tinyInteger('orientasi_pelayanan');
             $table->tinyInteger('disiplin');
             $table->tinyInteger('kepemimpinan');
-            $table->decimal('nilai_ncf');
-            $table->decimal('nilai_nsf');
+            $table->decimal('nilai_corefactor');
+            $table->decimal('nilai_secondaryfactor');
             $table->timestamps();
         });
     }
