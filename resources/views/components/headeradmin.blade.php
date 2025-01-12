@@ -20,10 +20,11 @@
     <!--   Ikon Font Awesome   -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <!-- Tambahkan link ke Bootstrap JS dan Popper.js (untuk modal) -->
-    <!-- JS JQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <!-- JS Popper.js -->
+    <!-- JS jQuery lengkap (bukan slim) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Popper.js (jika belum ada) -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <!-- JS Bootstrap -->
+    <!-- Bootstrap 4 -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </head>

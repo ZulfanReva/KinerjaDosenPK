@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<x-headeradmin :title="'Form Penilaian PK | E-Kinerja UMBJM'" />
+<x-headeradmin :title="'Form Penilaian Perilaku Kerja | E-Kinerja UMBJM'" />
 
-<body class="g-sidenav-show  bg-gray-100">
+<body class="g-sidenav-show bg-gray-100">
     <x-navigasidosenberjabatan></x-navigasidosenberjabatan>
 
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
@@ -33,13 +33,13 @@
                 </div>
 
                 <div class="card card-body blur shadow-blur mx-4 mt-4 overflow-hidden">
-                    <form id="penilaian-pk-form" method="POST"
+                    <form id="formPenilaianPerilaku" method="POST"
                         action="{{ route('dosenberjabatan.penilaianperilakukerja.store') }}">
                         @csrf
                         <h6 class="text-center text-info mb-4 font-weight-bold">FORM PENILAIAN PERILAKU KERJA</h6>
 
+                        <!-- Profil Dosen -->
                         <div class="row">
-                            <!-- Profil Dosen -->
                             <div class="col-md-6">
                                 <h6 class="font-weight-bold text-info">Profil Dosen</h6>
                                 <div class="form-group">
@@ -74,9 +74,9 @@
                                         value="{{ $dosenBerjabatan->nama_dosen }}" readonly>
                                     <input type="hidden" name="user_id" value="{{ $dosenBerjabatan->users_id }}">
                                 </div>
-                                <div class="form-group">
-                                    <label for="jabatan">Jabatan</label>
-                                    <input type="text" class="form-control" id="jabatan"
+                                <div class="mb-3">
+                                    <label for="jabatan" class="form-label">Jabatan</label>
+                                    <input type="text" id="jabatan" class="form-control"
                                         value="{{ $dosenBerjabatan->jabatan->nama_jabatan ?? 'Belum Ditentukan' }}"
                                         readonly>
                                 </div>
@@ -99,7 +99,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="integritas">Integritas</label>
-                                    <select class="form-select" id="integritas" name="integritas">
+                                    <select class="form-select" id="integritas" name="integritas" required>
                                         <option value="">Pilih Nilai</option>
                                         <option value="1">1 (Tidak Memenuhi Syarat)</option>
                                         <option value="2">2 (Kurang Baik)</option>
@@ -110,7 +110,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="komitmen">Komitmen</label>
-                                    <select class="form-select" id="komitmen" name="komitmen">
+                                    <select class="form-select" id="komitmen" name="komitmen" required>
                                         <option value="">Pilih Nilai</option>
                                         <option value="1">1 (Tidak Memenuhi Syarat)</option>
                                         <option value="2">2 (Kurang Baik)</option>
@@ -121,7 +121,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="kerjasama">Kerjasama</label>
-                                    <select class="form-select" id="kerjasama" name="kerjasama">
+                                    <select class="form-select" id="kerjasama" name="kerjasama" required>
                                         <option value="">Pilih Nilai</option>
                                         <option value="1">1 (Tidak Memenuhi Syarat)</option>
                                         <option value="2">2 (Kurang Baik)</option>
@@ -134,7 +134,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="orientasi-pelayanan">Orientasi Pelayanan</label>
-                                    <select class="form-select" id="orientasi-pelayanan" name="orientasi_pelayanan">
+                                    <select class="form-select" id="orientasi-pelayanan" name="orientasi_pelayanan"
+                                        required>
                                         <option value="">Pilih Nilai</option>
                                         <option value="1">1 (Tidak Memenuhi Syarat)</option>
                                         <option value="2">2 (Kurang Baik)</option>
@@ -145,7 +146,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="disiplin">Disiplin</label>
-                                    <select class="form-select" id="disiplin" name="disiplin">
+                                    <select class="form-select" id="disiplin" name="disiplin" required>
                                         <option value="">Pilih Nilai</option>
                                         <option value="1">1 (Tidak Memenuhi Syarat)</option>
                                         <option value="2">2 (Kurang Baik)</option>
@@ -156,7 +157,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="kepemimpinan">Kepemimpinan</label>
-                                    <select class="form-select" id="kepemimpinan" name="kepemimpinan">
+                                    <select class="form-select" id="kepemimpinan" name="kepemimpinan" required>
                                         <option value="">Pilih Nilai</option>
                                         <option value="1">1 (Tidak Memenuhi Syarat)</option>
                                         <option value="2">2 (Kurang Baik)</option>
@@ -168,7 +169,7 @@
                             </div>
                         </div>
 
-                        <!-- Kolom untuk Total Nilai Perhitungan Core Factor dan Secondary Factor -->
+                        <!-- Kolom untuk Total Nilai -->
                         <div class="row mt-4">
                             <h6 class="font-weight-bold text-info text-center">Hasil Perhitungan Core Factor dan
                                 Secondary Factor</h6>
@@ -192,82 +193,139 @@
                             <div class="col-12 text-end">
                                 <button type="button" class="btn btn-outline-secondary"
                                     onclick="window.location.href='{{ route('dosenberjabatan.penilaianperilakukerja.index') }}'">Kembali</button>
-                                <button type="submit" class="btn bg-gradient-info me-2">Simpan</button>
+                                <button type="button" class="btn bg-gradient-info me-2"
+                                    id="submitBtn">Selesai</button>
                             </div>
                         </div>
+
+
                     </form>
                 </div>
             </div>
         </div>
+
+        <!-- Modal Konfirmasi -->
+        <div class="modal fade" id="confirmSaveModal" tabindex="-1" aria-labelledby="confirmSaveModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmSaveModalLabel">Konfirmasi Simpan</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Apakah Anda yakin ingin menyimpan data ini?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="cancelBtn"
+                            data-bs-dismiss="modal">Batal</button>
+                        <button type="button" id="confirmSaveBtn" class="btn bg-gradient-info">Ya, Simpan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function hitungFaktor() {
+                // Standar nilai
+                const standar = 4;
+
+                // Core Factor dan Secondary Factor
+                const coreFactorKriteria = ["integritas", "komitmen", "kerjasama"];
+                const secondaryFactorKriteria = ["orientasi-pelayanan", "disiplin", "kepemimpinan"];
+
+                let coreTotal = 0;
+                let secondaryTotal = 0;
+                let coreTerisi = true;
+                let secondaryTerisi = true;
+
+                // Hitung Core Factor
+                coreFactorKriteria.forEach(id => {
+                    const element = document.getElementById(id);
+                    const value = parseInt(element.value);
+                    if (isNaN(value)) {
+                        coreTerisi = false;
+                    } else {
+                        coreTotal += value - standar;
+                    }
+                });
+
+                // Hitung Secondary Factor
+                secondaryFactorKriteria.forEach(id => {
+                    const element = document.getElementById(id);
+                    const value = parseInt(element.value);
+                    if (isNaN(value)) {
+                        secondaryTerisi = false;
+                    } else {
+                        secondaryTotal += value - standar;
+                    }
+                });
+
+                // Isi kolom Core Factor jika semua terisi
+                if (coreTerisi) {
+                    const coreFactor = coreTotal / coreFactorKriteria.length + 4;
+                    document.getElementById("core-factor-value").value = coreFactor.toFixed(2);
+                } else {
+                    document.getElementById("core-factor-value").value = "";
+                }
+
+                // Isi kolom Secondary Factor jika semua terisi
+                if (secondaryTerisi) {
+                    const secondaryFactor = secondaryTotal / secondaryFactorKriteria.length + 4;
+                    document.getElementById("secondary-factor-value").value = secondaryFactor.toFixed(2);
+                } else {
+                    document.getElementById("secondary-factor-value").value = "";
+                }
+            }
+
+            // Tambahkan event listener ke semua dropdown
+            document.addEventListener("DOMContentLoaded", function() {
+                const kriteria = ["integritas", "komitmen", "kerjasama", "orientasi-pelayanan", "disiplin",
+                    "kepemimpinan"
+                ];
+                kriteria.forEach(id => {
+                    const dropdown = document.getElementById(id);
+                    if (dropdown) {
+                        dropdown.addEventListener("change", hitungFaktor);
+                    }
+                });
+            });
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const form = document.getElementById('formPenilaianPerilaku');
+                const submitBtn = document.getElementById('submitBtn'); // Tombol Selesai
+                const confirmSaveBtn = document.getElementById('confirmSaveBtn'); // Tombol Simpan di modal
+                const cancelBtn = document.getElementById('cancelBtn'); // Tombol Batal di modal
+                const modalElement = document.getElementById('confirmSaveModal');
+                const modal = new bootstrap.Modal(modalElement); // Inisialisasi modal Bootstrap
+
+                // Event listener untuk tombol "Selesai"
+                submitBtn.addEventListener('click', function(e) {
+                    e.preventDefault(); // Mencegah form untuk langsung dikirim
+                    if (form.checkValidity()) {
+                        modal.show(); // Tampilkan modal konfirmasi jika form valid
+                    } else {
+                        form.reportValidity(); // Tampilkan error validasi form jika belum valid
+                    }
+                });
+
+                // Event listener untuk tombol "Simpan" di modal konfirmasi
+                confirmSaveBtn.addEventListener('click', function() {
+                    modal.hide(); // Sembunyikan modal setelah tombol Simpan diklik
+                    form.submit(); // Kirimkan form untuk disimpan
+                });
+
+                // Event listener untuk tombol "Batal" di modal konfirmasi
+                cancelBtn.addEventListener('click', function() {
+                    modal.hide(); // Menutup modal jika tombol Batal diklik
+                });
+            });
+        </script>
+
     </main>
-
-    <script>
-        function hitungFaktor() {
-            // Standar nilai
-            const standar = 4;
-
-            // Core Factor dan Secondary Factor
-            const coreFactorKriteria = ["integritas", "komitmen", "kerjasama"];
-            const secondaryFactorKriteria = ["orientasi-pelayanan", "disiplin", "kepemimpinan"];
-
-            let coreTotal = 0;
-            let secondaryTotal = 0;
-            let coreTerisi = true;
-            let secondaryTerisi = true;
-
-            // Hitung Core Factor
-            coreFactorKriteria.forEach(id => {
-                const element = document.getElementById(id);
-                const value = parseInt(element.value);
-                if (isNaN(value)) {
-                    coreTerisi = false;
-                } else {
-                    coreTotal += value - standar;
-                }
-            });
-
-            // Hitung Secondary Factor
-            secondaryFactorKriteria.forEach(id => {
-                const element = document.getElementById(id);
-                const value = parseInt(element.value);
-                if (isNaN(value)) {
-                    secondaryTerisi = false;
-                } else {
-                    secondaryTotal += value - standar;
-                }
-            });
-
-            // Isi kolom Core Factor jika semua terisi
-            if (coreTerisi) {
-                const coreFactor = coreTotal / coreFactorKriteria.length + 4;
-                document.getElementById("core-factor-value").value = coreFactor.toFixed(2);
-            } else {
-                document.getElementById("core-factor-value").value = "";
-            }
-
-            // Isi kolom Secondary Factor jika semua terisi
-            if (secondaryTerisi) {
-                const secondaryFactor = secondaryTotal / secondaryFactorKriteria.length + 4;
-                document.getElementById("secondary-factor-value").value = secondaryFactor.toFixed(2);
-            } else {
-                document.getElementById("secondary-factor-value").value = "";
-            }
-        }
-
-        // Tambahkan event listener ke semua dropdown
-        document.addEventListener("DOMContentLoaded", function() {
-            const kriteria = ["integritas", "komitmen", "kerjasama", "orientasi-pelayanan", "disiplin",
-                "kepemimpinan"
-            ];
-            kriteria.forEach(id => {
-                const dropdown = document.getElementById(id);
-                if (dropdown) {
-                    dropdown.addEventListener("change", hitungFaktor);
-                }
-            });
-        });
-    </script>
-
 </body>
 
 </html>
