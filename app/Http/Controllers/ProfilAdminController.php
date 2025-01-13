@@ -17,6 +17,7 @@ class ProfilAdminController extends Controller
 
     public function updatePassword(Request $request)
     {
+        // Validasi input
         $request->validate([
             'current_password' => 'required',
             'new_password' => 'required|min:8|confirmed',
@@ -25,20 +26,21 @@ class ProfilAdminController extends Controller
         // Ambil pengguna yang sedang login
         $user = Auth::user();
 
-        // Periksa apakah objek $user adalah instance dari User
-        if (!$user instanceof \App\Models\User) {
-            return back()->withErrors(['user' => 'Terjadi kesalahan autentikasi.']);
+        // Periksa apakah objek $user valid
+        if (!$user || !$user instanceof \App\Models\User) {
+            return back()->with('error', 'Terjadi kesalahan autentikasi. Silakan login ulang.');
         }
 
-        // Periksa apakah kata sandi saat ini benar
+        // Periksa apakah kata sandi saat ini cocok
         if (!Hash::check($request->current_password, $user->password)) {
             return back()->withErrors(['current_password' => 'Kata sandi saat ini salah.']);
         }
 
-        // Perbarui kata sandi dan simpan
-        $user->password = bcrypt($request->new_password);
+        // Perbarui kata sandi
+        $user->password = Hash::make($request->new_password);
         $user->save();
 
+        // Kirim pesan sukses ke session
         return redirect()->back()->with('success', 'Kata sandi berhasil diperbarui.');
     }
 }

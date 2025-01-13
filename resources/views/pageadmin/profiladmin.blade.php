@@ -28,6 +28,24 @@
     </nav>
     <!-- End Navbar -->
 
+    <!-- Alert Section -->
+    <div class="container mt-3">
+      <!-- Menampilkan pesan sukses atau error -->
+      @if ($message = Session::get('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          {{ $message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      @endif
+
+      @if ($message = Session::get('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          {{ $message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      @endif
+    </div>
+
     <div class="main-content position-relative bg-gray-100 max-height-vh-100 h-100">
       <div class="container-fluid">
         <div class="page-header min-height-300 border-radius-xl mt-4" style="background-image: url('../assets/foto/bgprofil.png'); background-position-y: 50%;">
@@ -71,7 +89,7 @@
                           </g>
                         </g>
                       </svg>
-                      <span class="ms-1">Edit Kata Sandi</span>
+                      <span class="ms-1">Ubah Kata Sandi</span>
                     </a>
                   </li>
                 </ul>
