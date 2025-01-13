@@ -38,7 +38,6 @@ Route::post('/masuk', [MasukController::class, 'login'])->name('login');
 // Logout
 Route::post('/logout', [MasukController::class, 'logout'])->name('logout');
 
-// Route untuk halaman admin (Proteksi dengan middleware auth)
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     // Halaman beranda admin
     Route::view('/beranda', 'pageadmin.berandaadmin')->name('beranda');
@@ -87,9 +86,11 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         'destroy' => 'penilaianpm.destroy',
     ]);
 
+    // Profil Admin
     Route::prefix('profil')->name('profil.')->group(function () {
         Route::get('/', [ProfilAdminController::class, 'index'])->name('index');
         Route::put('/update-password', [ProfilAdminController::class, 'updatePassword'])->name('update.password');
+        Route::post('/check-password', [ProfilAdminController::class, 'checkPassword'])->name('checkPassword');
     });
 });
 
