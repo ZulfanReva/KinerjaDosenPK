@@ -31,6 +31,19 @@
         </nav>
         <!-- End Navbar -->
 
+        <!-- Menampilkan pesan sukses atau error -->
+        @if ($message = Session::get('success'))
+            <div class="alert alert-success">
+                {{ $message }}
+            </div>
+        @endif
+
+        @if ($message = Session::get('error'))
+            <div class="alert alert-danger">
+                {{ $message }}
+            </div>
+        @endif
+
         <div class="container-fluid py-4">
             <div class="row">
                 <div class="col-12">

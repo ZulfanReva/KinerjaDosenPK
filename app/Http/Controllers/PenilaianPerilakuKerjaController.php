@@ -99,8 +99,9 @@ class PenilaianPerilakuKerjaController extends Controller
         // Menyimpan data menggunakan mass assignment
         PenilaianPerilakuKerja::create($request->all());
 
-        // Redirect kembali ke index dengan pesan sukses
-        return redirect()->route('dosenberjabatan.penilaianperilakukerja.index')->with('success', 'Penilaian Perilaku Kerja berhasil disimpan.');
+        // Redirect dengan pesan sukses
+        return redirect()->route('dosenberjabatan.penilaianperilakukerja.index')
+            ->with('success', 'Penilaian Perilaku Kerja Berhasil dimasukan!');
     }
 
     /**
