@@ -12,10 +12,10 @@ class ProdiController extends Controller
     {
         // Mengambil semua data Prodi
         $prodis = Prodi::all();
-    
+
         // Mengirim data Prodi ke tampilan
         return view('pageadmin.dataprodi.index', compact('prodis'));
-        }
+    }
 
     // Menampilkan form tambah data
     public function create()
@@ -26,19 +26,20 @@ class ProdiController extends Controller
     // Menyimpan data baru
     public function store(Request $request)
     {
-    // Validasi input
-    $request->validate([
-        'nama_prodi' => 'required|array',
-        'nama_prodi.*' => 'required|string|max:255',
-    ]);
+        // Validasi input
+        $request->validate([
+            'nama_prodi' => 'required|array',
+            'nama_prodi.*' => 'required|string|max:255',
+        ]);
 
-    // Simpan data prodi
-    foreach ($request->nama_prodi as $namaProdi) {
-        Prodi::create(['nama_prodi' => $namaProdi]);
-    }
+        // Simpan data prodi
+        foreach ($request->nama_prodi as $namaProdi) {
+            Prodi::create(['nama_prodi' => $namaProdi]);
+        }
 
-    // Setelah berhasil, redirect ke halaman daftar prodi
-    return redirect()->route('admin.dataprodi.index')->with('success', 'Data Prodi berhasil disimpan!');
+        // Redirect dengan pesan sukses
+        return redirect()->route('admin.dataprodi.index')
+            ->with('success', 'Data Prodi berhasil ditambah!');
     }
 
     // Menampilkan detail data
@@ -68,20 +69,13 @@ class ProdiController extends Controller
 
         // Cek apakah data ditemukan
         if (!$prodi) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Data Prodi tidak ditemukan.'
-            ], 404);  // Mengembalikan error 404 jika data tidak ditemukan
+            return redirect()->route('admin.dataprodi.index')->with('error', 'Data Prodi tidak ditemukan.');
         }
 
         // Menghapus data
         $prodi->delete();
 
-        // Mengirimkan pesan sukses dalam format JSON
-        return response()->json([
-            'success' => true,
-            'message' => 'Data Prodi berhasil dihapus!'
-        ]);
+        // Mengirimkan pesan sukses
+        return redirect()->route('admin.dataprodi.index')->with('success', 'Data Prodi berhasil dihapus!');
     }
-
 }

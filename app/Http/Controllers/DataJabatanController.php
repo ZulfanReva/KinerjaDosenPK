@@ -10,11 +10,11 @@ class DataJabatanController extends Controller
     // Menampilkan daftar data
     public function index()
     {
-    // Mengambil semua data Jabatan
-    $jabatans = Jabatan::all();
+        // Mengambil semua data Jabatan
+        $jabatans = Jabatan::all();
 
-    // Mengirim data Jabatan ke tampilan
-    return view('pageadmin.datajabatan.index', compact('jabatans'));
+        // Mengirim data Jabatan ke tampilan
+        return view('pageadmin.datajabatan.index', compact('jabatans'));
     }
 
     // Menampilkan form tambah data
@@ -26,19 +26,20 @@ class DataJabatanController extends Controller
     // Menyimpan data baru
     public function store(Request $request)
     {
-    // Validasi input
-    $request->validate([
-        'nama_jabatan' => 'required|array',
-        'nama_jabatan.*' => 'required|string|max:255',
-    ]);
+        // Validasi input
+        $request->validate([
+            'nama_jabatan' => 'required|array',
+            'nama_jabatan.*' => 'required|string|max:255',
+        ]);
 
-    // Simpan data prodi
-    foreach ($request->nama_jabatan as $namaJabatan) {
-        Jabatan::create(['nama_jabatan' => $namaJabatan]);
-    }
+        // Simpan data jabatan
+        foreach ($request->nama_jabatan as $namaJabatan) {
+            Jabatan::create(['nama_jabatan' => $namaJabatan]);
+        }
 
-    // Setelah berhasil, redirect ke halaman daftar prodi
-    return redirect()->route('admin.datajabatan.index')->with('success', 'Data Prodi berhasil disimpan!');
+        // Redirect dengan pesan sukses
+        return redirect()->route('admin.datajabatan.index')
+            ->with('success', 'Data Jabatan berhasil ditambah!');
     }
 
     // Menampilkan detail data
@@ -64,24 +65,17 @@ class DataJabatanController extends Controller
     public function destroy($id)
     {
         // Mencari data berdasarkan ID
-        $prodi = Jabatan::find($id);
+        $jabatan = Jabatan::find($id);
 
         // Cek apakah data ditemukan
-        if (!$prodi) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Data Jabatan tidak ditemukan.'
-            ], 404);  // Mengembalikan error 404 jika data tidak ditemukan
+        if (!$jabatan) {
+            return redirect()->route('admin.datajabatan.index')->with('error', 'Data Jabatan tidak ditemukan.');
         }
 
         // Menghapus data
-        $prodi->delete();
+        $jabatan->delete();
 
-        // Mengirimkan pesan sukses dalam format JSON
-        return response()->json([
-            'success' => true,
-            'message' => 'Data Jabatan berhasil dihapus!'
-        ]);
+        // Mengirimkan pesan sukses
+        return redirect()->route('admin.datajabatan.index')->with('success', 'Data Jabatan berhasil dihapus!');
     }
-
 }
