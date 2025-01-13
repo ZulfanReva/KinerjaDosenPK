@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<x-headeradmin :title="'Profil Admin | E-Kinerja UMBJM'" />
+<x-headeradmin :title="'Profil | E-Kinerja UMBJM'" />
 
 <body class="g-sidenav-show bg-gray-100">
     <x-navigasidosenberjabatan></x-navigasidosenberjabatan>
@@ -107,43 +107,39 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
-                    <form method="POST" action="{{ route('dosenberjabatan.profil.update.password') }}">
+                    <form method="POST" action="{{ route('dosenberjabatan.profil.update.password') }}" id="passwordForm">
                         @csrf
                         @method('PUT')
                         <div class="modal-body">
-                            <!-- Tambahkan pesan error -->
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul class="mb-0">
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
-
                             <div class="mb-3">
                                 <label for="currentPassword" class="form-label">Kata Sandi Saat Ini</label>
-                                <input type="password"
-                                    class="form-control @error('current_password') is-invalid @enderror"
-                                    id="currentPassword" name="current_password" required>
+                                <input type="password" class="form-control" id="currentPassword" name="current_password"
+                                    required>
                                 @error('current_password')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    <div class="bg-gradient-danger text-white p-2 mt-1">
+                                        {{ $message }}
+                                    </div>
                                 @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="newPassword" class="form-label">Kata Sandi Baru</label>
-                                <input type="password"
-                                    class="form-control @error('new_password') is-invalid @enderror" id="newPassword"
-                                    name="new_password">
+                                <input type="password" class="form-control" id="newPassword" name="new_password"
+                                    required>
                                 @error('new_password')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    <div class="bg-gradient-danger text-white p-2 mt-1">
+                                        {{ $message }}
+                                    </div>
                                 @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="confirmPassword" class="form-label">Konfirmasi Kata Sandi Baru</label>
                                 <input type="password" class="form-control" id="confirmPassword"
                                     name="new_password_confirmation" required>
+                                @error('new_password_confirmation')
+                                    <div class="bg-gradient-danger text-white p-2 mt-1">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -151,28 +147,113 @@
                             <button type="submit" class="btn bg-gradient-info">Simpan</button>
                         </div>
                     </form>
-
-                    @if (session('success'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            {{ session('success') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                aria-label="Close"></button>
-                        </div>
-                    @endif
-
-                    @if ($errors->any())
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                aria-label="Close"></button>
-                        </div>
-                    @endif
-
                 </div>
             </div>
         </div>
+
+        <script>
+            // First, initialize the modal properly at the top of your script
+            let editPasswordModal;
+            document.addEventListener('DOMContentLoaded', function() {
+                editPasswordModal = new bootstrap.Modal(document.getElementById('editPasswordModal'));
+            });
+
+            document.getElementById('passwordForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const currentPassword = document.getElementById('currentPassword').value;
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+
+                // Basic validations
+                if (!currentPassword || !newPassword || !confirmPassword) {
+                    alert('Semua field harus diisi!');
+                    event.target.reset(); // Reset form when validation fails
+                    return;
+                }
+
+                if (newPassword.length < 8) {
+                    alert('Kata sandi baru minimal 8 karakter!');
+                    event.target.reset(); // Reset form when validation fails
+                    return;
+                }
+
+                if (newPassword !== confirmPassword) {
+                    alert('Kata sandi baru dan konfirmasi kata sandi tidak cocok!');
+                    event.target.reset(); // Reset form when validation fails
+                    return;
+                }
+
+                if (currentPassword === newPassword) {
+                    alert('Kata sandi baru tidak boleh sama dengan kata sandi saat ini!');
+                    event.target.reset(); // Reset form when validation fails
+                    return;
+                }
+
+                // Create FormData
+                const formData = new FormData();
+                formData.append('current_password', currentPassword);
+                formData.append('new_password', newPassword);
+                formData.append('new_password_confirmation', confirmPassword);
+                formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+                formData.append('_method', 'PUT');
+
+                // Show loading state
+                const submitButton = event.target.querySelector('button[type="submit"]');
+                const originalText = submitButton.innerHTML;
+                submitButton.disabled = true;
+                submitButton.innerHTML = 'Menyimpan...';
+
+                fetch("{{ route('dosenberjabatan.profil.update.password') }}", {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Kata sandi berhasil diperbarui!');
+
+                            // Reset form
+                            event.target.reset();
+
+                            // Close modal using the initialized instance
+                            if (editPasswordModal) {
+                                editPasswordModal.hide();
+                            }
+
+                            // Use a timeout to delay the redirect
+                            setTimeout(() => {
+                                window.location.href = @json(route('dosenberjabatan.profil.index'));
+                            }, 500);
+                        } else {
+                            if (data.errors && data.errors.current_password) {
+                                alert(data.errors.current_password[0]);
+                                event.target.reset(); // Reset form when server validation fails
+                            } else if (data.message) {
+                                alert(data.message);
+                                event.target.reset(); // Reset form when server returns error message
+                            } else {
+                                alert('Terjadi kesalahan. Silakan coba lagi.');
+                                event.target.reset(); // Reset form when unknown error occurs
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Terjadi kesalahan. Silakan coba lagi.');
+                        event.target.reset(); // Reset form when fetch fails
+                    })
+                    .finally(() => {
+                        // Reset button state
+                        submitButton.disabled = false;
+                        submitButton.innerHTML = originalText;
+                    });
+            });
+        </script>
+
     </main>
 
     <!-- Bootstrap JS -->
