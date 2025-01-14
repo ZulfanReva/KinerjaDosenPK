@@ -2,16 +2,17 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\MasukController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\KontakController;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\DataDosenController;
 use App\Http\Controllers\DataJabatanController;
-use App\Http\Controllers\PenilaianPMController;
 use App\Http\Controllers\ProfilAdminController;
 use App\Http\Controllers\ProfilDosenBerjabatanController;
 use App\Http\Controllers\PenilaianPerilakuKerjaController;
+use App\Http\Controllers\PenilaianProfileMatchingController;
 
 // Route untuk halaman beranda
 Route::get('/', [BerandaController::class, 'index'])->name('index');
@@ -76,14 +77,14 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     ]);
 
     // Penilaian PM menggunakan resource route
-    Route::resource('penilaianpm', PenilaianPMController::class)->names([
-        'index' => 'penilaianpm.index',
-        'create' => 'penilaianpm.create',
-        'store' => 'penilaianpm.store',
-        'show' => 'penilaianpm.show',
-        'edit' => 'penilaianpm.edit',
-        'update' => 'penilaianpm.update',
-        'destroy' => 'penilaianpm.destroy',
+    Route::resource('penilaianprofilemachting', PenilaianProfileMatchingController::class)->names([
+        'index' => 'penilaianprofilematching.index',
+        'create' => 'penilaianprofilematching.create',
+        'store' => 'penilaianprofilematching.store',
+        'show' => 'penilaianprofilematching.show',
+        'edit' => 'penilaianprofilematching.edit',
+        'update' => 'penilaianprofilematching.update',
+        'destroy' => 'penilaianprofilematching.destroy',
     ]);
 
     // Profil Admin

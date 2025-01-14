@@ -64,8 +64,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('admin.penilaianpm*') ? 'active' : '' }}"
-                    href="{{ route('admin.penilaianpm.index') }}">
+                <a class="nav-link {{ request()->routeIs('admin.penilaianprofilematching*') ? 'active' : '' }}"
+                    href="{{ route('admin.penilaianprofilematching.index') }}">
                     <div
                         class="bg-gradient-info icon-shape shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <img src="{{ asset('assets/foto/pm.png') }}" alt="Penilaian PM" width="50" height="50">

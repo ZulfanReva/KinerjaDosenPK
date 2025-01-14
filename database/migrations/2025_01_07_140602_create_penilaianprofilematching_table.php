@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('penilaian_profilematching', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_penilaian_perilakukerja')->constrained('penilaian_perilakukerja');
-            $table->integer('nilai_profilematching');
             $table->string('grade');
             $table->timestamps();
         });

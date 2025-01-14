@@ -23,6 +23,8 @@ class Dosen extends Model
         'password',
     ];
 
+    
+
     // Relasi dengan tabel prodi
     public function prodi()
     {
@@ -45,6 +47,6 @@ class Dosen extends Model
     // Relasi dengan PenilaianPK
     public function penilaianperilakukerja()
     {
-        return $this->hasOne(PenilaianPerilakuKerja::class, 'dosen_id');
+        return $this->hasMany(PenilaianPerilakuKerja::class, 'dosen_id');
     }
 }

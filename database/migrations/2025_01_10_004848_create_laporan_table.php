@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('laporan', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_penilaian_profilematching')->constrained('penilaian_profilematching');
+            $table->foreignId('id_penilaianprofilematching')->constrained('penilaian_profilematching');
             $table->text('umpan_balik');
             $table->timestamps();
         });

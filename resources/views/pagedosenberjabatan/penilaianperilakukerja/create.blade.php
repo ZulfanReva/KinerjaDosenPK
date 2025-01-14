@@ -171,20 +171,12 @@
 
                         <!-- Kolom untuk Total Nilai -->
                         <div class="row mt-4">
-                            <h6 class="font-weight-bold text-info text-center">Hasil Perhitungan Core Factor dan
-                                Secondary Factor</h6>
-                            <div class="col-md-6">
+                            <h6 class="font-weight-bold text-info text-center">Total Nilai</h6>
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="core-factor-value">Nilai Core Factor</label>
-                                    <input type="text" class="form-control" id="core-factor-value"
-                                        name="nilai_corefactor" readonly>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="secondary-factor-value">Nilai Secondary Factor</label>
-                                    <input type="text" class="form-control" id="secondary-factor-value"
-                                        name="nilai_secondaryfactor" readonly>
+                                    <label for="total-nilai">Total Nilai</label>
+                                    <input type="text" class="form-control" id="total-nilai" name="total_nilai"
+                                        readonly>
                                 </div>
                             </div>
                         </div>
@@ -262,20 +254,14 @@
                     }
                 });
 
-                // Isi kolom Core Factor jika semua terisi
-                if (coreTerisi) {
+                // Hitung Total Nilai berdasarkan rumus N = (60% x total core factor) + (40% x total secondary factor)
+                if (coreTerisi && secondaryTerisi) {
                     const coreFactor = coreTotal / coreFactorKriteria.length + 4;
-                    document.getElementById("core-factor-value").value = coreFactor.toFixed(2);
-                } else {
-                    document.getElementById("core-factor-value").value = "";
-                }
-
-                // Isi kolom Secondary Factor jika semua terisi
-                if (secondaryTerisi) {
                     const secondaryFactor = secondaryTotal / secondaryFactorKriteria.length + 4;
-                    document.getElementById("secondary-factor-value").value = secondaryFactor.toFixed(2);
+                    const totalNilai = (0.6 * coreFactor) + (0.4 * secondaryFactor);
+                    document.getElementById("total-nilai").value = totalNilai.toFixed(2);
                 } else {
-                    document.getElementById("secondary-factor-value").value = "";
+                    document.getElementById("total-nilai").value = "";
                 }
             }
 

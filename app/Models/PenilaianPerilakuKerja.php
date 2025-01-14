@@ -14,17 +14,16 @@ class PenilaianPerilakuKerja extends Model
 
     // Tentukan field yang dapat diisi massal
     protected $fillable = [
-        'dosen_id',
-        'users_id',
-        'periode',
-        'integritas',
-        'komitmen',
-        'kerjasama',
-        'orientasi_pelayanan',
-        'disiplin',
-        'kepemimpinan',
-        'nilai_corefactor',
-        'nilai_secondaryfactor',
+        'dosen_id', 
+        'users_id', 
+        'periode', 
+        'integritas', 
+        'komitmen', 
+        'kerjasama', 
+        'orientasi_pelayanan', 
+        'disiplin', 
+        'kepemimpinan', 
+        'total_nilai',
     ];
 
     // Relasi ke tabel periode
@@ -37,4 +36,9 @@ class PenilaianPerilakuKerja extends Model
     {
         return $this->belongsTo(Dosen::class, 'dosen_id'); // pastikan kolom foreign key benar
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'users_id');
+    }
+    
 }

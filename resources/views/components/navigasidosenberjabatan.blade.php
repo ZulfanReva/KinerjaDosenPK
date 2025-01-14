@@ -29,7 +29,7 @@
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('dosenberjabatan.penilaianperilakukerja*') ? 'active' : '' }}" href="{{ route('dosenberjabatan.penilaianperilakukerja.index') }}">
                     <div class="bg-gradient-info icon-shape shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <img src="{{ asset('assets/foto/pk.png') }}" alt="Penilaian PK" width="50" height="50">
+                        <img src="{{ asset('assets/foto/pm.png') }}" alt="Penilaian PK" width="50" height="50">
                     </div>
                     <span class="nav-link-text ms-1">Penilaian</span>
                 </a>

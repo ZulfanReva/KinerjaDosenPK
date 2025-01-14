@@ -93,19 +93,12 @@ class PenilaianPerilakuKerjaController extends Controller
             'orientasi_pelayanan' => 'required|integer|min:1|max:5',
             'disiplin' => 'required|integer|min:1|max:5',
             'kepemimpinan' => 'nullable|integer|min:1|max:5',
-            'nilai_corefactor' => 'required|numeric',
-            'nilai_secondaryfactor' => 'required|numeric',
+            'total_nilai' => 'required|numeric', // Validasi nilai total
         ]);
 
-        // Format core factor dan secondary factor sebelum menyimpan
-        $request->merge([
-            'nilai_corefactor' => number_format((float) $request->nilai_corefactor, 2, '.', ''),
-            'nilai_secondaryfactor' => number_format((float) $request->nilai_secondaryfactor, 2, '.', ''),
-        ]);
-
-        // Tambahkan users_id (dosen berjabatan yang menilai) ke data request
+        // Menambahkan data tambahan untuk users_id
         $data = $request->all();
-        $data['users_id'] = $user->id; // Ambil ID pengguna yang sedang login
+        $data['users_id'] = $user->id; // Menambahkan ID pengguna yang sedang login
 
         // Simpan data ke tabel penilaian_perilakukerja
         PenilaianPerilakuKerja::create($data);
@@ -123,8 +116,8 @@ class PenilaianPerilakuKerjaController extends Controller
     {
 
         // Menampilkan detail penilaian PK berdasarkan ID
-        $penilaianPK = PenilaianPerilakuKerja::findOrFail($id);
-        return view('dosenberjabatan.penilaianperilakukerja.show', compact('penilaianPK'));
+        $penilaianPerilakuKerjas = PenilaianPerilakuKerja::findOrFail($id);
+        return view('dosenberjabatan.penilaianperilakukerja.show', compact('penilaianperilakukerja'));
     }
 
     /**
@@ -133,8 +126,8 @@ class PenilaianPerilakuKerjaController extends Controller
     public function edit(string $id)
     {
         // Menampilkan form untuk mengedit penilaian PK
-        $penilaianPK = PenilaianPerilakuKerja::findOrFail($id);
-        return view('dosenberjabatan.penilaianperilakukerja.edit', compact('penilaianPK'));
+        $penilaianPerilakuKerjas = PenilaianPerilakuKerja::findOrFail($id);
+        return view('dosenberjabatan.penilaianperilakukerja.edit', compact('penilaianperilakukerja'));
     }
 
     /**
@@ -161,8 +154,8 @@ class PenilaianPerilakuKerjaController extends Controller
         ]);
 
         // Mengupdate data penilaian PK
-        $penilaianPK = PenilaianPerilakuKerja::findOrFail($id);
-        $penilaianPK->update($request->all());
+        $penilaianPerilakuKerjas = PenilaianPerilakuKerja::findOrFail($id);
+        $penilaianPerilakuKerjas->update($request->all());
 
         // Redirect ke index dengan pesan sukses
         return redirect()->route('dosenberjabatan.penilaianperilakukerja.index')->with('success', 'Penilaian Perilaku Kerja berhasil diperbarui.');
@@ -174,10 +167,10 @@ class PenilaianPerilakuKerjaController extends Controller
     public function destroy($id)
     {
         // Mencari data berdasarkan ID
-        $penilaianPK = PenilaianPerilakuKerja::find($id);
+        $penilaianPerilakuKerjas = PenilaianPerilakuKerja::find($id);
 
         // Cek apakah data ditemukan
-        if (!$penilaianPK) {
+        if (!$penilaianPerilakuKerjas) {
             return response()->json([
                 'success' => false,
                 'message' => 'Data tidak ditemukan.'
@@ -185,7 +178,7 @@ class PenilaianPerilakuKerjaController extends Controller
         }
 
         // Menghapus data
-        $penilaianPK->delete();
+        $penilaianPerilakuKerjas->delete();
 
         // Mengirimkan pesan sukses dalam format JSON
         return response()->json([
