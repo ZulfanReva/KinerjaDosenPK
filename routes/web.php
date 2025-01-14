@@ -87,6 +87,9 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         'destroy' => 'penilaianprofilematching.destroy',
     ]);
 
+    // Penilaian PDF Route
+    Route::get('/penilaian/pdf/{id}', [PenilaianProfileMatchingController::class, 'generatePDF'])->name('penilaian.generatePDF');
+
     // Profil Admin
     Route::prefix('profil')->name('profil.')->group(function () {
         Route::get('/', [ProfilAdminController::class, 'index'])->name('index');
