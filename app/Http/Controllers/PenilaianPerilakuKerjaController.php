@@ -61,6 +61,8 @@ class PenilaianPerilakuKerjaController extends Controller
         // Ambil data dosen berdasarkan user yang login (profil dosen berjabatan)
         $dosenBerjabatan = Dosen::with('jabatan')->where('users_id', $user->id)->firstOrFail();
 
+
+
         // Pilihan periode statis
         $periodeList = [
             '2022/2023 Ganjil',
@@ -75,10 +77,15 @@ class PenilaianPerilakuKerjaController extends Controller
      */
     public function store(Request $request)
     {
+        // Ambil user yang sedang login
+        $user = Auth::user();
+
+        // Ambil dosen berjabatan berdasarkan users_id dari user yang sedang login
+        $dosenBerjabatan = Dosen::where('users_id', $user->id)->firstOrFail();
+
         // Validasi input
         $request->validate([
-            'dosen_id' => 'required|exists:dosen,id',
-            'user_id' => 'nullable|exists:users,id',
+            'dosen_id' => 'required|exists:dosen,id', // Dosen yang dinilai
             'periode' => 'required|string',
             'integritas' => 'required|integer|min:1|max:5',
             'komitmen' => 'required|integer|min:1|max:5',
@@ -93,16 +100,21 @@ class PenilaianPerilakuKerjaController extends Controller
         // Format core factor dan secondary factor sebelum menyimpan
         $request->merge([
             'nilai_corefactor' => number_format((float) $request->nilai_corefactor, 2, '.', ''),
-            'nilai_secondaryfactor' => number_format((float) $request->nilai_secondaryfactor, 2, '.', '')
+            'nilai_secondaryfactor' => number_format((float) $request->nilai_secondaryfactor, 2, '.', ''),
         ]);
 
-        // Menyimpan data menggunakan mass assignment
-        PenilaianPerilakuKerja::create($request->all());
+        // Tambahkan users_id (dosen berjabatan yang menilai) ke data request
+        $data = $request->all();
+        $data['users_id'] = $user->id; // Ambil ID pengguna yang sedang login
+
+        // Simpan data ke tabel penilaian_perilakukerja
+        PenilaianPerilakuKerja::create($data);
 
         // Redirect dengan pesan sukses
         return redirect()->route('dosenberjabatan.penilaianperilakukerja.index')
-            ->with('success', 'Penilaian Perilaku Kerja Berhasil dimasukan!');
+            ->with('success', 'Penilaian Perilaku Kerja Berhasil dimasukkan!');
     }
+
 
     /**
      * Display the specified resource.

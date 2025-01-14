@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('penilaian_perilakukerja', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('dosen_id')->constrained('dosen')->cascadeOnDelete();
+            $table->foreignId('dosen_id')->constrained('dosen')->cascadeOnDelete(); // Dosen yang dinilai
+            $table->foreignId('users_id')->constrained('users')->cascadeOnDelete(); // Dosen berjabatan yang menilai
             $table->string('periode');
             $table->tinyInteger('integritas');
             $table->tinyInteger('komitmen');

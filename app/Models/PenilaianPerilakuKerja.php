@@ -15,6 +15,7 @@ class PenilaianPerilakuKerja extends Model
     // Tentukan field yang dapat diisi massal
     protected $fillable = [
         'dosen_id',
+        'users_id',
         'periode',
         'integritas',
         'komitmen',
@@ -25,7 +26,7 @@ class PenilaianPerilakuKerja extends Model
         'nilai_corefactor',
         'nilai_secondaryfactor',
     ];
-    
+
     // Relasi ke tabel periode
     public function periode()
     {
