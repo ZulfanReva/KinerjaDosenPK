@@ -38,7 +38,7 @@
                     <div class="row gx-4">
                         <div class="col-auto">
                             <div class="avatar avatar-xl position-relative bg-gradient-info">
-                                <img src="../assets/foto/dosenaktif.png" alt="profile_image"
+                                <img src="../assets/foto/dosentugasbelajar.png" alt="profile_image"
                                     class="w-100 border-radius-lg shadow-sm">
                             </div>
                         </div>

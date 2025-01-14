@@ -11,14 +11,14 @@
         <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
             navbar-scroll="true">
             <div class="container-fluid py-1 px-3">
-              <nav aria-label="breadcrumb">
-                <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-                    <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark"
-                            href="javascript:;">Halaman</a></li>
-                    <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Penilaian</li>
-                </ol>
-                <h6 class="font-weight-bolder mb-0">Selamat Datang di halaman Penilaian</h6>
-            </nav>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+                        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark"
+                                href="javascript:;">Halaman</a></li>
+                        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Penilaian</li>
+                    </ol>
+                    <h6 class="font-weight-bolder mb-0">Selamat Datang di halaman Penilaian</h6>
+                </nav>
                 <x-buttonlogout></x-buttonlogout>
             </div>
         </nav>
@@ -29,7 +29,7 @@
                 <div class="col-12">
                     <div class="card mb-4">
                         <div class="card-header pb-0">
-                            <h6>Tabel Penilaian Perilaku Kerja</h6>
+                            <h6>Tabel Data Penilaian Perilaku Kerja</h6>
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
                             <div class="table-responsive p-0">
@@ -66,7 +66,7 @@
                                             </th>
                                             <th
                                                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">
-                                                Pengawas (Dosen Berjabatan)
+                                                Dosen Penilai
                                             </th>
                                             <th
                                                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">
@@ -115,20 +115,18 @@
                                                     {{ $penilaian->user->dosen->nama_dosen ?? '-' }}
                                                 </td>
                                                 <td class="text-center">
-                                                    <button class="btn btn-sm bg-gradient-info me-2">
-                                                        <i class="fa fa-eye"></i>
+                                                    <!-- Tombol Lihat -->
+                                                    <button class="btn btn-sm bg-gradient-info me-2" title="Lihat">
+                                                        <i class="fa fa-eye fa-xs" style="font-size:10px"></i> <!-- Ikon Lihat -->
                                                     </button>
-                                                    <form
-                                                        action="{{ route('admin.penilaianprofilematching.destroy', $penilaian->id) }}"
-                                                        method="POST" style="display: inline-block;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-sm bg-gradient-danger"
-                                                            onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
-                                                            <i class="fa fa-trash"></i>
-                                                        </button>
-                                                    </form>
+                                                
+                                                    <!-- Tombol Cetak -->
+                                                    <button class="btn btn-sm bg-gradient-primary me-2" title="Cetak">
+                                                        <i class="fa fa-print fa-xs" style="font-size:10px"></i> <!-- Ikon Cetak -->
+                                                    </button>
                                                 </td>
+
+
                                             </tr>
                                         @empty
                                             <tr>

@@ -72,17 +72,17 @@
                                 <table class="table align-items-center mb-0" style="font-size: 0.9rem;">
                                     <thead>
                                         <tr>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify"
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
                                                 style="padding: 10px;">Nama</th>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify"
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
                                                 style="padding: 10px;">NIDN</th>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify"
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
                                                 style="padding: 10px;">Prodi</th>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify"
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
                                                 style="padding: 10px;">Status</th>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify"
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
                                                 style="padding: 10px;">Jabatan</th>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify"
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
                                                 style="padding: 10px;">Aksi</th>
                                         </tr>
                                     </thead>
@@ -94,7 +94,7 @@
                                                 <td class="text-start" style="padding: 10px;">{{ $dosen->nidn }}</td>
                                                 <td class="text-start" style="padding: 10px;">
                                                     {{ $dosen->prodi->nama_prodi }}</td>
-                                                <td class="text-start" style="padding: 10px;">
+                                                <td class="text-center" style="padding: 10px;">
                                                     <span
                                                         class="badge bg-gradient-{{ $dosen->status === 'Aktif' ? 'success' : 'danger' }}">
                                                         {{ ucfirst($dosen->status) }}
@@ -102,14 +102,14 @@
                                                 </td>
                                                 <td class="text-start" style="padding: 10px;">
                                                     {{ $dosen->jabatan->nama_jabatan }}</td>
-                                                <td class="text-start" style="padding: 10px;">
+                                                <td class="text-center" style="padding: 10px;">
                                                     <!-- Tombol Edit -->
-                                                    <a href="{{ route('admin.datadosen.edit', $dosen->id) }}"
+                                                    <a href="{{ route('admin.datadosen.edit', $dosen->id) }}" title="Edit"
                                                         class="btn btn-sm bg-gradient-info me-2">
                                                         <i class="fa fa-edit fa-xs"></i>
                                                     </a>
                                                     <!-- Tombol Hapus -->
-                                                    <button class="btn btn-sm bg-gradient-danger"
+                                                    <button class="btn btn-sm bg-gradient-danger" title="Hapus"
                                                         onclick="hapusData({{ $dosen->id }})" data-bs-toggle="modal"
                                                         data-bs-target="#confirmDeleteModal">
                                                         <i class="fa fa-trash"></i>
@@ -170,21 +170,21 @@
                                 <table class="table align-items-center mb-0" style="font-size: 0.9rem;">
                                     <thead>
                                         <tr>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify"
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
                                                 style="padding: 10px;">Nama</th>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify"
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
                                                 style="padding: 10px;">NIDN</th>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify"
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
                                                 style="padding: 10px;">Prodi</th>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify"
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
                                                 style="padding: 10px;">Status</th>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify"
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
                                                 style="padding: 10px;">Jabatan</th>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify"
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
                                                 style="padding: 10px;">Nama Pengguna</th>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify"
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
                                                 style="padding: 10px;">Kata Sandi</th>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bold text-justify"
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center"
                                                 style="padding: 10px;">Aksi</th>
                                         </tr>
                                     </thead>
@@ -197,7 +197,7 @@
                                                 </td>
                                                 <td class="text-start" style="padding: 10px;">
                                                     {{ $dosen->prodi->nama_prodi }}</td>
-                                                <td class="text-start" style="padding: 10px;">
+                                                <td class="text-center" style="padding: 10px;">
                                                     <span
                                                         class="badge bg-gradient-{{ $dosen->status === 'Aktif' ? 'success' : 'danger' }}">
                                                         {{ ucfirst($dosen->status) }}
@@ -208,15 +208,15 @@
                                                 <td class="text-start" style="padding: 10px;">
                                                     {{ $dosen->user->username ?? '-' }}
                                                 </td>
-                                                <td class="text-start" style="padding: 10px;">*****</td>
-                                                <td class="text-start" style="padding: 10px;">
+                                                <td class="text-centerr" style="padding: 10px;">*****</td>
+                                                <td class="text-center" style="padding: 10px;">
                                                     <!-- Tombol Edit -->
-                                                    <a href="{{ route('admin.datadosen.edit', $dosen->id) }}"
+                                                    <a href="{{ route('admin.datadosen.edit', $dosen->id) }}" title="Edit"
                                                         class="btn btn-sm bg-gradient-info me-2">
                                                         <i class="fa fa-edit fa-xs"></i>
                                                     </a>
                                                     <!-- Tombol Hapus -->
-                                                    <button class="btn btn-sm bg-gradient-danger"
+                                                    <button class="btn btn-sm bg-gradient-danger" title="Hapus"
                                                         onclick="hapusData({{ $dosen->id }})"
                                                         data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
                                                         <i class="fa fa-trash"></i>

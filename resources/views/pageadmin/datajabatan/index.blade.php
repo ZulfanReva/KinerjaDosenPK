@@ -57,7 +57,7 @@
                                     <thead>
                                         <tr>
                                             <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-start">
+                                                class="text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Jabatan</th>
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -77,7 +77,7 @@
                                                 </td>
                                                 <td class="align-middle text-center">
                                                     <button class="btn btn-sm bg-gradient-danger me-2"
-                                                        onclick="hapusData({{ $jabatan->id }})" data-bs-toggle="modal"
+                                                        onclick="hapusData({{ $jabatan->id }})" data-bs-toggle="modal" title="Hapus"
                                                         data-bs-target="#confirmDeleteModal">
                                                         <i class="fa fa-trash fa-xs"></i>
                                                     </button>
