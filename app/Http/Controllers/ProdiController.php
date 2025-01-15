@@ -8,13 +8,16 @@ use Illuminate\Http\Request;
 class ProdiController extends Controller
 {
     // Menampilkan daftar data
-    public function index()
+    public function index(Request $request)
     {
-        // Mengambil semua data Prodi
-        $prodis = Prodi::all();
+        // Mengambil parameter sort dari query string, default ke 'asc' (ascending)
+        $sortOrder = $request->get('sort', 'asc');
 
-        // Mengirim data Prodi ke tampilan
-        return view('pageadmin.dataprodi.index', compact('prodis'));
+        // Mengambil data Prodi dengan sorting berdasarkan nama_prodi
+        $prodis = Prodi::orderBy('nama_prodi', $sortOrder)->get();
+
+        // Mengirim data Prodi dan urutan sort ke tampilan
+        return view('pageadmin.dataprodi.index', compact('prodis', 'sortOrder'));
     }
 
     // Menampilkan form tambah data

@@ -8,13 +8,16 @@ use Illuminate\Http\Request;
 class DataJabatanController extends Controller
 {
     // Menampilkan daftar data
-    public function index()
+    public function index(Request $request)
     {
-        // Mengambil semua data Jabatan
-        $jabatans = Jabatan::all();
+        // Mengambil parameter sort dari query string, default ke 'asc' (ascending)
+        $sortOrder = $request->get('sort', 'asc');
 
-        // Mengirim data Jabatan ke tampilan
-        return view('pageadmin.datajabatan.index', compact('jabatans'));
+        // Mengambil data Jabatan dengan sorting berdasarkan nama_jabatan
+        $jabatans = Jabatan::orderBy('nama_jabatan', $sortOrder)->get();
+
+        // Mengirim data Jabatan dan urutan sort ke tampilan
+        return view('pageadmin.datajabatan.index', compact('jabatans', 'sortOrder'));
     }
 
     // Menampilkan form tambah data

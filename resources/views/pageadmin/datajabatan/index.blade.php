@@ -58,10 +58,20 @@
                                         <tr>
                                             <th
                                                 class="text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Jabatan</th>
+                                                <a href="?sort={{ $sortOrder === 'asc' ? 'desc' : 'asc' }}"
+                                                    class="text-dark text-decoration-none">
+                                                    Jabatan
+                                                    @if ($sortOrder === 'asc')
+                                                        <i class="fa fa-arrow-up"></i>
+                                                    @else
+                                                        <i class="fa fa-arrow-down"></i>
+                                                    @endif
+                                                </a>
+                                            </th>
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Aksi</th>
+                                                Aksi
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -77,8 +87,8 @@
                                                 </td>
                                                 <td class="align-middle text-center">
                                                     <button class="btn btn-sm bg-gradient-danger me-2"
-                                                        onclick="hapusData({{ $jabatan->id }})" data-bs-toggle="modal" title="Hapus"
-                                                        data-bs-target="#confirmDeleteModal">
+                                                        onclick="hapusData({{ $jabatan->id }})" data-bs-toggle="modal"
+                                                        title="Hapus" data-bs-target="#confirmDeleteModal">
                                                         <i class="fa fa-trash fa-xs"></i>
                                                     </button>
                                                 </td>

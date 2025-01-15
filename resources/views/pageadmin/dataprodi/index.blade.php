@@ -58,10 +58,20 @@
                                         <tr>
                                             <th
                                                 class="text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Prodi</th>
+                                                <a href="?sort={{ $sortOrder === 'asc' ? 'desc' : 'asc' }}"
+                                                    class="text-dark text-decoration-none">
+                                                    Prodi
+                                                    @if ($sortOrder === 'asc')
+                                                        <i class="fa fa-arrow-up"></i>
+                                                    @else
+                                                        <i class="fa fa-arrow-down"></i>
+                                                    @endif
+                                                </a>
+                                            </th>
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Aksi</th>
+                                                Aksi
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
