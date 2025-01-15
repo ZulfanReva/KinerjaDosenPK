@@ -115,23 +115,10 @@
                                                     {{ $penilaian->user->dosen->nama_dosen ?? '-' }}
                                                 </td>
                                                 <td class="text-center">
-                                                    <!-- Tombol Lihat -->
-                                                    <a href="{{ route('admin.penilaianprofilematching.show', $penilaian->id) }}" class="btn btn-sm bg-gradient-info me-2" title="Lihat Detail">
-                                                        <i class="fa fa-eye" style="font-size:10px"></i>
+                                                    <!-- Tombol Cetak yang baru -->
+                                                    <a href="{{ route('admin.penilaianprofilematching.show', $penilaian->id) }}" class="btn btn-sm bg-gradient-info me-2" title="Cetak">
+                                                        <i class="fa fa-print" style="font-size:10px"></i> Cetak
                                                     </a>
-                                                
-                                                    <!-- Tombol Cetak -->
-                                                    <button class="btn btn-sm bg-gradient-primary me-2" title="Unduh PDF" onclick="downloadPDF({{ $penilaian->id }})">
-                                                        <i class="fa fa-download" style="font-size:10px"></i>
-                                                    </button>
-                                                
-                                                    <!-- Script Unduh PDF -->
-                                                    <script>
-                                                        function downloadPDF(id) {
-                                                            // Menggunakan route yang benar dengan prefix 'admin.'
-                                                            window.location.href = '{{ route('admin.penilaian.generatePDF', ':id') }}'.replace(':id', id);
-                                                        }
-                                                    </script>
                                                 </td>
 
 

@@ -8,6 +8,7 @@ use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\KontakController;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\DataDosenController;
+use App\Http\Controllers\BerandaRoleController;
 use App\Http\Controllers\DataJabatanController;
 use App\Http\Controllers\ProfilAdminController;
 use App\Http\Controllers\ProfilDosenBerjabatanController;
@@ -24,13 +25,11 @@ Route::get('/kontak', [KontakController::class, 'index'])->name('kontak');
 Route::get('/masuk', function () {
     if (Auth::check()) {
         // Cek peran pengguna
-        if (Auth::user()->role === 'admin') {
-            return redirect()->route('admin.beranda'); // Redirect ke beranda admin
-        } elseif (Auth::user()->role === 'dosenberjabatan') {
-            return redirect()->route('dosenberjabatan.beranda'); // Redirect ke beranda dosenberjabatan
-        }
+        return Auth::user()->role === 'admin'
+            ? redirect()->route('admin.beranda')
+            : redirect()->route('dosenberjabatan.beranda');
     }
-    return view('masuk'); // Ganti dengan 'masuk' sesuai nama file tampilan Anda
+    return view('masuk');
 })->name('masuk');
 
 // Proses login
@@ -39,9 +38,10 @@ Route::post('/masuk', [MasukController::class, 'login'])->name('login');
 // Logout
 Route::post('/logout', [MasukController::class, 'logout'])->name('logout');
 
+// Route untuk admin
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     // Halaman beranda admin
-    Route::view('/beranda', 'pageadmin.berandaadmin')->name('beranda');
+    Route::get('/beranda', [BerandaRoleController::class, 'index'])->name('beranda');
 
     // Data Dosen menggunakan resource route
     Route::resource('datadosen', DataDosenController::class)->names([
@@ -55,39 +55,13 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     ]);
 
     // Data Prodi menggunakan resource route
-    Route::resource('dataprodi', ProdiController::class)->names([
-        'index' => 'dataprodi.index',
-        'create' => 'dataprodi.create',
-        'store' => 'dataprodi.store',
-        'show' => 'dataprodi.show',
-        'edit' => 'dataprodi.edit',
-        'update' => 'dataprodi.update',
-        'destroy' => 'dataprodi.destroy',
-    ]);
+    Route::resource('dataprodi', ProdiController::class);
 
     // Data Jabatan menggunakan resource route
-    Route::resource('datajabatan', DataJabatanController::class)->names([
-        'index' => 'datajabatan.index',
-        'create' => 'datajabatan.create',
-        'store' => 'datajabatan.store',
-        'show' => 'datajabatan.show',
-        'edit' => 'datajabatan.edit',
-        'update' => 'datajabatan.update',
-        'destroy' => 'datajabatan.destroy',
-    ]);
+    Route::resource('datajabatan', DataJabatanController::class);
 
-    // Penilaian PM menggunakan resource route
-    Route::resource('penilaianprofilemachting', PenilaianProfileMatchingController::class)->names([
-        'index' => 'penilaianprofilematching.index',
-        'create' => 'penilaianprofilematching.create',
-        'store' => 'penilaianprofilematching.store',
-        'show' => 'penilaianprofilematching.show',
-        'edit' => 'penilaianprofilematching.edit',
-        'update' => 'penilaianprofilematching.update',
-        'destroy' => 'penilaianprofilematching.destroy',
-    ]);
-
-    // Penilaian PDF Route
+    // Penilaian Profile Matching
+    Route::resource('penilaianprofilematching', PenilaianProfileMatchingController::class);
     Route::get('/penilaian/pdf/{id}', [PenilaianProfileMatchingController::class, 'generatePDF'])->name('penilaian.generatePDF');
 
     // Profil Admin
@@ -98,19 +72,16 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     });
 });
 
-
+// Route untuk dosen berjabatan
 Route::middleware(['auth'])->prefix('dosenberjabatan')->name('dosenberjabatan.')->group(function () {
     // Halaman beranda dosen berjabatan
-    Route::view('/beranda', 'pagedosenberjabatan.berandadosenberjabatan')->name('beranda');
+    Route::get('/beranda', [BerandaRoleController::class, 'index'])->name('beranda');
 
-    // Menggunakan resource untuk sisa route
+    // Penilaian Perilaku Kerja
     Route::resource('penilaianperilakukerja', PenilaianPerilakuKerjaController::class)->except(['create']);
+    Route::get('penilaianperilakukerja/create/{dosen_id}', [PenilaianPerilakuKerjaController::class, 'create'])->name('penilaianperilakukerja.create');
 
-    // Route untuk halaman create penilaian pk dengan parameter dosen_id
-    Route::get('penilaianperilakukerja/create/{dosen_id}', [PenilaianPerilakuKerjaController::class, 'create'])
-        ->name('penilaianperilakukerja.create');
-
-    // Profil dosen berjabatan
+    // Profil Dosen Berjabatan
     Route::prefix('profil')->name('profil.')->group(function () {
         Route::get('/', [ProfilDosenBerjabatanController::class, 'index'])->name('index');
         Route::put('/update-password', [ProfilDosenBerjabatanController::class, 'updatePassword'])->name('update.password');

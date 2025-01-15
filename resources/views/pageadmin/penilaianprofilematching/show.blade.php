@@ -129,7 +129,9 @@
             <div class="d-flex justify-content-end align-items-center mb-3">
                 <div>
                     <button class="btn btn-secondary" onclick="window.history.back()">Kembali</button>
-                    <button class="btn bg-gradient-info" onclick="window.print()">Cetak</button>
+                    <button class="btn bg-gradient-info" onclick="window.print()">
+                        <i class="fa fa-print" style="font-size:10px"></i> Cetak
+                    </button>
                 </div>
             </div>
 
