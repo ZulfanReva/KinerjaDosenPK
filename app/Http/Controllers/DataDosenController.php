@@ -15,8 +15,10 @@ class DataDosenController extends Controller
 {
     public function index()
     {
+        // Ambil semua data dosen dengan relasi 'prodi', 'jabatan', 'user'
         $dosens = Dosen::with('prodi', 'jabatan', 'user')->get();
 
+        // Pisahkan dosen pengajar dan dosen berjabatan
         $dosenPengajar = $dosens->filter(function ($dosen) {
             return $dosen->jabatan->nama_jabatan == 'Dosen Pengajar';
         });
@@ -25,7 +27,42 @@ class DataDosenController extends Controller
             return $dosen->jabatan->nama_jabatan != 'Dosen Pengajar';
         });
 
-        return view('pageadmin.datadosen.index', compact('dosenPengajar', 'dosenBerjabatan'));
+        // Ambil daftar Prodi untuk dropdown di filter
+        $listProdi = Prodi::all();
+
+        return view('pageadmin.datadosen.index', compact('dosenPengajar', 'dosenBerjabatan', 'listProdi'));
+    }
+
+    public function filter(Request $request)
+    {
+        // Filter untuk Dosen Pengajar
+        $queryPengajar = Dosen::with('prodi', 'jabatan', 'user');
+        if ($request->prodi) {
+            $queryPengajar->where('prodi_id', $request->prodi);
+        }
+        if ($request->status) {
+            $queryPengajar->where('status', $request->status);
+        }
+        $dosenPengajar = $queryPengajar->whereHas('jabatan', function ($query) {
+            $query->where('nama_jabatan', 'Dosen Pengajar');
+        })->get();
+
+        // Filter untuk Dosen Berjabatan
+        $queryBerjabatan = Dosen::with('prodi', 'jabatan', 'user');
+        if ($request->prodi) {
+            $queryBerjabatan->where('prodi_id', $request->prodi);
+        }
+        if ($request->status) {
+            $queryBerjabatan->where('status', $request->status);
+        }
+        $dosenBerjabatan = $queryBerjabatan->whereHas('jabatan', function ($query) {
+            $query->where('nama_jabatan', '!=', 'Dosen Pengajar');
+        })->get();
+
+        // Ambil daftar Prodi untuk dropdown di filter
+        $listProdi = Prodi::all();
+
+        return view('pageadmin.datadosen.index', compact('dosenPengajar', 'dosenBerjabatan', 'listProdi'));
     }
 
     public function create()
