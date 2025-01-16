@@ -81,7 +81,13 @@
                                         readonly>
                                 </div>
 
-                                <h6 class="font-weight-bold text-info">Waktu Penilaian</h6>
+                                {{-- <h6 class="font-weight-bold text-info">Waktu Penilaian</h6> --}}
+                                <div class="form-group">
+                                    <label for="tanggal-penilaian" class="form-label">Tanggal Penilaian</label>
+                                    <input type="text" class="form-control" id="tanggal-penilaian"
+                                        name="tanggal_penilaian" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                        readonly>
+                                </div>
                                 <div class="form-group">
                                     <label for="periode" class="form-label">Periode</label>
                                     <select name="periode" class="form-select" required>

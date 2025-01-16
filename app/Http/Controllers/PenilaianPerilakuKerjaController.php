@@ -92,11 +92,12 @@ class PenilaianPerilakuKerjaController extends Controller
             'kerjasama' => 'required|integer|min:1|max:5',
             'orientasi_pelayanan' => 'required|integer|min:1|max:5',
             'disiplin' => 'required|integer|min:1|max:5',
-            'kepemimpinan' => 'nullable|integer|min:1|max:5',
-            'total_nilai' => 'required|numeric', // Validasi nilai total
+            'kepemimpinan' => 'required|integer|min:1|max:5', // Mengubah menjadi required
+            'tanggal_penilaian' => 'required|date', // Validasi tanggal penilaian
+            'total_nilai' => 'required|numeric', // Validasi total nilai menjadi required
         ]);
 
-        // Menambahkan data tambahan untuk users_id
+        // Menambahkan data tambahan untuk users_id dan total_nilai
         $data = $request->all();
         $data['users_id'] = $user->id; // Menambahkan ID pengguna yang sedang login
 
@@ -107,6 +108,8 @@ class PenilaianPerilakuKerjaController extends Controller
         return redirect()->route('dosenberjabatan.penilaianperilakukerja.index')
             ->with('success', 'Penilaian Perilaku Kerja Berhasil dimasukkan!');
     }
+
+
 
 
     /**

@@ -17,6 +17,7 @@ class PenilaianPerilakuKerja extends Model
         'dosen_id', 
         'users_id', 
         'periode', 
+        'tanggal_penilaian', 
         'integritas', 
         'komitmen', 
         'kerjasama', 

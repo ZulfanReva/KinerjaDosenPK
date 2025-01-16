@@ -60,6 +60,8 @@
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-start">NIDN</th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-start">Prodi</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Periode</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Penilaian</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
                                     </tr>
                                 </thead>
@@ -82,12 +84,17 @@
                                             <td class="align-middle text-center text-sm">
                                                 <span class="badge bg-gradient-success btn-sm mb-0">Aktif</span>
                                             </td>
-                                            <td class="align-middle text-center">
+                                            <td class="align-middle text-center text-sm">
                                                 @php
-                                                    // Cek apakah dosen sudah pernah dinilai oleh dosen dengan jabatan tertentu
-                                                    $isRated = $penilaianPerilakuKerjas->where('dosen_id', $dosen->id)->first();
+                                                    $penilaian = $penilaianPerilakuKerjas->where('dosen_id', $dosen->id)->first();
                                                 @endphp
-                                                @if ($isRated)
+                                                {{ $penilaian ? $penilaian->periode : '-' }}
+                                            </td>
+                                            <td class="align-middle text-center text-sm">
+                                                {{ $penilaian ? \Carbon\Carbon::parse($penilaian->tanggal_penilaian)->format('d-m-Y') : '-' }}
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                @if ($penilaian)
                                                     <button class="btn bg-gradient-success btn-sm mb-0" disabled>
                                                         Sudah Dinilai
                                                     </button>
@@ -100,7 +107,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="5" class="text-center text-secondary py-4">
+                                            <td colspan="7" class="text-center text-secondary py-4">
                                                 <h6 class="mb-0">BELUM ADA DATA PENILAIAN PERILAKU KERJA</h6>
                                             </td>
                                         </tr>
