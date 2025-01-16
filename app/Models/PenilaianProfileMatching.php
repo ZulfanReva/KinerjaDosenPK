@@ -23,4 +23,6 @@ class PenilaianProfileMatching extends Model
     {
         return $this->belongsTo(PenilaianPerilakuKerja::class, 'id_penilaian_perilakukerja');
     }
+
+    
 }

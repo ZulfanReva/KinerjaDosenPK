@@ -40,7 +40,7 @@
 
     // Route untuk admin
     Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
-        // Halaman beranda admin
+        // Halaman Beranda Admin
         Route::get('/beranda', [BerandaRoleController::class, 'index'])->name('beranda');
 
         // Data Dosen menggunakan resource route
@@ -63,8 +63,21 @@
         Route::resource('datajabatan', DataJabatanController::class);
 
         // Penilaian Profile Matching
-        Route::resource('penilaianprofilematching', PenilaianProfileMatchingController::class);
-        Route::get('/penilaian/pdf/{id}', [PenilaianProfileMatchingController::class, 'generatePDF'])->name('penilaian.generatePDF');
+        Route::resource('penilaianprofilematching', PenilaianProfileMatchingController::class)->names([
+            'index' => 'penilaianprofilematching.index',
+            'create' => 'penilaianprofilematching.create',
+            'store' => 'penilaianprofilematching.store',
+            'show' => 'penilaianprofilematching.show',
+            'edit' => 'penilaianprofilematching.edit',
+            'update' => 'penilaianprofilematching.update',
+            'destroy' => 'penilaianprofilematching.destroy',
+        ]);
+
+        // Route untuk generate PDF
+        Route::get('/penilaian/rekap', [PenilaianProfileMatchingController::class, 'generatePDF'])->name('penilaian.generatePDF');
+
+        // Route untuk filter Penilaian
+        Route::get('/penilaianprofilematching/filter', [PenilaianProfileMatchingController::class, 'filter'])->name('penilaianprofilematching.filter');
 
         // Profil Admin
         Route::prefix('profil')->name('profil.')->group(function () {

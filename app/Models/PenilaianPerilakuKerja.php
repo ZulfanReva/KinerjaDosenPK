@@ -27,10 +27,6 @@ class PenilaianPerilakuKerja extends Model
     ];
 
     // Relasi ke tabel periode
-    public function periode()
-    {
-        return $this->belongsTo(Periode::class, 'periode_id'); // pastikan kolom foreign key benar
-    }
 
     public function dosen()
     {

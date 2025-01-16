@@ -185,7 +185,6 @@
                         </div>
                     </div>
 
-
                     <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog"
                         aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -364,7 +363,7 @@
                         }
                     });
                 </script>
-
+            </div>
         </main>
     </body>
 

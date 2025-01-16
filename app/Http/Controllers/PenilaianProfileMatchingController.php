@@ -2,16 +2,43 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Prodi;
+use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\PenilaianPerilakuKerja;
-use Illuminate\Http\Request;
 
 class PenilaianProfileMatchingController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $penilaianPerilaku = PenilaianPerilakuKerja::with(['dosen.user'])->get();
-        return view('pageadmin.penilaianprofilematching.index', compact('penilaianPerilaku'));
+        // Ambil list Prodi untuk dropdown
+        $prodiList = Prodi::all();
+
+        // Ambil list periode untuk dropdown (sesuaikan dengan cara periode ditentukan)
+        $periodeList = PenilaianPerilakuKerja::distinct()->pluck('periode')->toArray();
+
+        // Query penilaian dengan filter jika ada
+        $penilaianPerilaku = PenilaianPerilakuKerja::query();
+
+        if ($request->filled('prodi')) {
+            $penilaianPerilaku->whereHas('dosen.prodi', function ($query) use ($request) {
+                $query->where('id', $request->prodi);
+            });
+        }
+
+        if ($request->filled('periode')) {
+            $penilaianPerilaku->where('periode', $request->periode);
+        }
+
+        // Ambil data penilaian sesuai filter
+        $penilaianPerilaku = $penilaianPerilaku->get();
+
+        // Kirim data ke tampilan
+        return view('pageadmin.penilaianprofilematching.index', [
+            'penilaianPerilaku' => $penilaianPerilaku,
+            'prodiList' => $prodiList,
+            'periodeList' => $periodeList,
+        ]);
     }
 
     public function show($id)
@@ -45,25 +72,6 @@ class PenilaianProfileMatchingController extends Controller
             // Tangani kesalahan jika ada
             return redirect()->route('admin.penilaianprofilematching.index')
                 ->with('error', 'Terjadi kesalahan saat membuat PDF.');
-        }
-    }
-
-    public function destroy($id)
-    {
-        try {
-            // Cari data berdasarkan ID
-            $penilaian = PenilaianPerilakuKerja::findOrFail($id);
-
-            // Hapus data
-            $penilaian->delete();
-
-            // Redirect dengan pesan sukses
-            return redirect()->route('pageadmin.penilaianprofilematching.index')
-                ->with('success', 'Data penilaian berhasil dihapus.');
-        } catch (\Exception $e) {
-            // Tangani kesalahan (jika ada)
-            return redirect()->route('pageadmin.penilaianprofilematching.index')
-                ->with('error', 'Terjadi kesalahan saat menghapus data.');
         }
     }
 }
