@@ -102,6 +102,10 @@
                                             </th>
                                             <th
                                                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">
+                                                Tanggal Penilaian
+                                            </th>
+                                            <th
+                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">
                                                 Nilai
                                             </th>
                                             <th
@@ -137,6 +141,9 @@
                                                     {{ $penilaian->periode }}
                                                 </td>
                                                 <td class="text-center">
+                                                    {{ $penilaian ? \Carbon\Carbon::parse($penilaian->tanggal_penilaian)->format('d-m-Y') : '-' }}
+                                                </td>
+                                                <td class="text-center">
                                                     {{ $penilaian->total_nilai }}
                                                 </td>
                                                 <td class="text-center">
@@ -168,7 +175,7 @@
                                             </tr>
                                         @empty
                                             <tr>
-                                                <td colspan="9" class="text-center text-secondary py-4">
+                                                <td colspan="10" class="text-center text-secondary py-4">
                                                     <h6 class="mb-0">Belum ada data penilaian</h6>
                                                 </td>
                                             </tr>
