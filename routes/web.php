@@ -73,11 +73,10 @@
             'destroy' => 'penilaianprofilematching.destroy',
         ]);
 
-        // Route untuk generate PDF
-        Route::get('/penilaian/rekap', [PenilaianProfileMatchingController::class, 'generatePDF'])->name('penilaian.generatePDF');
-
         // Route untuk filter Penilaian
         Route::get('/penilaianprofilematching/filter', [PenilaianProfileMatchingController::class, 'filter'])->name('penilaianprofilematching.filter');
+
+        Route::get('/admin/penilaianprofilematching/export-pdf', [PenilaianProfileMatchingController::class, 'exportPDF'])->name('penilaianprofilematching.export-pdf');
 
         // Profil Admin
         Route::prefix('profil')->name('profil.')->group(function () {

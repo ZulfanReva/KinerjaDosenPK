@@ -134,7 +134,7 @@
 
         <div class="container-fluid py-4">
             <div class="row">
-                <!-- Chart: 10 Dosen dengan Penilaian Tertinggi -->
+                <!-- Chart: 5 Dosen dengan Penilaian Tertinggi -->
                 <div class="col-12 col-xl-4">
                     <div class="card h-100">
                         <div class="card-header pb-0 p-3">
@@ -146,17 +146,15 @@
                         <!-- Nama Dosen yang Masuk Top 5 -->
                         <div class="card-footer">
                             <ul class="list-unstyled text-right">
-                                <li>(1) Nama Dosen - 95</li>
-                                <li>(2) Nama Dosen - 85</li>
-                                <li>(3) Nama Dosen - 75</li>
-                                <li>(4) Nama Dosen - 65</li>
-                                <li>(5) Nama Dosen - 55</li>
+                                @foreach ($topDosen as $index => $dosen)
+                                    <li>({{ $index + 1 }}) {{ $dosen->nama_dosen }} - {{ $dosen->total_nilai }}</li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
                 </div>
 
-                <!-- Chart: 10 Dosen dengan Penilaian Terendah -->
+                <!-- Chart: 5 Dosen dengan Penilaian Terendah -->
                 <div class="col-12 col-xl-4">
                     <div class="card h-100">
                         <div class="card-header pb-0 p-3">
@@ -168,17 +166,15 @@
                         <!-- Nama Dosen yang Masuk Top 5 -->
                         <div class="card-footer">
                             <ul class="list-unstyled text-right">
-                                <li>(1) Nama Dosen - 15</li>
-                                <li>(2) Nama Dosen - 25</li>
-                                <li>(3) Nama Dosen - 35</li>
-                                <li>(4) Nama Dosen - 45</li>
-                                <li>(5) Nama Dosen - 50</li>
+                                @foreach ($lowDosen as $index => $dosen)
+                                    <li>({{ $index + 1 }}) {{ $dosen->nama_dosen }} - {{ $dosen->total_nilai }}</li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
                 </div>
 
-                <!-- Chart: 3 Fakultas dengan Dosen Terbaik -->
+                <!-- Chart: Prodi dengan Dosen Grade A -->
                 <div class="col-12 col-xl-4">
                     <div class="card h-100">
                         <div class="card-header pb-0 p-3">
@@ -187,43 +183,52 @@
                         <div class="card-body p-3">
                             <canvas id="topFacultiesChart"></canvas>
                         </div>
+                        <!-- Nama Prodi dengan Dosen Grade A -->
+                        <div class="card-footer">
+                            <ul class="list-unstyled text-right">
+                                @foreach ($topProdi as $prodi)
+                                    <li>{{ $prodi->nama_prodi }} - {{ $prodi->dosen_grade_A }} Dosen</li>
+                                @endforeach
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class="row mt-4">
-                <!-- Footer -->
-                <footer class="footer pt-3">
-                    <div class="container-fluid">
-                        <div class="row align-items-center justify-content-lg-between">
-                            <div class="col-lg-6 mb-lg-0 mb-4">
-                                <div class="copyright text-center text-sm text-muted text-lg-start">
-                                    ©
-                                    <script>
-                                        document.write(new Date().getFullYear())
-                                    </script>,
-                                    created by <a href="#" class="font-weight-bold" target="_blank">Universitas
-                                        Muhammadiyah Banjarmasin</a>.
-                                </div>
-                            </div>
+        </div>
+        <!-- Footer -->
+        <footer class="footer pt-3">
+            <div class="container-fluid">
+                <div class="row align-items-center justify-content-lg-between">
+                    <div class="col-lg-6 mb-lg-0 mb-4">
+                        <div class="copyright text-center text-sm text-muted text-lg-start">
+                            ©
+                            <script>
+                                document.write(new Date().getFullYear())
+                            </script>,
+                            created by <a href="#" class="font-weight-bold" target="_blank">Universitas
+                                Muhammadiyah Banjarmasin</a>.
                         </div>
                     </div>
-                </footer>
+                </div>
             </div>
-        </div>
+        </footer>
 
         <!-- Chart.js Library -->
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
-            // Chart: 10 Dosen dengan Penilaian Tertinggi
+            // Chart: 5 Dosen dengan Penilaian Tertinggi
             const topTenDosenCtx = document.getElementById('topTenDosenChart').getContext('2d');
             const topTenDosenChart = new Chart(topTenDosenCtx, {
                 type: 'bar',
                 data: {
-                    labels: ['1', '2', '3', '4', '5'],
+                    labels: ['1', '2', '3', '4', '5'], // Label numerik
                     datasets: [{
                         label: 'Nilai',
-                        data: [95, 94, 93, 92, 91],
+                        data: [
+                            @foreach ($topDosen as $dosen)
+                                {{ $dosen->total_nilai }},
+                            @endforeach
+                        ],
                         backgroundColor: 'rgba(75, 192, 192, 0.6)',
                         borderColor: 'rgba(75, 192, 192, 1)',
                         borderWidth: 1
@@ -239,15 +244,19 @@
                 }
             });
 
-            // Chart: 10 Dosen dengan Penilaian Terendah
+            // Chart: 5 Dosen dengan Penilaian Terendah
             const lowTenDosenCtx = document.getElementById('lowTenDosenChart').getContext('2d');
             const lowTenDosenChart = new Chart(lowTenDosenCtx, {
                 type: 'bar',
                 data: {
-                    labels: ['1', '2', '3', '4', '5'],
+                    labels: ['1', '2', '3', '4', '5'], // Label numerik
                     datasets: [{
                         label: 'Nilai',
-                        data: [50, 52, 53, 54, 55],
+                        data: [
+                            @foreach ($lowDosen as $dosen)
+                                {{ $dosen->total_nilai }},
+                            @endforeach
+                        ],
                         backgroundColor: 'rgba(255, 99, 132, 0.6)',
                         borderColor: 'rgba(255, 99, 132, 1)',
                         borderWidth: 1
@@ -263,6 +272,7 @@
                 }
             });
 
+            // Chart: Fakultas dengan Dosen Grade A
             // Chart: Fakultas dengan Dosen Terbaik
             const topFacultiesCtx = document.getElementById('topFacultiesChart').getContext('2d');
             const topFacultiesChart = new Chart(topFacultiesCtx, {
@@ -300,6 +310,7 @@
                 }
             });
         </script>
+
 
     </main>
 

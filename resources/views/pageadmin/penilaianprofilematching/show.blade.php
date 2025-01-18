@@ -262,7 +262,7 @@
                         </div>
 
                         <div class="col-md-6">
-                            <h6 class="text-uppercase text-sm">Profil Pengawas</h6>
+                            <h6 class="text-uppercase text-sm">Profil Dosen Penilai</h6>
                             <table class="table table-bordered">
                                 <tr>
                                     <td>Nama</td>

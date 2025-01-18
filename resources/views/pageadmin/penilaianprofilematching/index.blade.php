@@ -69,11 +69,18 @@
                     <div class="card mb-4">
                         <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                             <h6>Tabel Data Penilaian Perilaku Kerja</h6>
-                            <!-- Button Filter -->
-                            <button class="btn btn-sm bg-gradient-info me-2" data-bs-toggle="modal"
-                                data-bs-target="#filterModal" title="Filter Data">
-                                <i class="fa fa-filter" style="font-size:10px"></i> Filter
-                            </button>
+                            <div>
+                                <!-- Button Filter -->
+                                <button class="btn btn-sm bg-gradient-info me-2" data-bs-toggle="modal"
+                                    data-bs-target="#filterModal" title="Filter Data">
+                                    <i class="fa fa-filter" style="font-size:10px"></i> Filter
+                                </button>
+                                <button class="btn btn-sm bg-gradient-info me-2"
+                                    onclick="window.location.href='{{ route('admin.penilaianprofilematching.export-pdf', request()->all()) }}'"
+                                    title="Rekap Data">
+                                    <i class="fa fa-file-pdf" style="font-size:10px"></i> Rekap Data
+                                </button>
+                            </div>
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
                             <div class="table-responsive p-0">

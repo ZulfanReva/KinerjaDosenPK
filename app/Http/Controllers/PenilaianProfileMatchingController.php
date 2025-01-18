@@ -6,6 +6,7 @@ use App\Models\Prodi;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\PenilaianPerilakuKerja;
+use Carbon\Carbon;
 
 class PenilaianProfileMatchingController extends Controller
 {
@@ -44,34 +45,66 @@ class PenilaianProfileMatchingController extends Controller
     public function show($id)
     {
         try {
-            // Ambil data berdasarkan ID beserta relasi terkait
             $penilaian = PenilaianPerilakuKerja::with(['dosen.prodi', 'user.dosen'])->findOrFail($id);
-
-            // Tampilkan halaman detail
             return view('pageadmin.penilaianprofilematching.show', compact('penilaian'));
         } catch (\Exception $e) {
-            // Tangani jika data tidak ditemukan
-            return redirect()->route('pageadmin.penilaianprofilematching.index')
+            // Perbaiki nama route disini
+            return redirect()->route('admin.penilaianprofilematching.index')
                 ->with('error', 'Data penilaian tidak ditemukan.');
         }
     }
 
-    public function generatePDF($id)
+    public function exportPDF(Request $request)
     {
-        try {
-            // Ambil data yang diperlukan
-            $penilaian = PenilaianPerilakuKerja::with(['dosen.prodi', 'user.dosen'])->findOrFail($id);
+        // Get filtered data based on request parameters
+        $query = PenilaianPerilakuKerja::with(['dosen.prodi', 'user.dosen']);
 
-            // Muat tampilan untuk PDF dan kirim data
-            // Pastikan layout dari show juga diterapkan di PDF
-            $pdf = Pdf::loadView('pageadmin.penilaianprofilematching.show', compact('penilaian'));
-
-            // Stream PDF langsung ke browser
-            return $pdf->stream('Penilaian_' . $id . '.pdf');
-        } catch (\Exception $e) {
-            // Tangani kesalahan jika ada
-            return redirect()->route('admin.penilaianprofilematching.index')
-                ->with('error', 'Terjadi kesalahan saat membuat PDF.');
+        if ($request->has('prodi') && $request->prodi) {
+            $query->whereHas('dosen.prodi', function ($q) use ($request) {
+                $q->where('id', $request->prodi);
+            });
         }
+
+        if ($request->has('periode') && $request->periode) {
+            $query->where('periode', $request->periode);
+        }
+
+        $penilaianPerilaku = $query->get();
+
+        // Calculate grades and add as attribute
+        $penilaianPerilaku->map(function ($penilaian) {
+            $nilai = $penilaian->total_nilai;
+            $penilaian->grade = $nilai >= 4.56 ? 'A' : ($nilai >= 3.56 ? 'B' : ($nilai >= 2.56 ? 'C' : ($nilai >= 1.56 ? 'D' : 'E')));
+            return $penilaian;
+        });
+
+        // Sort collection by grade
+        $penilaianPerilaku = $penilaianPerilaku->sortBy(function ($penilaian) {
+            // Create grade order map for proper sorting
+            $gradeOrder = [
+                'A' => 1,
+                'B' => 2,
+                'C' => 3,
+                'D' => 4,
+                'E' => 5
+            ];
+            return $gradeOrder[$penilaian->grade];
+        });
+
+        // Encode images to base64
+        $kopImage = base64_encode(file_get_contents(public_path('assets/foto/kopsurat.png')));
+        $ttdImage = base64_encode(file_get_contents(public_path('assets/foto/ttddigital.png')));
+
+        $pdf = PDF::loadView('pageadmin.penilaianprofilematching.pdf', [
+            'penilaianPerilaku' => $penilaianPerilaku,
+            'exportDate' => Carbon::now()->format('d-m-Y H:i:s'),
+            'kopBase64' => 'data:image/png;base64,' . $kopImage,
+            'ttdBase64' => 'data:image/png;base64,' . $ttdImage
+        ]);
+
+        $pdf->getDomPDF()->set_option('isRemoteEnabled', true);
+        $pdf->getDomPDF()->set_option('isHtml5ParserEnabled', true);
+
+        return $pdf->download('penilaian-perilaku-kerja-' . Carbon::now()->format('Y-m-d') . '.pdf');
     }
 }
