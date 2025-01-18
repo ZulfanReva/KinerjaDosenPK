@@ -119,9 +119,12 @@
             </tr>
         </thead>
         <tbody>
-            @forelse($penilaianPerilaku as $index => $penilaian)
+            @php
+                $nomorUrut = 1; // Anda bisa mengubah nilai ini sesuai keinginan
+            @endphp
+            @forelse($penilaianPerilaku as $penilaian)
                 <tr>
-                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $nomorUrut++ }}</td> <!-- Menampilkan nomor urut manual -->
                     <td>{{ $penilaian->dosen->nama_dosen }}</td>
                     <td>{{ $penilaian->dosen->nidn }}</td>
                     <td>{{ $penilaian->dosen->prodi->nama_prodi ?? '-' }}</td>

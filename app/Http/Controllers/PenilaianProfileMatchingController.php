@@ -78,9 +78,9 @@ class PenilaianProfileMatchingController extends Controller
             return $penilaian;
         });
 
-        // Sort collection by grade
-        $penilaianPerilaku = $penilaianPerilaku->sortBy(function ($penilaian) {
-            // Create grade order map for proper sorting
+        // Sort collection by total_nilai (descending) and grade
+        $penilaianPerilaku = $penilaianPerilaku->sortByDesc(function ($penilaian) {
+            // Create a custom sorting array: first by total_nilai, then by grade
             $gradeOrder = [
                 'A' => 1,
                 'B' => 2,
@@ -88,7 +88,9 @@ class PenilaianProfileMatchingController extends Controller
                 'D' => 4,
                 'E' => 5
             ];
-            return $gradeOrder[$penilaian->grade];
+
+            // Return an array with both sorting criteria
+            return [$penilaian->total_nilai, $gradeOrder[$penilaian->grade]];
         });
 
         // Encode images to base64
