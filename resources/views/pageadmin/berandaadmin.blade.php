@@ -135,16 +135,13 @@
         <div class="container-fluid py-4">
             <div class="row">
                 <!-- Chart: 5 Dosen dengan Penilaian Tertinggi -->
-                <div class="col-12 col-xl-4">
+                <div class="col-12 col-md-4 mb-4">
                     <div class="card h-100">
                         <div class="card-header pb-0 p-3">
                             <h6 class="mb-0">5 Dosen dengan Penilaian Tertinggi</h6>
                         </div>
-                        <div class="card-body p-3">
+                        <div class="card-body">
                             <canvas id="topTenDosenChart"></canvas>
-                        </div>
-                        <!-- Nama Dosen yang Masuk Top 5 -->
-                        <div class="card-footer">
                             <ul class="list-unstyled text-right">
                                 @foreach ($topDosen as $index => $dosen)
                                     <li>({{ $index + 1 }}) {{ $dosen->nama_dosen }} - {{ $dosen->total_nilai }}</li>
@@ -155,16 +152,13 @@
                 </div>
 
                 <!-- Chart: 5 Dosen dengan Penilaian Terendah -->
-                <div class="col-12 col-xl-4">
+                <div class="col-12 col-md-4 mb-4">
                     <div class="card h-100">
                         <div class="card-header pb-0 p-3">
                             <h6 class="mb-0">5 Dosen dengan Penilaian Terendah</h6>
                         </div>
-                        <div class="card-body p-3">
+                        <div class="card-body">
                             <canvas id="lowTenDosenChart"></canvas>
-                        </div>
-                        <!-- Nama Dosen yang Masuk Top 5 -->
-                        <div class="card-footer">
                             <ul class="list-unstyled text-right">
                                 @foreach ($lowDosen as $index => $dosen)
                                     <li>({{ $index + 1 }}) {{ $dosen->nama_dosen }} - {{ $dosen->total_nilai }}</li>
@@ -174,21 +168,17 @@
                     </div>
                 </div>
 
-                <!-- Chart: Prodi dengan Dosen Grade A -->
-                <div class="col-12 col-xl-4">
+                <div class="col-12 col-md-4 mb-4">
                     <div class="card h-100">
                         <div class="card-header pb-0 p-3">
-                            <h6 class="mb-0">Prodi dengan Dosen Grade A</h6>
+                            <h6 class="mb-0">5 Dosen dengan Penilaian Terendah</h6>
                         </div>
-                        <div class="card-body p-3">
-                            <canvas id="topFacultiesChart"></canvas>
-                        </div>
-                        <!-- Nama Prodi dengan Dosen Grade A -->
-                        <div class="card-footer">
+                        <div class="card-body">
+                            <canvas id="prodiGradeAChart"></canvas>
                             <ul class="list-unstyled text-right">
-                                @foreach ($topProdi as $prodi)
-                                    <li>{{ $prodi->nama_prodi }} - {{ $prodi->dosen_grade_A }} Dosen</li>
-                                @endforeach
+                                @foreach ($prodiWithGradeA as $prodi)
+                                <li>{{ $prodi->nama_prodi }} - {{ $prodi->total_dosen }} Dosen</li>
+                            @endforeach
                             </ul>
                         </div>
                     </div>
@@ -272,48 +262,49 @@
                 }
             });
 
-            // Chart: Fakultas dengan Dosen Grade A
-            // Chart: Fakultas dengan Dosen Terbaik
-            const topFacultiesCtx = document.getElementById('topFacultiesChart').getContext('2d');
-            const topFacultiesChart = new Chart(topFacultiesCtx, {
+            // Chart: Prodi dengan Dosen Bergrade A
+            const prodiGradeAChartCtx = document.getElementById('prodiGradeAChart').getContext('2d');
+            const prodiGradeAChart = new Chart(prodiGradeAChartCtx, {
                 type: 'pie',
                 data: {
-                    labels: ['Fakultas Teknik', 'Fakultas Farmasi', 'Fakultas Psikologi', 'Fakultas FKIP',
-                        'Fakultas FKIK', 'Fakultas FAI', 'Fakultas Pasca Sarjana'
+                    labels: [
+                        @foreach ($prodiWithGradeA as $prodi)
+                            '{{ $prodi->nama_prodi }}',
+                        @endforeach
                     ],
                     datasets: [{
-                        label: 'Jumlah Dosen Terbaik',
-                        data: [20, 15, 10, 8, 5, 7, 4],
+                        label: 'Jumlah Dosen Bergrade A',
+                        data: [
+                            @foreach ($prodiWithGradeA as $prodi)
+                                {{ $prodi->total_dosen }},
+                            @endforeach
+                        ],
                         backgroundColor: [
-                            'rgba(54, 162, 235, 0.6)',
-                            'rgba(255, 206, 86, 0.6)',
                             'rgba(75, 192, 192, 0.6)',
-                            'rgba(153, 102, 255, 0.6)',
-                            'rgba(255, 159, 64, 0.6)',
                             'rgba(255, 99, 132, 0.6)',
-                            'rgba(201, 203, 207, 0.6)'
+                            'rgba(255, 206, 86, 0.6)',
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(153, 102, 255, 0.6)',
+                            'rgba(255, 159, 64, 0.6)'
                         ],
                         borderColor: [
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
                             'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)',
                             'rgba(255, 99, 132, 1)',
-                            'rgba(201, 203, 207, 1)'
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
                         ],
                         borderWidth: 1
                     }]
                 },
                 options: {
-                    responsive: true
+                    responsive: true, // Disable responsiveness
+                    
                 }
             });
         </script>
-
-
     </main>
-
 </body>
 
 </html>
