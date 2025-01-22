@@ -18,13 +18,13 @@ class DataDosenController extends Controller
         // Ambil semua data dosen dengan relasi 'prodi', 'jabatan', 'user'
         $dosens = Dosen::with('prodi', 'jabatan', 'user')->get();
 
-        // Pisahkan dosen pengajar dan dosen berjabatan
+        // Pisahkan DOSEN PENGAJAR dan dosen berjabatan
         $dosenPengajar = $dosens->filter(function ($dosen) {
-            return $dosen->jabatan->nama_jabatan == 'Dosen Pengajar';
+            return $dosen->jabatan->nama_jabatan == 'DOSEN PENGAJAR';
         });
 
         $dosenBerjabatan = $dosens->filter(function ($dosen) {
-            return $dosen->jabatan->nama_jabatan != 'Dosen Pengajar';
+            return $dosen->jabatan->nama_jabatan != 'DOSEN PENGAJAR';
         });
 
         // Ambil daftar Prodi untuk dropdown di filter
@@ -35,7 +35,7 @@ class DataDosenController extends Controller
 
     public function filter(Request $request)
     {
-        // Filter untuk Dosen Pengajar
+        // Filter untuk DOSEN PENGAJAR
         $queryPengajar = Dosen::with('prodi', 'jabatan', 'user');
         if ($request->prodi) {
             $queryPengajar->where('prodi_id', $request->prodi);
@@ -44,7 +44,7 @@ class DataDosenController extends Controller
             $queryPengajar->where('status', $request->status);
         }
         $dosenPengajar = $queryPengajar->whereHas('jabatan', function ($query) {
-            $query->where('nama_jabatan', 'Dosen Pengajar');
+            $query->where('nama_jabatan', 'DOSEN PENGAJAR');
         })->get();
 
         // Filter untuk Dosen Berjabatan
@@ -56,7 +56,7 @@ class DataDosenController extends Controller
             $queryBerjabatan->where('status', $request->status);
         }
         $dosenBerjabatan = $queryBerjabatan->whereHas('jabatan', function ($query) {
-            $query->where('nama_jabatan', '!=', 'Dosen Pengajar');
+            $query->where('nama_jabatan', '!=', 'DOSEN PENGAJAR');
         })->get();
 
         // Ambil daftar Prodi untuk dropdown di filter
@@ -88,9 +88,9 @@ class DataDosenController extends Controller
             foreach ($request->nama_dosen as $key => $namaDosen) {
                 $jabatan = Jabatan::find($request->jabatan_id[$key]);
 
-                if ($jabatan->nama_jabatan !== 'Dosen Pengajar') {
+                if ($jabatan->nama_jabatan !== 'DOSEN PENGAJAR') {
                     if (empty($request->username[$key]) || empty($request->password[$key])) {
-                        return back()->withErrors(['error' => "Username dan Password wajib diisi untuk dosen dengan jabatan selain 'Dosen Pengajar'."]);
+                        return back()->withErrors(['error' => "Username dan Password wajib diisi untuk dosen dengan jabatan selain 'DOSEN PENGAJAR'."]);
                     }
 
                     $user = User::create([
@@ -151,7 +151,7 @@ class DataDosenController extends Controller
             $dosen = Dosen::findOrFail($id);
             $jabatan = Jabatan::find($request->jabatan_id);
 
-            if ($jabatan->nama_jabatan === 'Dosen Pengajar') {
+            if ($jabatan->nama_jabatan === 'DOSEN PENGAJAR') {
                 if ($dosen->user) {
                     $dosen->user->delete();
                 }
@@ -167,7 +167,7 @@ class DataDosenController extends Controller
                     $dosen->user->save();
                 } else {
                     if (!$request->filled('username') || !$request->filled('password')) {
-                        throw new \Exception("Username dan Password wajib diisi untuk dosen dengan jabatan selain 'Dosen Pengajar'.");
+                        throw new \Exception("Username dan Password wajib diisi untuk dosen dengan jabatan selain 'DOSEN PENGAJAR'.");
                     }
                     $user = User::create([
                         'username' => $request->username,
