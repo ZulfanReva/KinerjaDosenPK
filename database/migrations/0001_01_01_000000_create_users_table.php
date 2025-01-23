@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('username');
+            $table->string('username')->unique(); // Menambahkan unique constraint di sini
             $table->string('password');
             $table->enum('role', ['admin', 'dosenberjabatan'])->default('dosenberjabatan');
             $table->timestamps();

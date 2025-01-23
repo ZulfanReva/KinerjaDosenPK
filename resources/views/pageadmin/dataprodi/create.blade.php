@@ -65,6 +65,22 @@
         </nav>
         <!-- End Navbar -->
 
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <div class="container-fluid py-4">
             <div class="row">
                 <div class="col-12">
@@ -82,8 +98,8 @@
                                         <div class="form-group mb-4">
                                             <div class="row">
                                                 <div class="col-md-6 mb-3">
-                                                    <label for="nama_prodi[]" class="form-label">Nama Prodi</label>
-                                                    <input type="text" name="nama_prodi[]" class="form-control"
+                                                    <label for="nama_prodi" class="form-label">Nama Prodi</label>
+                                                    <input type="text" name="nama_prodi" class="form-control"
                                                         placeholder="Masukkan Nama Prodi" required>
                                                 </div>
                                             </div>
@@ -91,15 +107,11 @@
                                     </div>
                                     <div id="additionalForms"></div>
                                     <div class="d-flex justify-content-between mt-4">
-                                        <!-- Tombol Simpan dan Kembali (bersebelahan) -->
                                         <div class="d-flex" style="gap: 10px;">
-                                            <!-- Menambahkan jarak menggunakan gap -->
                                             <button type="submit" class="btn bg-gradient-info">Simpan</button>
                                             <button type="button" class="btn btn-outline-secondary"
                                                 onclick="window.location.href='{{ route('admin.dataprodi.index') }}'">Kembali</button>
                                         </div>
-
-                                        <!-- Tombol Tambah Form di sebelah kanan -->
                                         <button type="button" class="btn btn-outline-info" id="addFormButton">
                                             <i class="fa fa-plus"></i> Tambah Form
                                         </button>
@@ -119,8 +131,8 @@
                 newForm.innerHTML = `
         <div class="row">
             <div class="col-md-6 mb-3">
-                <label for="nama_prodi[]" class="form-label">Nama Prodi</label>
-                <input type="text" name="nama_prodi[]" class="form-control" placeholder="Masukkan Nama Prodi" required>
+                <label for="nama_prodi" class="form-label">Nama Prodi</label>
+                <input type="text" name="nama_prodi" class="form-control" placeholder="Masukkan Nama Prodi" required>
             </div>
         </div>
     `;

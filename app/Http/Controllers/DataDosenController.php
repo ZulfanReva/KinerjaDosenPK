@@ -75,14 +75,41 @@ class DataDosenController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'nama_dosen.*' => 'required|string|max:255',
+            'nama_dosen.*' => 'required|string|max:255|unique:dosen,nama_dosen',
             'nidn.*' => 'required|string|max:255|unique:dosen,nidn',
             'prodi_id.*' => 'required|integer|exists:prodi,id',
             'status.*' => 'required|in:Aktif,Nonaktif',
             'jabatan_id.*' => 'required|integer|exists:jabatan,id',
             'username.*' => 'nullable|max:50|unique:users,username',
             'password.*' => 'nullable|string|min:8',
+        ], [
+            // Custom messages for nama_dosen
+            'nama_dosen.*.required' => 'Nama dosen wajib diisi.',
+            'nama_dosen.*.string' => 'Nama dosen harus berupa teks.',
+            'nama_dosen.*.unique' => 'Nama Dosen ":input" sudah terdaftar di database.',
+
+            // Custom messages for nidn
+            'nidn.*.required' => 'NIDN wajib diisi.',
+            'nidn.*.unique' => 'NIDN ":input" sudah terdaftar di database.',
+
+            // Custom messages for prodi_id
+            'prodi_id.*.required' => 'Prodi wajib diisi.',
+
+            // Custom messages for status
+            'status.*.required' => 'Status wajib diisi.',
+
+            // Custom messages for jabatan_id
+            'jabatan_id.*.required' => 'Jabatan wajib diisi.',
+
+            // Custom messages for username
+            'username.*.max' => 'Username tidak boleh lebih dari 50 karakter.',
+            'username.*.unique' => 'Username ":input" sudah terdaftar di database.',
+
+            // Custom messages for password
+            'password.*.string' => 'Password harus berupa teks.',
+            'password.*.min' => 'Password minimal harus terdiri dari 8 karakter.',
         ]);
+
 
         try {
             foreach ($request->nama_dosen as $key => $namaDosen) {

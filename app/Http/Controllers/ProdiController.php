@@ -31,14 +31,16 @@ class ProdiController extends Controller
     {
         // Validasi input
         $request->validate([
-            'nama_prodi' => 'required|array',
-            'nama_prodi.*' => 'required|string|max:255',
+            'nama_prodi' => 'required|string|max:30|unique:prodi,nama_prodi', // Pastikan unique di database
+        ], [
+            'nama_prodi.string' => 'Nama prodi harus berupa teks.',
+            'nama_prodi.required' => 'Nama prodi wajib diisi.',
+            'nama_prodi.unique' => 'Prodi ":input" sudah terdaftar dalam database.',
+            'nama_prodi.max' => 'Nama prodi tidak boleh melebihi 30 karakter.',
         ]);
 
         // Simpan data prodi
-        foreach ($request->nama_prodi as $namaProdi) {
-            Prodi::create(['nama_prodi' => $namaProdi]);
-        }
+        Prodi::create(['nama_prodi' => $request->nama_prodi]);
 
         // Redirect dengan pesan sukses
         return redirect()->route('admin.dataprodi.index')

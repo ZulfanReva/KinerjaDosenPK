@@ -15,11 +15,6 @@ class Jabatan extends Model
 
     public function dosen()
     {
-    return $this->hasMany(Pengawas::class, 'jabatan_id');
-    }
-
-    public function pengawas()
-    {
-        return $this->hasMany(Pengawas::class, 'jabatan_id'); // Relasi ke tabel pengawas
+    return $this->hasMany(Dosen::class, 'jabatan_id');
     }
 }

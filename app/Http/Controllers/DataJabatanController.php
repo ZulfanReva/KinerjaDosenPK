@@ -29,21 +29,26 @@ class DataJabatanController extends Controller
     // Menyimpan data baru
     public function store(Request $request)
     {
-        // Validasi input
-        $request->validate([
-            'nama_jabatan' => 'required|array',
-            'nama_jabatan.*' => 'required|string|max:255',
+        $validatedData = $request->validate([
+            'nama_jabatan' => 'required|string|max:30|unique:jabatan,nama_jabatan',
+        ], [
+            'nama_jabatan.string' => 'Nama jabatan harus berupa teks.',
+            'nama_jabatan.required' => 'Nama jabatan wajib diisi.',
+            'nama_jabatan.unique' => 'Jabatan ":input" sudah terdaftar dalam database.',
+            'nama_jabatan.max' => 'Nama jabatan tidak boleh melebihi 30 karakter.',
         ]);
 
-        // Simpan data jabatan
-        foreach ($request->nama_jabatan as $namaJabatan) {
-            Jabatan::create(['nama_jabatan' => $namaJabatan]);
-        }
+        try {
+            Jabatan::create([
+                'nama_jabatan' => $validatedData['nama_jabatan'],
+            ]);
 
-        // Redirect dengan pesan sukses
-        return redirect()->route('admin.datajabatan.index')
-            ->with('success', 'Data Jabatan berhasil ditambah!');
+            return redirect()->route('admin.datajabatan.index')->with('success', 'Data dosen berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
+
 
     // Menampilkan detail data
     public function show($id)

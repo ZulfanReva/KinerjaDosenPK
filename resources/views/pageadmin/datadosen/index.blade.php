@@ -27,6 +27,18 @@
             <!-- End Navbar -->
 
             <div class="container-fluid py-4">
+                <!-- Tombol di sebelah kanan -->
+                <div class="d-flex justify-content-end">
+                    <!-- Tombol Filter -->
+                    <button class="btn btn-sm bg-gradient-info me-2" data-bs-toggle="modal"
+                        data-bs-target="#filterModal" title="Filter Data">
+                        <i class="fa fa-filter" style="font-size:10px"></i> Filter
+                    </button>
+
+                    <!-- Tombol Tambah Data -->
+                    <a href="{{ route('admin.datadosen.create') }}" class="btn btn-sm bg-gradient-info">Tambah Data</a>
+                </div>
+
                 <!-- Flash Messages -->
                 @if (Session::has('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -52,20 +64,6 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
-
-                <!-- Tombol di sebelah kanan -->
-                <div class="d-flex justify-content-end">
-                    <!-- Tombol Filter -->
-                    <button class="btn btn-sm bg-gradient-info me-2" data-bs-toggle="modal"
-                        data-bs-target="#filterModal" title="Filter Data">
-                        <i class="fa fa-filter" style="font-size:10px"></i> Filter
-                    </button>
-
-                    <!-- Tombol Tambah Data -->
-                    <a href="{{ route('admin.datadosen.create') }}" class="btn btn-sm bg-gradient-info">Tambah Data</a>
-                </div>
-
-
 
                 <!-- Tabel Data Dosen Pengajar -->
                 <div class="row">
@@ -102,9 +100,9 @@
                                                     <td class="text-start" style="padding: 10px;">
                                                         {{ $dosen->nama_dosen }}
                                                     </td>
-                                                    <td class="text-start" style="padding: 10px;">{{ $dosen->nidn }}
+                                                    <td class="text-center" style="padding: 10px;">{{ $dosen->nidn }}
                                                     </td>
-                                                    <td class="text-start" style="padding: 10px;">
+                                                    <td class="text-center" style="padding: 10px;">
                                                         {{ $dosen->prodi->nama_prodi }}</td>
                                                     <td class="text-center" style="padding: 10px;">
                                                         <span
@@ -112,7 +110,7 @@
                                                             {{ ucfirst($dosen->status) }}
                                                         </span>
                                                     </td>
-                                                    <td class="text-start" style="padding: 10px;">
+                                                    <td class="text-center" style="padding: 10px;">
                                                         {{ $dosen->jabatan->nama_jabatan }}</td>
                                                     <td class="text-center" style="padding: 10px;">
                                                         <!-- Tombol Edit -->

@@ -25,6 +25,22 @@
             </nav>
             <!-- End Navbar -->
 
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <div class="container-fluid py-4">
                 <div class="row">
                     <div class="col-12">
@@ -42,9 +58,9 @@
                                             <div class="form-group mb-4">
                                                 <div class="row">
                                                     <div class="col-md-6 mb-3">
-                                                        <label for="nama_jabatan[]" class="form-label">Nama
+                                                        <label for="nama_jabatan" class="form-label">Nama
                                                             Jabatan</label>
-                                                        <input type="text" name="nama_jabatan[]" class="form-control"
+                                                        <input type="text" name="nama_jabatan" class="form-control"
                                                             placeholder="Masukkan Nama Jabatan" required>
                                                     </div>
                                                 </div>
@@ -76,8 +92,8 @@
                     newForm.innerHTML = `
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label for="nama_jabatan[]" class="form-label">Nama Jabatan</label>
-                                <input type="text" name="nama_jabatan[]" class="form-control" placeholder="Masukkan Nama Jabatan" required>
+                                <label for="nama_jabatan" class="form-label">Nama Jabatan</label>
+                                <input type="text" name="nama_jabatan" class="form-control" placeholder="Masukkan Nama Jabatan" required>
                             </div>
                         </div>
                     `;

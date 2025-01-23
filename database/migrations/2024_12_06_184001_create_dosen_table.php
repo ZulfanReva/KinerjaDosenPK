@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('dosen', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_dosen');
+            $table->string('nama_dosen')->unique(); // Tambahkan unique di sini
             $table->string('nidn')->unique();
             $table->foreignId('prodi_id')->constrained('prodi')->onDelete('cascade');
             $table->enum('status', ['Aktif', 'Nonaktif']);

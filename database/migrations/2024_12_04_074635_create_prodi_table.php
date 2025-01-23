@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('prodi', function (Blueprint $table) {
             $table->id(); // Primary key otomatis
-            $table->string('nama_prodi'); // Kolom nama prodi
+            $table->string('nama_prodi')->unique(); // Kolom nama prodi dengan constraint unique
             $table->timestamps(); // Kolom created_at dan updated_at
         });
     }

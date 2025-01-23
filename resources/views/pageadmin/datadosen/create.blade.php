@@ -124,7 +124,7 @@
                                                 const selectedOption = jabatanSelect.options[jabatanSelect.selectedIndex].text;
 
                                                 // Tampilkan atau sembunyikan kolom tambahan berdasarkan pilihan
-                                                if (selectedOption !== 'Dosen Pengajar') {
+                                                if (selectedOption !== 'DOSEN PENGAJAR') {
                                                     additionalFields.style.display = 'block'; // Tampilkan kolom
                                                 } else {
                                                     additionalFields.style.display = 'none'; // Sembunyikan kolom
@@ -227,7 +227,7 @@
                 const selectedOption = jabatanSelect.options[jabatanSelect.selectedIndex].text;
 
                 // Tampilkan atau sembunyikan kolom tambahan berdasarkan pilihan
-                if (selectedOption !== 'Dosen Pengajar') {
+                if (selectedOption !== 'DOSEN PENGAJAR') {
                     additionalFields.style.display = 'block'; // Tampilkan kolom
                 } else {
                     additionalFields.style.display = 'none'; // Sembunyikan kolom
