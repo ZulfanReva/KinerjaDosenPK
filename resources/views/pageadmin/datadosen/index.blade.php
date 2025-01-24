@@ -246,9 +246,9 @@
                                                 <tr>
                                                     <td class="text-start" style="padding: 10px;">
                                                         {{ $dosen->nama_dosen }}</td>
-                                                    <td class="text-start" style="padding: 10px;">{{ $dosen->nidn }}
+                                                    <td class="text-center" style="padding: 10px;">{{ $dosen->nidn }}
                                                     </td>
-                                                    <td class="text-start" style="padding: 10px;">
+                                                    <td class="text-center" style="padding: 10px;">
                                                         {{ $dosen->prodi->nama_prodi }}</td>
                                                     <td class="text-center" style="padding: 10px;">
                                                         <span
@@ -256,12 +256,12 @@
                                                             {{ ucfirst($dosen->status) }}
                                                         </span>
                                                     </td>
-                                                    <td class="text-start" style="padding: 10px;">
+                                                    <td class="text-center" style="padding: 10px;">
                                                         {{ $dosen->jabatan->nama_jabatan }}</td>
-                                                    <td class="text-start" style="padding: 10px;">
+                                                    <td class="text-center" style="padding: 10px;">
                                                         {{ $dosen->user->username ?? '-' }}
                                                     </td>
-                                                    <td class="text-centerr" style="padding: 10px;">*****</td>
+                                                    <td class="text-center" style="padding: 10px;">*****</td>
                                                     <td class="text-center" style="padding: 10px;">
                                                         <!-- Tombol Edit -->
                                                         <a href="{{ route('admin.datadosen.edit', $dosen->id) }}"
