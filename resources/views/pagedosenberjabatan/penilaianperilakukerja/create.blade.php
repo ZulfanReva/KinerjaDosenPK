@@ -43,7 +43,7 @@
                             <div class="col-md-6">
                                 <h6 class="font-weight-bold text-info">Profil Dosen</h6>
                                 <div class="form-group">
-                                    <label for="nama-dosen">Nama</label>
+                                    <label for="nama-dosen">Nama Dosen</label>
                                     <input type="text" class="form-control" id="nama-dosen"
                                         value="{{ $dosen->nama_dosen }}" readonly>
                                     <input type="hidden" name="dosen_id" value="{{ $dosen->id }}">
@@ -67,9 +67,9 @@
 
                             <!-- Profil Dosen Berjabatan -->
                             <div class="col-md-6">
-                                <h6 class="font-weight-bold text-info">Profil Dosen Berjabatan</h6>
+                                <h6 class="font-weight-bold text-info">Profil Dosen Penilai</h6>
                                 <div class="form-group">
-                                    <label for="nama-user">Nama Dosen Berjabatan</label>
+                                    <label for="nama-user">Nama Dosen</label>
                                     <input type="text" class="form-control" id="nama-user"
                                         value="{{ $dosenBerjabatan->nama_dosen }}" readonly>
                                     <input type="hidden" name="user_id" value="{{ $dosenBerjabatan->users_id }}">
