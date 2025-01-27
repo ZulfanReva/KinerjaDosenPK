@@ -18,14 +18,19 @@ class DataDosenController extends Controller
         // Ambil semua data dosen dengan relasi 'prodi', 'jabatan', 'user'
         $dosens = Dosen::with('prodi', 'jabatan', 'user')->get();
 
-        // Pisahkan DOSEN PENGAJAR dan dosen berjabatan
-        $dosenPengajar = $dosens->filter(function ($dosen) {
-            return $dosen->jabatan->nama_jabatan == 'DOSEN PENGAJAR';
-        });
+        // Ambil dosen dengan jabatan 'DOSEN PENGAJAR'
+        $dosenPengajar = Dosen::with('prodi', 'jabatan', 'user')
+            ->whereHas('jabatan', function ($query) {
+                $query->where('nama_jabatan', 'DOSEN PENGAJAR');
+            })
+            ->paginate(10, ['*'], 'dosenPengajar_page'); // Pagination untuk Dosen Pengajar
 
-        $dosenBerjabatan = $dosens->filter(function ($dosen) {
-            return $dosen->jabatan->nama_jabatan != 'DOSEN PENGAJAR';
-        });
+        // Ambil dosen yang bukan 'DOSEN PENGAJAR'
+        $dosenBerjabatan = Dosen::with('prodi', 'jabatan', 'user')
+            ->whereHas('jabatan', function ($query) {
+                $query->where('nama_jabatan', '!=', 'DOSEN PENGAJAR');
+            })
+            ->paginate(10, ['*'], 'dosenBerjabatan_page'); // Pagination untuk Dosen Berjabatan
 
         // Ambil daftar Prodi untuk dropdown di filter
         $listProdi = Prodi::all();

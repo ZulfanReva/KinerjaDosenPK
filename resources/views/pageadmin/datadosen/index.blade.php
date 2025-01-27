@@ -106,7 +106,7 @@
                                                         {{ $dosen->prodi->nama_prodi }}</td>
                                                     <td class="text-center" style="padding: 10px;">
                                                         <span
-                                                            class="badge bg-gradient-{{ $dosen->status === 'Aktif' ? 'success' : 'danger' }}">
+                                                            class="badge bg-gradient-{{ $dosen->status === 'Aktif' ? 'success' : 'secondary' }}">
                                                             {{ ucfirst($dosen->status) }}
                                                         </span>
                                                     </td>
@@ -136,7 +136,55 @@
                                             @endforelse
                                         </tbody>
                                     </table>
+
+                                    <!-- Tambahkan Pagination -->
+                                    <section>
+                                        <div class="container">
+                                            <div class="row justify-content-center py-2">
+                                                <!-- Pagination Dosen Berjabatan -->
+                                                <div class="col-lg-4 mx-auto">
+                                                    {{ $dosenPengajar->appends(['dosenPengajar_page' => $dosenPengajar->currentPage()])->links('pagination::bootstrap-4') }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
                                 </div>
+
+                                <style>
+                                    .pagination {
+                                        display: flex;
+                                        justify-content: center;
+                                        gap: 8px;
+                                    }
+
+                                    .pagination .page-item .page-link {
+                                        color: #000;
+                                        /* Warna teks default hitam */
+                                        border: none;
+                                        /* Hilangkan border */
+                                        border-radius: 50%;
+                                        /* Bentuk lingkaran */
+                                        padding: 8px 12px;
+                                        text-align: center;
+                                        transition: background-color 0.3s ease, color 0.3s ease;
+                                        /* Animasi */
+                                    }
+
+                                    .pagination .page-item.active .page-link {
+                                        background-image: linear-gradient(310deg, #2152ff 0%, #21d4fd 100%);
+                                        /* Gradient aktif */
+                                        color: #fff !important;
+                                        /* Warna font putih */
+                                    }
+
+                                    .pagination .page-item .page-link:hover {
+                                        background-image: linear-gradient(310deg, #2152ff 0%, #21d4fd 100%);
+                                        /* Gradient saat hover */
+                                        color: #fff;
+                                        /* Warna font hover */
+                                    }
+                                </style>
+
                             </div>
                         </div>
                     </div>
@@ -246,7 +294,8 @@
                                                 <tr>
                                                     <td class="text-start" style="padding: 10px;">
                                                         {{ $dosen->nama_dosen }}</td>
-                                                    <td class="text-center" style="padding: 10px;">{{ $dosen->nidn }}
+                                                    <td class="text-center" style="padding: 10px;">
+                                                        {{ $dosen->nidn }}
                                                     </td>
                                                     <td class="text-center" style="padding: 10px;">
                                                         {{ $dosen->prodi->nama_prodi }}</td>
@@ -287,6 +336,18 @@
                                             @endforelse
                                         </tbody>
                                     </table>
+
+                                    <!-- Tambahkan Pagination -->
+                                    <section>
+                                        <div class="container">
+                                            <div class="row justify-content-center py-2">
+                                                <!-- Pagination Dosen Berjabatan -->
+                                                <div class="col-lg-4 mx-auto">
+                                                    {{ $dosenBerjabatan->appends(['dosenBerjabatan_page' => $dosenBerjabatan->currentPage()])->links('pagination::bootstrap-4') }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
                                 </div>
                             </div>
                         </div>
