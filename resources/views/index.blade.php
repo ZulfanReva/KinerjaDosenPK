@@ -6,8 +6,8 @@
 
 <body class="index-page">
 
-    <!-- Header -->
-    <x-header></x-header>
+    <!-- Navbar  -->
+    <x-navbar></x-navbar>
 
     <main class="main">
 
