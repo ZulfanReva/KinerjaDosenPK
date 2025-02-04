@@ -34,7 +34,7 @@
         <div class="container-fluid py-4">
             <div class="row">
                 <!-- Chart: 5 Dosen dengan Penilaian Tertinggi -->
-                <div class="col-12 col-md-4 mb-4">
+                <div class="col-12 col-md-6 mb-4">
                     <div class="card h-100">
                         <div class="card-header pb-0 p-3">
                             <h6 class="mb-0">5 Dosen dengan Penilaian Tertinggi</h6>
@@ -51,7 +51,7 @@
                 </div>
 
                 <!-- Chart: 5 Dosen dengan Penilaian Terendah -->
-                <div class="col-12 col-md-4 mb-4">
+                <div class="col-12 col-md-6 mb-4">
                     <div class="card h-100">
                         <div class="card-header pb-0 p-3">
                             <h6 class="mb-0">5 Dosen dengan Penilaian Terendah</h6>
@@ -67,21 +67,20 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-header pb-0 p-3">
-                            <h6 class="mb-0">5 Dosen dengan Penilaian Terendah</h6>
-                        </div>
-                        <div class="card-body">
-                            <canvas id="prodiGradeAChart"></canvas>
-                            <ul class="list-unstyled text-right">
-                                @foreach ($prodiWithGradeA as $prodi)
+                {{-- <div class="card h-100">
+                    <div class="card-header pb-0 p-3">
+                        <h6 class="mb-0">Dosen Dengan Grade A</h6>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="prodiGradeAChart"></canvas>
+                        <ul class="list-unstyled text-right">
+                            @foreach ($prodiWithGradeA as $prodi)
                                 <li>{{ $prodi->nama_prodi }} - {{ $prodi->total_dosen }} Dosen</li>
                             @endforeach
-                            </ul>
-                        </div>
+                        </ul>
                     </div>
-                </div>
+                </div> --}}
+
             </div>
         </div>
 
