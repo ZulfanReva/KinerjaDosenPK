@@ -61,16 +61,12 @@ class PenilaianPerilakuKerjaController extends Controller
         // Ambil data dosen berdasarkan user yang login (profil dosen berjabatan)
         $dosenBerjabatan = Dosen::with('jabatan')->where('users_id', $user->id)->firstOrFail();
 
-
-
-        // Pilihan periode statis
-        $periodeList = [
-            '2022/2023 Ganjil',
-            '2022/2023 Genap',
-        ];
+        // Ambil daftar periode dari database
+        $periodeList = Periode::pluck('nama_periode');
 
         return view('pagedosenberjabatan.penilaianperilakukerja.create', compact('dosen', 'dosenBerjabatan', 'periodeList'));
     }
+
 
     /**
      * Store a newly created resource in storage.
