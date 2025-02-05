@@ -7,8 +7,9 @@
     <title>Laporan Penilaian Perilaku Kerja</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Times New Roman';
             font-size: 12px;
+            color: black;
         }
 
         .letterhead {

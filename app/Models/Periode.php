@@ -12,8 +12,8 @@ class Periode extends Model
     protected $table = 'periode'; 
     protected $fillable = ['nama_periode'];
 
-    public function dosen()
+    public function penilaianPerilakuKerja()
     {
-    return $this->hasMany(Dosen::class, 'periode_id');
+        return $this->hasMany(PenilaianPerilakuKerja::class, 'periode_id');
     }
 }

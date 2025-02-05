@@ -88,7 +88,7 @@
                                                 @php
                                                     $penilaian = $penilaianPerilakuKerjas->where('dosen_id', $dosen->id)->first();
                                                 @endphp
-                                                {{ $penilaian ? $penilaian->periode : '-' }}
+                                                {{ $penilaian ? $penilaian->periode->nama_periode : '-' }}
                                             </td>
                                             <td class="align-middle text-center text-sm">
                                                 {{ $penilaian ? \Carbon\Carbon::parse($penilaian->tanggal_penilaian)->format('d-m-Y') : '-' }}

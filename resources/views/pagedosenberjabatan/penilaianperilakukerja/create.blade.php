@@ -90,10 +90,10 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="periode" class="form-label">Periode</label>
-                                    <select name="periode" class="form-select" required>
+                                    <select name="periode_id" class="form-select" required>
                                         <option value="" selected disabled>Pilih Periode</option>
                                         @foreach ($periodeList as $periode)
-                                            <option value="{{ $periode }}">{{ $periode }}</option>
+                                            <option value="{{ $periode->id }}">{{ $periode->nama_periode }}</option>
                                         @endforeach
                                     </select>
                                 </div>

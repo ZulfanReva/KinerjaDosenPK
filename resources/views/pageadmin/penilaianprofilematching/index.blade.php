@@ -152,7 +152,7 @@
                                                     <span class="badge bg-gradient-success">Aktif</span>
                                                 </td>
                                                 <td class="text-center">
-                                                    {{ $penilaian->periode }}
+                                                    {{ $penilaian->periode->nama_periode ?? '-' }}
                                                 </td>
                                                 <td class="text-center">
                                                     {{ $penilaian ? \Carbon\Carbon::parse($penilaian->tanggal_penilaian)->format('d-m-Y') : '-' }}
@@ -190,7 +190,7 @@
                                         @empty
                                             <tr>
                                                 <td colspan="10" class="text-center text-secondary py-4">
-                                                    <h6 class="mb-0">Belum ada data penilaian</h6>
+                                                    <h6 class="mb-0">BELUM ADA DATA PENILAIAN</h6>
                                                 </td>
                                             </tr>
                                         @endforelse

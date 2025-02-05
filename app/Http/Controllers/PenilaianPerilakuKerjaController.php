@@ -2,184 +2,161 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use App\Models\PenilaianPerilakuKerja;
 use App\Models\Dosen;
 use App\Models\Periode;
-use App\Models\PenilaianPerilakuKerja;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PenilaianPerilakuKerjaController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Tampilkan daftar penilaian perilaku kerja.
      */
     public function index()
     {
-        // Ambil user yang sedang login
         $user = Auth::user();
-
-        // Ambil dosen yang terhubung dengan user
         $dosenUser = $user->dosen;
 
         if (!$dosenUser) {
-            // Jika user login bukan dosen, tampilkan error atau redirect
             return redirect()->back()->with('error', 'User tidak terkait dengan dosen.');
         }
 
-        // Ambil prodi_id dari dosen yang login
         $userProdiId = $dosenUser->prodi_id;
 
-        // Ambil semua penilaian perilaku kerja
-        $penilaianPerilakuKerjas = PenilaianPerilakuKerja::whereIn('dosen_id', Dosen::where('prodi_id', $userProdiId)->pluck('id'))->get();
-
-        // Ambil data dosen yang aktif, memiliki prodi yang sama, dan bukan dosen yang sedang login
-        $dosenaktif = Dosen::where('status', 'Aktif')
-            ->where('prodi_id', $userProdiId)
-            ->where('id', '!=', $dosenUser->id) // Menambahkan pengecualian untuk dosen yang sedang login
+        // Ambil semua penilaian perilaku kerja dengan relasi periode
+        $penilaianPerilakuKerjas = PenilaianPerilakuKerja::with('periode')
+            ->whereIn('dosen_id', Dosen::where('prodi_id', $userProdiId)->pluck('id'))
             ->get();
 
-        // Tambahkan properti isRated untuk setiap dosen aktif
+        $dosenaktif = Dosen::where('status', 'Aktif')
+            ->where('prodi_id', $userProdiId)
+            ->where('id', '!=', $dosenUser->id)
+            ->get();
+
         foreach ($dosenaktif as $dosen) {
             $dosen->isRated = $penilaianPerilakuKerjas->contains('dosen_id', $dosen->id);
         }
 
-        // Kirim data ke view
         return view('pagedosenberjabatan.penilaianperilakukerja.index', compact('dosenaktif', 'penilaianPerilakuKerjas'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Tampilkan form untuk membuat penilaian baru.
      */
     public function create(Request $request)
     {
-        // Ambil user yang sedang login
         $user = Auth::user();
-
-        // Ambil data dosen berdasarkan dosen_id yang dikirimkan
         $dosen = Dosen::findOrFail($request->dosen_id);
-
-        // Ambil data dosen berdasarkan user yang login (profil dosen berjabatan)
         $dosenBerjabatan = Dosen::with('jabatan')->where('users_id', $user->id)->firstOrFail();
 
-        // Ambil daftar periode dari database
-        $periodeList = Periode::pluck('nama_periode');
+        // Ambil daftar periode dari tabel `periode` dalam bentuk koleksi
+        $periodeList = Periode::all();
 
         return view('pagedosenberjabatan.penilaianperilakukerja.create', compact('dosen', 'dosenBerjabatan', 'periodeList'));
     }
-
-
     /**
-     * Store a newly created resource in storage.
+     * Simpan data penilaian ke dalam database.
      */
     public function store(Request $request)
     {
-        // Ambil user yang sedang login
+        // dd($request->all());
         $user = Auth::user();
-
-        // Ambil dosen berjabatan berdasarkan users_id dari user yang sedang login
         $dosenBerjabatan = Dosen::where('users_id', $user->id)->firstOrFail();
 
-        // Validasi input
         $request->validate([
-            'dosen_id' => 'required|exists:dosen,id', // Dosen yang dinilai
-            'periode' => 'required|string',
+            'dosen_id' => 'required|exists:dosen,id',
+            'periode_id' => 'required|exists:periode,id',  // Validasi untuk periode_id
             'integritas' => 'required|integer|min:1|max:5',
             'komitmen' => 'required|integer|min:1|max:5',
             'kerjasama' => 'required|integer|min:1|max:5',
             'orientasi_pelayanan' => 'required|integer|min:1|max:5',
             'disiplin' => 'required|integer|min:1|max:5',
-            'kepemimpinan' => 'required|integer|min:1|max:5', // Mengubah menjadi required
-            'tanggal_penilaian' => 'required|date', // Validasi tanggal penilaian
-            'total_nilai' => 'required|numeric', // Validasi total nilai menjadi required
+            'kepemimpinan' => 'required|integer|min:1|max:5',
+            'tanggal_penilaian' => 'required|date',
+            'total_nilai' => 'required|numeric',
         ]);
 
-        // Menambahkan data tambahan untuk users_id dan total_nilai
-        $data = $request->all();
-        $data['users_id'] = $user->id; // Menambahkan ID pengguna yang sedang login
+        // Menyimpan PenilaianPerilakuKerja
+        PenilaianPerilakuKerja::create([
+            'dosen_id' => $request->dosen_id,
+            'periode_id' => $request->periode_id,  // Pastikan periode_id terisi
+            'integritas' => $request->integritas,
+            'komitmen' => $request->komitmen,
+            'kerjasama' => $request->kerjasama,
+            'orientasi_pelayanan' => $request->orientasi_pelayanan,
+            'disiplin' => $request->disiplin,
+            'kepemimpinan' => $request->kepemimpinan,
+            'tanggal_penilaian' => $request->tanggal_penilaian,
+            'total_nilai' => $request->total_nilai,
+            'users_id' => $user->id,
+        ]);
 
-        // Simpan data ke tabel penilaian_perilakukerja
-        PenilaianPerilakuKerja::create($data);
-
-        // Redirect dengan pesan sukses
         return redirect()->route('dosenberjabatan.penilaianperilakukerja.index')
-            ->with('success', 'Penilaian Perilaku Kerja Berhasil dimasukkan!');
-    }
-
-
-
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-
-        // Menampilkan detail penilaian PK berdasarkan ID
-        $penilaianPerilakuKerjas = PenilaianPerilakuKerja::findOrFail($id);
-        return view('dosenberjabatan.penilaianperilakukerja.show', compact('penilaianperilakukerja'));
+            ->with('success', 'Penilaian Perilaku Kerja berhasil ditambahkan!');
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Tampilkan detail penilaian berdasarkan ID.
      */
-    public function edit(string $id)
+    public function show($id)
     {
-        // Menampilkan form untuk mengedit penilaian PK
-        $penilaianPerilakuKerjas = PenilaianPerilakuKerja::findOrFail($id);
-        return view('dosenberjabatan.penilaianperilakukerja.edit', compact('penilaianperilakukerja'));
+        $penilaianPerilakuKerja = PenilaianPerilakuKerja::with('periode')->findOrFail($id);
+        return view('pagedosenberjabatan.penilaianperilakukerja.show', compact('penilaianPerilakuKerja'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Tampilkan form edit penilaian.
      */
-    public function update(Request $request, string $id)
+    public function edit($id)
     {
-        // Validasi data yang diterima
+        $penilaianPerilakuKerja = PenilaianPerilakuKerja::with('periode')->findOrFail($id);
+        $periodeList = Periode::pluck('nama_periode', 'id');
+
+        return view('pagedosenberjabatan.penilaianperilakukerja.edit', compact('penilaianPerilakuKerja', 'periodeList'));
+    }
+
+    /**
+     * Perbarui data penilaian.
+     */
+    public function update(Request $request, $id)
+    {
         $request->validate([
             'dosen_id' => 'required|exists:dosen,id',
-            'pengawas_id' => 'required|exists:pengawas,id',
             'periode_id' => 'required|exists:periode,id',
-            'orientasi_pelayanan' => 'required|numeric|min:0|max:5',
             'integritas' => 'required|numeric|min:0|max:5',
             'komitmen' => 'required|numeric|min:0|max:5',
-            'disiplin' => 'required|numeric|min:0|max:5',
             'kerjasama' => 'required|numeric|min:0|max:5',
-            'nilai_nsf' => 'required|numeric|between:0,5.00',
+            'orientasi_pelayanan' => 'required|numeric|min:0|max:5',
+            'disiplin' => 'required|numeric|min:0|max:5',
+            'kepemimpinan' => 'required|numeric|min:0|max:5',
+            'total_nilai' => 'required|numeric|between:0,5.00',
+            'tanggal_penilaian' => 'required|date',
         ]);
 
-        // Format nilai_nsf sebelum menyimpan
-        $request->merge([
-            'nilai_nsf' => number_format((float) $request->nilai_nsf, 2, '.', '')
-        ]);
+        $penilaianPerilakuKerja = PenilaianPerilakuKerja::findOrFail($id);
+        $penilaianPerilakuKerja->update($request->all());
 
-        // Mengupdate data penilaian PK
-        $penilaianPerilakuKerjas = PenilaianPerilakuKerja::findOrFail($id);
-        $penilaianPerilakuKerjas->update($request->all());
-
-        // Redirect ke index dengan pesan sukses
-        return redirect()->route('dosenberjabatan.penilaianperilakukerja.index')->with('success', 'Penilaian Perilaku Kerja berhasil diperbarui.');
+        return redirect()->route('dosenberjabatan.penilaianperilakukerja.index')
+            ->with('success', 'Penilaian Perilaku Kerja berhasil diperbarui.');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Hapus data penilaian.
      */
     public function destroy($id)
     {
-        // Mencari data berdasarkan ID
-        $penilaianPerilakuKerjas = PenilaianPerilakuKerja::find($id);
+        $penilaianPerilakuKerja = PenilaianPerilakuKerja::find($id);
 
-        // Cek apakah data ditemukan
-        if (!$penilaianPerilakuKerjas) {
+        if (!$penilaianPerilakuKerja) {
             return response()->json([
                 'success' => false,
                 'message' => 'Data tidak ditemukan.'
-            ], 404);  // Mengembalikan error 404 jika data tidak ditemukan
+            ], 404);
         }
 
-        // Menghapus data
-        $penilaianPerilakuKerjas->delete();
+        $penilaianPerilakuKerja->delete();
 
-        // Mengirimkan pesan sukses dalam format JSON
         return response()->json([
             'success' => true,
             'message' => 'Data berhasil dihapus!'

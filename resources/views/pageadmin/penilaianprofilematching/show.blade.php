@@ -5,10 +5,8 @@
 
 <head>
     <style>
-        /* Mengatur tampilan hanya untuk print */
         @media print {
 
-            /* Reset basic page settings */
             body,
             html {
                 margin: 0;
@@ -18,7 +16,6 @@
                 overflow: visible;
             }
 
-            /* Hide non-essential elements */
             .x-headeradmin,
             .btn,
             .x-navigasiadmin,
@@ -26,7 +23,6 @@
                 display: none !important;
             }
 
-            /* Card styling */
             .card {
                 border: none;
                 box-shadow: none;
@@ -40,7 +36,6 @@
                 line-height: 1.3;
             }
 
-            /* Tables */
             .table-bordered {
                 margin-bottom: 10px;
                 font-size: 9pt;
@@ -52,13 +47,11 @@
                 border: 1px solid #000 !important;
             }
 
-            /* Headers */
             h6.text-uppercase {
                 font-size: 11pt;
                 margin: 10px 0 5px 0;
             }
 
-            /* Row spacing */
             .row {
                 margin-bottom: 10px;
             }
@@ -67,14 +60,12 @@
                 margin-bottom: 8px;
             }
 
-            /* Grid adjustments */
             .col-md-6 {
                 width: 48%;
                 float: left;
                 margin-right: 2%;
             }
 
-            /* Lists */
             ul {
                 margin: 5px 0;
                 padding-left: 20px;
@@ -86,7 +77,6 @@
                 margin-bottom: 2px;
             }
 
-            /* Footer/signature section */
             .text-end {
                 margin-top: 15px;
                 clear: both;
@@ -101,10 +91,10 @@
                 margin: 5px 0;
             }
 
-            /* Scale content to fit */
             @page {
                 size: A4;
                 margin: 1cm;
+                /* Atur margin sesuai kebutuhan */
             }
 
             .container-fluid {
@@ -112,19 +102,16 @@
                 transform: scale(0.95);
             }
 
-            /* Image adjustments */
             img {
                 max-width: 100%;
                 height: auto;
             }
 
-            /* Force page break settings */
             .card-body {
                 page-break-before: avoid;
                 page-break-after: avoid;
             }
 
-            /* Ensure header image displays properly */
             .card-header img {
                 height: 70px;
                 margin-bottom: -60px;
@@ -157,16 +144,12 @@
 
                 <div class="card-body">
                     <style>
-                        .card-body {
-                            font-family: "Times New Roman", Times, serif;
-                            font-size: 12px;
-                            padding: 10px;
-                        }
-
+                        /* CSS yang sudah ada */
                         .table-bordered {
                             border-collapse: collapse;
                             width: 100%;
                             table-layout: fixed;
+                            /* Default tetap fixed */
                             margin-bottom: 10px;
                         }
 
@@ -176,6 +159,12 @@
                             padding: 6px;
                             text-align: left;
                             word-wrap: break-word;
+                            max-width: 200px;
+                            /* Batas awal default */
+                            overflow-wrap: break-word;
+                            /* Mencegah teks keluar batas */
+                            white-space: normal;
+                            /* Membantu agar teks panjang tetap dalam batas */
                         }
 
                         .table-bordered tr:last-child td {
@@ -216,28 +205,45 @@
                             }
                         }
 
+                        /* Bagian kesimpulan */
                         .kesimpulan h6 {
                             margin-bottom: 0.5rem;
-                            /* Mengurangi jarak bawah <h6> */
                             font-size: 1rem;
-                            /* (Opsional) Menyesuaikan ukuran font jika diperlukan */
                         }
 
                         .kesimpulan ul {
                             margin-top: 0;
-                            /* Menghilangkan jarak atas <ul> */
                             padding-left: 1.5rem;
-                            /* Indentasi untuk daftar */
                             list-style-type: disc;
-                            /* Menambahkan simbol list (opsional) */
+                        }
+
+                        /* Tambahkan CSS baru untuk font dan warna */
+                        .custom-font {
+                            font-family: 'Times New Roman', Times, serif;
+                            font-size: 12pt;
+                            color: black;
+                        }
+
+                        /* Tambahan untuk fleksibilitas tabel */
+                        .custom-font td {
+                            max-width: 100%;
+                            min-width: 120px;
+                            overflow-wrap: anywhere;
+                        }
+
+                        /* Jika kontennya lebih panjang, atur table-layout ke auto */
+                        @media (min-width: 1024px) {
+                            .table-bordered {
+                                table-layout: auto;
+                            }
                         }
                     </style>
 
                     <!-- Data Dosen -->
-                    <div class="row mb-2">
+                    <div class="row mb-2 custom-font">
                         <div class="col-md-6">
                             <h6 class="text-uppercase text-sm">Profil Dosen</h6>
-                            <table class="table table-bordered">
+                            <table class="table table-bordered custom-font">
                                 <tr>
                                     <td>Nama</td>
                                     <td>{{ $penilaian->dosen->nama_dosen }}</td>
@@ -254,16 +260,12 @@
                                     <td>Status</td>
                                     <td>{{ $penilaian->dosen->status ?? '-' }}</td>
                                 </tr>
-                                <tr>
-                                    <td>Test</td>
-                                    <td>Test</td>
-                                </tr>
                             </table>
                         </div>
 
                         <div class="col-md-6">
                             <h6 class="text-uppercase text-sm">Profil Dosen Penilai</h6>
-                            <table class="table table-bordered">
+                            <table class="table table-bordered custom-font">
                                 <tr>
                                     <td>Nama</td>
                                     <td>{{ $penilaian->user->dosen->nama_dosen ?? '-' }}</td>
@@ -278,63 +280,63 @@
                                 </tr>
                                 <tr>
                                     <td>Periode</td>
-                                    <td>{{ $penilaian->periode }}</td>
+                                    <td>{{ $penilaian->periode->nama_periode ?? '-' }}</td>
                                 </tr>
                             </table>
                         </div>
                     </div>
 
                     <!-- Penilaian Perilaku Kerja -->
-                    <div class="row mb-2">
+                    <div class="row mb-2 custom-font">
                         <div class="col-md-6">
                             <h6 class="text-uppercase text-sm">Penilaian Perilaku Kerja</h6>
-                            <table class="table table-bordered">
+                            <table class="table table-bordered custom-font">
                                 <thead>
                                     <tr>
-                                        <th>Aspek</th>
-                                        <th>Nilai</th>
+                                        <th class="text-center">ASPEK</th>
+                                        <th class="text-center">NILAI</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>Orientasi Pelayanan</td>
-                                        <td>{{ $penilaian->orientasi_pelayanan }}</td>
+                                        <td class="text-start">Orientasi Pelayanan</td>
+                                        <td class="text-center">{{ $penilaian->orientasi_pelayanan }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Integritas</td>
-                                        <td>{{ $penilaian->integritas }}</td>
+                                        <td class="text-start">Integritas</td>
+                                        <td class="text-center">{{ $penilaian->integritas }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Komitmen</td>
-                                        <td>{{ $penilaian->komitmen }}</td>
+                                        <td class="text-start">Komitmen</td>
+                                        <td class="text-center">{{ $penilaian->komitmen }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Disiplin</td>
-                                        <td>{{ $penilaian->disiplin }}</td>
+                                        <td class="text-start">Disiplin</td>
+                                        <td class="text-center">{{ $penilaian->disiplin }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Kerjasama</td>
-                                        <td>{{ $penilaian->kerjasama }}</td>
+                                        <td class="text-start">Kerjasama</td>
+                                        <td class="text-center">{{ $penilaian->kerjasama }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Kepemimpinan</td>
-                                        <td>{{ $penilaian->kepemimpinan }}</td>
+                                        <td class="text-start">Kepemimpinan</td>
+                                        <td class="text-center">{{ $penilaian->kepemimpinan }}</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
 
                         <!-- Hasil Perhitungan -->
-                        <div class="col-md-6">
+                        <div class="col-md-6 custom-font">
                             <h6 class="text-uppercase text-sm">Hasil Perhitungan</h6>
-                            <table class="table table-bordered">
+                            <table class="table table-bordered custom-font">
                                 <tr>
-                                    <td class="w-50">Total Nilai</td>
-                                    <td>{{ $penilaian->total_nilai }}</td>
+                                    <td class="w-50 text-start">Total Nilai</td>
+                                    <td class="text-start">{{ $penilaian->total_nilai }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Grade</td>
-                                    <td>
+                                    <td class="text-start">Grade</td>
+                                    <td class="text-start">
                                         @php
                                             $nilai = $penilaian->total_nilai;
                                             $grade =
@@ -357,20 +359,52 @@
 
                     <!-- Kesimpulan -->
                     <div class="kesimpulan">
-                        <h6 class="text-uppercase text-sm">Kesimpulan</h6>
-                        <ul>
+                        <h6 class="text-uppercase text-sm custom-font">Kesimpulan</h6>
+                        <ul class="custom-font">
                             @php
                                 $kesimpulan = [];
                                 if ($grade === 'A') {
-                                    $kesimpulan = ['Pujian dalam forum rapat resmi', 'Ucapan terima kasih secara formal', 'Sertifikat keberhasilan', 'Piagam penghargaan', 'Hadiah', 'Peningkatan fasilitas', 'Tugas belajar atau studi lanjut (di dalam/luar negeri) atas biaya universitas', 'Loncat jabatan fungsional atau kenaikan pangkat istimewa', 'Publikasi atas biaya universitas'];
+                                    $kesimpulan = [
+                                        'Pujian dalam forum rapat resmi',
+                                        'Ucapan terima kasih secara formal',
+                                        'Sertifikat keberhasilan',
+                                        'Piagam penghargaan',
+                                        'Hadiah',
+                                        'Peningkatan fasilitas',
+                                        'Tugas belajar atau studi lanjut (di dalam/luar negeri) atas biaya universitas',
+                                        'Loncat jabatan fungsional atau kenaikan pangkat istimewa',
+                                        'Publikasi atas biaya universitas',
+                                    ];
                                 } elseif ($grade === 'B') {
-                                    $kesimpulan = ['Pujian dalam forum rapat resmi', 'Ucapan terima kasih secara formal', 'Sertifikat keberhasilan', 'Peningkatan fasilitas', 'Pembebasan SPP untuk pendidikan lanjutan', 'Tugas belajar (tergantung keputusan universitas)'];
+                                    $kesimpulan = [
+                                        'Pujian dalam forum rapat resmi',
+                                        'Ucapan terima kasih secara formal',
+                                        'Sertifikat keberhasilan',
+                                        'Peningkatan fasilitas',
+                                        'Pembebasan SPP untuk pendidikan lanjutan',
+                                        'Tugas belajar (tergantung keputusan universitas)',
+                                    ];
                                 } elseif ($grade === 'C') {
-                                    $kesimpulan = ['Pujian dalam forum rapat resmi (hanya jika dianggap cukup memadai)', 'Teguran lisan (jika dianggap perlu perbaikan)', 'Teguran tertulis (untuk dorongan peningkatan kinerja ke depannya)'];
+                                    $kesimpulan = [
+                                        'Pujian dalam forum rapat resmi (hanya jika dianggap cukup memadai)',
+                                        'Teguran lisan (jika dianggap perlu perbaikan)',
+                                        'Teguran tertulis (untuk dorongan peningkatan kinerja ke depannya)',
+                                    ];
                                 } elseif ($grade === 'D') {
-                                    $kesimpulan = ['Teguran lisan atau tertulis', 'Peringatan keras', 'Penundaan kenaikan gaji berkala', 'Penundaan kenaikan pangkat'];
+                                    $kesimpulan = [
+                                        'Teguran lisan atau tertulis',
+                                        'Peringatan keras',
+                                        'Penundaan kenaikan gaji berkala',
+                                        'Penundaan kenaikan pangkat',
+                                    ];
                                 } else {
-                                    $kesimpulan = ['Peringatan keras', 'Pembebasan tugas', 'Penundaan kenaikan gaji berkala', 'Penundaan kenaikan pangkat', 'Pemberhentian jika tidak ada perbaikan signifikan'];
+                                    $kesimpulan = [
+                                        'Peringatan keras',
+                                        'Pembebasan tugas',
+                                        'Penundaan kenaikan gaji berkala',
+                                        'Penundaan kenaikan pangkat',
+                                        'Pemberhentian jika tidak ada perbaikan signifikan',
+                                    ];
                                 }
                             @endphp
                             @foreach ($kesimpulan as $item)
@@ -380,7 +414,7 @@
                     </div>
 
                     <!-- Penutupan -->
-                    <div class="text-end">
+                    <div class="text-end custom-font">
                         <p>Barito Kuala, {{ date('d/m/Y') }}</p>
                         <p>Kepala Bagian SDI</p>
                         <img src="{{ asset('assets/foto/ttddigital.png') }}" alt="Tanda Tangan" style="height: 100px;">

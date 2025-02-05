@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Prodi;
+use App\Models\Periode;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\PenilaianPerilakuKerja;
-use Carbon\Carbon;
 
 class PenilaianProfileMatchingController extends Controller
 {
@@ -15,8 +16,8 @@ class PenilaianProfileMatchingController extends Controller
         // Ambil list Prodi untuk dropdown
         $prodiList = Prodi::all();
 
-        // Ambil list periode untuk dropdown (sesuaikan dengan cara periode ditentukan)
-        $periodeList = PenilaianPerilakuKerja::distinct()->pluck('periode')->toArray();
+        // Ambil list periode untuk dropdown
+        $periodeList = Periode::pluck('nama_periode', 'id')->toArray();
 
         // Query penilaian dengan filter jika ada
         $penilaianPerilaku = PenilaianPerilakuKerja::query();
