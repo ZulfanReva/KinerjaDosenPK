@@ -66,7 +66,7 @@
         }
 
         .export-info {
-            text-align: right;
+            text-align: center;
             font-size: 10px;
             margin-bottom: 10px;
         }
@@ -90,20 +90,18 @@
 
 <body>
     <!-- Logo dan Garis -->
-    <div class="letterhead">
+    <div class="letterhead" style="margin-bottom: -10px;">
         <img src="{{ $kopBase64 }}" alt="Logo">
         <hr>
     </div>
 
     <!-- Header Text -->
-    <div class="header">
-        <h2>LAPORAN PENILAIAN PERILAKU KERJA DOSEN</h2>
-        <h3>UNIVERSITAS MUHAMMADIYAH BANJARMASIN</h3>
+    <div class="header" style="margin-bottom: 10px;">
+        <h2 style="margin-bottom: -5px;">LAPORAN PENILAIAN PERILAKU KERJA DOSEN</h2>
+        <h3 style="margin-bottom: -5px;">UNIVERSITAS MUHAMMADIYAH BANJARMASIN</h3>
+        <h4 style="margin-bottom: -1-px;">PERIODE: {{ $periodeFilter ?? 'Semua Periode' }}</h4>
     </div>
 
-    <div class="export-info">
-        Tanggal Export: {{ $exportDate }}
-    </div>
 
     <table>
         <thead>
@@ -129,7 +127,7 @@
                     <td>{{ $penilaian->dosen->nama_dosen }}</td>
                     <td>{{ $penilaian->dosen->nidn }}</td>
                     <td>{{ $penilaian->dosen->prodi->nama_prodi ?? '-' }}</td>
-                    <td>{{ $penilaian->periode }}</td>
+                    <td>{{ $penilaian->periode->nama_periode ?? '-' }}</td>
                     <td>{{ Carbon\Carbon::parse($penilaian->tanggal_penilaian)->format('d-m-Y') }}</td>
                     <td>{{ $penilaian->total_nilai }}</td>
                     <td>{{ $penilaian->grade }}</td>
@@ -150,9 +148,11 @@
         <p>Bapak Wahyudin</p>
     </div>
 
-    <div class="footer">
-        E-Kinerja UMBJM - Laporan Penilaian Perilaku Kerja
+    <div class="footer export-info" style="color: grey">
+        E-Kinerja UMBJM - Laporan Penilaian Perilaku Kerja<br>
+        Tanggal Export: {{ $exportDate }}
     </div>
+
 </body>
 
 </html>

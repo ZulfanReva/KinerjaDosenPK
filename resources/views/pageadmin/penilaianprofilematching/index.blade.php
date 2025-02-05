@@ -38,7 +38,7 @@
                             <div class="mb-3">
                                 <label for="prodi" class="form-label">Prodi</label>
                                 <select class="form-select" id="prodi" name="prodi">
-                                    <option value="">Semua Prodi</option>
+                                    <option value="">SEMUA PRODI</option>
                                     @foreach ($prodiList as $prodi)
                                         <option value="{{ $prodi->id }}">{{ $prodi->nama_prodi }}</option>
                                     @endforeach
@@ -47,7 +47,7 @@
                             <div class="mb-3">
                                 <label for="periode" class="form-label">Periode</label>
                                 <select class="form-select" id="periode" name="periode">
-                                    <option value="">Semua Periode</option>
+                                    <option value="">SEMUA PERIODE</option>
                                     @foreach ($periodeList as $periode)
                                         <option value="{{ $periode }}">{{ $periode }}</option>
                                     @endforeach

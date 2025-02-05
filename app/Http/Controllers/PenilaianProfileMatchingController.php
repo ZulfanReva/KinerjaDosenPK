@@ -29,7 +29,9 @@ class PenilaianProfileMatchingController extends Controller
         }
 
         if ($request->filled('periode')) {
-            $penilaianPerilaku->where('periode', $request->periode);
+            $penilaianPerilaku->whereHas('periode', function ($query) use ($request) {
+                $query->where('nama_periode', $request->periode);
+            });
         }
 
         // Ambil data penilaian sesuai filter
@@ -60,6 +62,7 @@ class PenilaianProfileMatchingController extends Controller
         // Get filtered data based on request parameters
         $query = PenilaianPerilakuKerja::with(['dosen.prodi', 'user.dosen']);
 
+        $periodeFilter = 'Semua Periode';
         if ($request->has('prodi') && $request->prodi) {
             $query->whereHas('dosen.prodi', function ($q) use ($request) {
                 $q->where('id', $request->prodi);
@@ -67,7 +70,10 @@ class PenilaianProfileMatchingController extends Controller
         }
 
         if ($request->has('periode') && $request->periode) {
-            $query->where('periode', $request->periode);
+            $query->whereHas('periode', function ($q) use ($request) {
+                $q->where('nama_periode', $request->periode);
+            });
+            $periodeFilter = $request->periode;
         }
 
         $penilaianPerilaku = $query->get();
@@ -90,7 +96,6 @@ class PenilaianProfileMatchingController extends Controller
                 'E' => 5
             ];
 
-            // Return an array with both sorting criteria
             return [$penilaian->total_nilai, $gradeOrder[$penilaian->grade]];
         });
 
@@ -102,7 +107,8 @@ class PenilaianProfileMatchingController extends Controller
             'penilaianPerilaku' => $penilaianPerilaku,
             'exportDate' => Carbon::now()->format('d-m-Y H:i:s'),
             'kopBase64' => 'data:image/png;base64,' . $kopImage,
-            'ttdBase64' => 'data:image/png;base64,' . $ttdImage
+            'ttdBase64' => 'data:image/png;base64,' . $ttdImage,
+            'periodeFilter' => $periodeFilter
         ]);
 
         $pdf->getDomPDF()->set_option('isRemoteEnabled', true);
