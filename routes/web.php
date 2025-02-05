@@ -10,6 +10,7 @@
     use App\Http\Controllers\DataDosenController;
     use App\Http\Controllers\BerandaRoleController;
     use App\Http\Controllers\DataJabatanController;
+    use App\Http\Controllers\DataPeriodeController;
     use App\Http\Controllers\ProfilAdminController;
     use App\Http\Controllers\ProfilDosenBerjabatanController;
     use App\Http\Controllers\PenilaianPerilakuKerjaController;
@@ -61,6 +62,15 @@
 
         // Data Jabatan menggunakan resource route
         Route::resource('datajabatan', DataJabatanController::class);
+
+        Route::resource('dataperiode', DataPeriodeController::class)->names([
+            'index' => 'dataperiode.index',
+            'create' => 'dataperiode.create',
+            'store' => 'dataperiode.store',
+            'edit' => 'dataperiode.edit',
+            'update' => 'dataperiode.update',
+            'destroy' => 'dataperiode.destroy',
+        ]);
 
         // Penilaian Profile Matching
         Route::resource('penilaianprofilematching', PenilaianProfileMatchingController::class)->names([
