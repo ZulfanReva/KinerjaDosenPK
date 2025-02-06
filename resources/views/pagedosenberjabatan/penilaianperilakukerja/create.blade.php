@@ -36,7 +36,7 @@
                     <form id="formPenilaianPerilaku" method="POST"
                         action="{{ route('dosenberjabatan.penilaianperilakukerja.store') }}">
                         @csrf
-                        <h6 class="text-center text-info mb-4 font-weight-bold">FORM PENILAIAN PERILAKU KERJA</h6>
+                        <h6 class="text-center text-info mb-4 font-weight-bold">FORM PENILAIAN PERILAKU KERJA PRODI {{ strtoupper($dosen->prodi->nama_prodi) }}</h6>
 
                         <!-- Profil Dosen -->
                         <div class="row">
