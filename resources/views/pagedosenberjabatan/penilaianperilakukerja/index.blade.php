@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<x-headeradmin :title="'Penialain Perilaku Kerja | E-Kinerja UMBJM'" />
+<x-headeradmin :title="'Penilaian Perilaku Kerja | E-Kinerja UMBJM'" />
 
 <body class="g-sidenav-show  bg-gray-100">
     <x-navigasidosenberjabatan></x-navigasidosenberjabatan>
