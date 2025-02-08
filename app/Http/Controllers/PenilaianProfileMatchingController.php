@@ -62,7 +62,7 @@ class PenilaianProfileMatchingController extends Controller
         // Get filtered data based on request parameters
         $query = PenilaianPerilakuKerja::with(['dosen.prodi', 'user.dosen']);
 
-        $periodeFilter = 'Semua Periode';
+        $periodeFilter = 'SEMUA PERIODE';
         if ($request->has('prodi') && $request->prodi) {
             $query->whereHas('dosen.prodi', function ($q) use ($request) {
                 $q->where('id', $request->prodi);

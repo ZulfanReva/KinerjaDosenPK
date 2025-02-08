@@ -136,11 +136,25 @@
             </div>
 
             <div class="card">
-                <div class="card-header text-start">
+                {{-- <div class="card-header text-start">
                     <img src="{{ asset('assets/foto/kopsurat.png') }}" alt="Logo"
                         style="height: 80px; margin-bottom: -70px;">
-                    <hr style="color: black;">
+                </div> --}}
+
+                <!-- Logo dan Garis -->
+                <div class="letterhead" style="text-align: center; margin-bottom: 5px;">
+                    <img src="{{ asset('assets/foto/kopsurat.png') }}" alt="Logo">
                 </div>
+                
+
+                <!-- Header Text -->
+                <div class="header" style="text-align: center; margin-bottom: 10px;">
+                    <h2 style="margin-bottom: -5px; font-size: 16pt;">LAPORAN PENILAIAN PERILAKU KERJA DOSEN</h2>
+                    <h3 style="margin-bottom: -5px; font-size: 14pt;">UNIVERSITAS MUHAMMADIYAH BANJARMASIN</h3>
+                    {{-- <h4 style="margin-bottom: -1px; font-size: 12pt;">PERIODE: {{ $periodeFilter ?? 'SEMUA PERIODE' }} --}}
+                    </h4>
+                </div>
+
 
                 <div class="card-body">
                     <style>
