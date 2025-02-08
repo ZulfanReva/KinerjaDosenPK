@@ -10,10 +10,9 @@ class DataPeriodeController extends Controller
     public function index(Request $request)
     {
         $sortOrder = $request->get('sort', 'asc'); // Default asc jika tidak ada parameter
-        $periodes = Periode::orderBy('nama_periode', $sortOrder)->get();
 
-        // Mendapatkan semua data periode dari database
-        $periodes = Periode::all();
+        // Ambil data periode dan urutkan berdasarkan nama_periode
+        $periodes = Periode::orderBy('nama_periode', $sortOrder)->get();
 
         return view('pageadmin.dataperiode.index', compact('periodes', 'sortOrder'));
     }
