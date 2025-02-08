@@ -47,8 +47,10 @@
                                 <div class="col-auto my-auto">
                                     <div class="h-100">
                                         <h5 class="mb-1">{{ $data->nama_dosen }}</h5>
-                                        <p class="mb-0 font-weight-bold text-sm">{{ $data->jabatan->nama_jabatan }} -
-                                            DOSEN BERJABATAN</p>
+                                        <p class="mb-0 font-weight-bold text-sm">
+                                            {{ $data->jabatan->nama_jabatan }} {{ $data->prodi->nama_prodi }} - DOSEN
+                                            BERJABATAN
+                                        </p>
                                     </div>
                                 </div>
                             @endforeach
@@ -107,7 +109,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
-                    <form method="POST" action="{{ route('dosenberjabatan.profil.update.password') }}" id="passwordForm">
+                    <form method="POST" action="{{ route('dosenberjabatan.profil.update.password') }}"
+                        id="passwordForm">
                         @csrf
                         @method('PUT')
                         <div class="modal-body">
