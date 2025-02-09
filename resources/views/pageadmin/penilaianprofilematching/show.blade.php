@@ -37,7 +37,7 @@
             }
 
             .table-bordered {
-                margin-bottom: 10px;
+                margin-bottom: 0px;
                 font-size: 9pt;
             }
 
@@ -114,7 +114,7 @@
 
             .card-header img {
                 height: 70px;
-                margin-bottom: -60px;
+                margin-bottom: -50px;
             }
         }
     </style>
@@ -148,7 +148,7 @@
                 
 
                 <!-- Header Text -->
-                <div class="header" style="text-align: center; margin-bottom: 10px;">
+                <div class="header" style="text-align: center; margin-bottom: 0px;">
                     <h2 style="margin-bottom: -5px; font-size: 16pt;">LAPORAN PENILAIAN PERILAKU KERJA DOSEN</h2>
                     <h3 style="margin-bottom: -5px; font-size: 14pt;">UNIVERSITAS MUHAMMADIYAH BANJARMASIN</h3>
                     {{-- <h4 style="margin-bottom: -1px; font-size: 12pt;">PERIODE: {{ $periodeFilter ?? 'SEMUA PERIODE' }} --}}
@@ -164,7 +164,7 @@
                             width: 100%;
                             table-layout: fixed;
                             /* Default tetap fixed */
-                            margin-bottom: 10px;
+                            margin-bottom: 5px;
                         }
 
                         .table-bordered th,
@@ -188,14 +188,14 @@
                         .text-uppercase {
                             font-weight: bold;
                             text-transform: uppercase;
-                            margin-bottom: 5px;
+                            margin-bottom: 0px;
                         }
 
                         .row {
                             margin-bottom: 10px;
                             display: flex;
                             flex-wrap: wrap;
-                            gap: 15px;
+                            gap: 5px;
                         }
 
                         .col-md-6 {
@@ -234,14 +234,14 @@
                         /* Tambahkan CSS baru untuk font dan warna */
                         .custom-font {
                             font-family: 'Times New Roman', Times, serif;
-                            font-size: 12pt;
+                            font-size: 10pt;
                             color: black;
                         }
 
                         /* Tambahan untuk fleksibilitas tabel */
                         .custom-font td {
                             max-width: 100%;
-                            min-width: 120px;
+                            min-width: 100px;
                             overflow-wrap: anywhere;
                         }
 
@@ -428,11 +428,11 @@
                     </div>
 
                     <!-- Penutupan -->
-                    <div class="text-end custom-font">
-                        <p>Barito Kuala, {{ date('d/m/Y') }}</p>
-                        <p>Kepala Bagian SDI</p>
-                        <img src="{{ asset('assets/foto/ttddigital.png') }}" alt="Tanda Tangan" style="height: 100px;">
-                        <p>Bapak Wahyudin</p>
+                    <div class="text-end custom-font" style="line-height: 1.2;">
+                        <p style="margin-bottom: 2px;">Barito Kuala, {{ date('d/m/Y') }}</p>
+                        <p style="margin-bottom: 2px;">Kepala Bagian SDI</p>
+                        <img src="{{ asset('assets/foto/ttddigital.png') }}" alt="Tanda Tangan" style="height: 80px;">
+                        <p style="margin-top: 2px;">Bapak Wahyudin</p>
                     </div>
                 </div>
             </div>
